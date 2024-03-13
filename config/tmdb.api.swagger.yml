@@ -1,0 +1,26 @@
+- /api/movies/{idMovie}/images:
+    get:
+      summary: Renvoie les images d'un film par ID
+      description: Renvoie les images d'un film par ID
+      parameters:
+        - in: path
+          name: idMovie
+          schema:
+            type: number
+          required: true
+          description: ID du film dont on veut visualiser les images
+        - in: query
+          name: include_image_language
+          schema:
+            type: string
+          required: false
+          description: Langue affichée sur les images
+        - in: query
+          name: language
+          schema:
+            type: string
+          required: false
+          description: Langue du retour serveur
+      responses:
+        200:
+          description: Liste des images liées au film demandé
