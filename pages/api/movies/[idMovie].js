@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
-import {ConfigService, tmdbGetOption} from "/services/IMDB.API/config.service";
-import {buildURL_movies_onlyLanguage} from "/services/IMDB.API/urlBuilder.service";
-import {getLikesCountForAMovie} from "/services/MONGODB.BDD/likes.service";
+import {ConfigService, tmdbGetOption} from "/src/services/IMDB.API/config.service";
+import {buildURL_movies_full, buildURL_movies_onlyLanguage} from "/src/services/IMDB.API/urlBuilder.service";
+import {getLikesCountForAMovie} from "/src/services/MONGODB.BDD/likes.service";
 
 /**
  * @swagger
@@ -16,6 +16,11 @@ import {getLikesCountForAMovie} from "/services/MONGODB.BDD/likes.service";
  *         required: true
  *         description: ID du film à retourner
  *       - in: query
+ *         name: append_to_response
+ *         type: string
+ *         required: false
+ *         description: permet de fetch plus de données en une seule requête pour un film [credits,images,keywords,recommandations,reviews,similar,videos]
+ *       - in: query
  *         name: language
  *         type: string
  *         required: false
@@ -26,12 +31,11 @@ import {getLikesCountForAMovie} from "/services/MONGODB.BDD/likes.service";
  */
 export default async function handler(req, res) {
     const idMovie = parseInt(req.query.idMovie, 10);
-    const baseURL = ConfigService.themoviedb.urls.movie.replace("{movie_id}", idMovie.toString());
-    const url = buildURL_movies_onlyLanguage(idMovie, req.query.language, baseURL);
-
+    const url = buildURL_movies_full(idMovie, req.query.append_to_response,req.query.language);
     switch (req.method) {
         case "GET":
-            const movie = await fetch(url, tmdbGetOption )
+            console.log("API CALL - GET - URL : ", url);
+            const movie = await fetch(url, tmdbGetOption)
                 .then(r => r.json())
                 .catch(err => console.error('error:' + err));
             if (movie) {

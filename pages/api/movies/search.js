@@ -9,7 +9,7 @@
 //https://api.themoviedb.org/3/search/movie
 
 import fetch from "node-fetch";
-import {ConfigService} from "/services/IMDB.API/config.service"
+import {ConfigService} from "/src/services/IMDB.API/config.service"
 
 /**
  * @swagger
@@ -38,11 +38,12 @@ import {ConfigService} from "/services/IMDB.API/config.service"
  *              description: Liste des films correspondant à la recherche
  */
 export default async function handler(req, res) {
+    console.log("api/movies/search req.query : ", req.query);
     let url = ConfigService.themoviedb.urls.search_movie
     let query;
     if (req.query.query) {
         query = req.query.query;
-        url = url + '?query=' + query;
+        url = url + '?query=' + query + '&include_adult=false';
     }
     if(req.query.language){
         const language = req.query.language;
@@ -52,7 +53,7 @@ export default async function handler(req, res) {
         const page = req.query.page;
         url = url + '&page=' + page;
     }
-
+    console.log("api/movies/search url : ", url);
     const options = {
         method: 'GET',
         headers: {
@@ -64,5 +65,5 @@ export default async function handler(req, res) {
     const apiResponse = await fetch(url, options)
         .then(r => r.json())
         .catch(err => console.error('error:' + err));
-    res.json({status: 200, data: apiResponse.results});
+    res.json({status: 200, data: apiResponse});
 }

@@ -36,7 +36,7 @@ import clientPromise from "/lib/mongodb";
  *         description: ID du film à liker/disliker
  *      responses:
  *          200:
- *              description: Movie liked/disliked
+ *              description: IdMovie liked/disliked
  */
 export default async function handler(req, res) {
     //TODO parser le JWT
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
                     { $set: { liked : !like.liked } }
                 )
                 data = {
-                    action: 'Movie liked : ' + !like.liked,
+                    action: 'IdMovie liked : ' + !like.liked,
                     idMovie: idMovie,
                     idUser: idUser
                 }
@@ -66,7 +66,7 @@ export default async function handler(req, res) {
                     {idTMDB: idMovie, idUser: idUser, liked: true}
                 )
                 data = {
-                    action: 'Relation Movie/User created',
+                    action: 'Relation IdMovie/User created',
                     idMovie: idMovie,
                     idUser: idUser,
                     liked: true

@@ -1,10 +1,10 @@
 //Recommander une liste de films selon ses likes et les genre des films
 //Récupérer la liste de tous les films liké par l'utilisateur
-//Récupérer pour chaque film la liste "Similar" de TMDB
-//Créer une nouvelle liste basée sur un mélange de toutes les listes "Similar" des films liké
+//Récupérer pour chaque film la liste "SimilarShowcase" de TMDB
+//Créer une nouvelle liste basée sur un mélange de toutes les listes "SimilarShowcase" des films liké
 
 import clientPromise from "/lib/mongodb";
-import {ConfigService, tmdbGetOption} from "../../../../../services/IMDB.API/config.service";
+import {ConfigService, tmdbGetOption} from "../../../../../src/services/IMDB.API/config.service";
 import fetch from "node-fetch";
 /**
  * @swagger

@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{
+    /*background: radial-gradient(circle, rgba(198,58,11,1) 0%, rgba(214,114,19,1) 15%, rgba(254,150,51,1) 34%, rgba(221,145,192,1) 69%, rgba(161,12,60,1) 100%);*/
+    /*background: radial-gradient(circle, rgba(127,191,207,1) 0%, rgba(89,170,199,1) 0%, rgba(58,152,191,1) 0%, rgba(24,111,137,1) 0%, rgba(0,82,100,1) 20%, rgba(0,52,57,1) 45%, rgba(0,22,24,1) 80%, rgba(0,0,0,1) 100%);*/
+    /*background: radial-gradient(circle, rgba(127,191,207,1) 0%, rgba(89,170,199,1) 0%, rgba(58,152,191,1) 0%, rgba(24,111,137,1) 0%, rgba(0,82,100,1) 0%, rgba(0,52,57,1) 29%, rgba(0,22,24,1) 52%, rgba(0,0,0,1) 100%);*/
+    --nav-height: 10vh;
+    height: fit-content;
+    /*@apply bg-midnight-900;*/
+    background: radial-gradient(circle at center, #202053 0%, #04040e 40%);
+    @apply text-white;
+    font-family: "Mandali", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+main, .ui_page, #swagger{
+    margin-top: 10vh;
+    min-height: 90vh;
+    max-width: 79.5vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+}
+
+header{
+    position: fixed;
+    height: 10vh;
+    width: 100%;
+    /*@apply bg-secondary-500;*/
+    background: linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    top: 0;
+    left:0;
+    z-index: 1000;
+    transition: top 0.2s ease-in-out;
+}
+header.hidden {
+    transform: translateY(-100%);
+}
+header img{
+    margin-top: -12px;
+}
+#title_sloggan{
+    margin-left: 5px;
+    margin-top: -5px;
+}
+#title_sloggan h1, #title_sloggan h2{
+    font-family: "Leckerli One", cursive;
+    font-weight: 400;
+    font-style: normal;
+    text-align: left;
+    color: #F3ECE5;
+}
+#title_sloggan h1{
+    font-size: 3.5rem;
+}
+#title_sloggan h2{
+    font-size: 1.5rem;
+    margin-top: -28px;
+    margin-left: 30px;
+}
+
+footer{
+    width: 100%;
+    height: 10vh;
+    background-color: rgba(57, 36, 1, 0.6);
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 7px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+::-webkit-scrollbar-thumb {
+    /*background-color: rgba(156, 158, 160, 0.7);*/
+    @apply bg-neutral-400;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-500;
+}
+
+/* MOVIES GRID */
+#movies-list{
+    max-width: 100vw;
+    overflow-y: auto;
+}
+#vertical-list-showcase{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+.category_title{
+    font-family: "Amaranth", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #F3ECE5;
+    font-size: 2rem;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* MOVIE PAGE */
+#main_movie_page{
+    position: relative;
+    max-width: 100vw;
+    margin-top: 10vh;
+    max-height: fit-content;
+}
+.main_title{
+    /*font-family: "Noto Sans Gurmukhi", sans-serif;*/
+    font-family: "Amaranth", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    @apply text-white;
+    letter-spacing: -0.3vw;
+    margin-bottom: 15px;
+}
+.background_image{
+    background-repeat: no-repeat;
+    background-position:top;
+    margin-top: -4vh;
+    z-index: 0;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom:0;
+    right: 0;
+    animation: gradient-opacity-0-03 1400ms;
+    mask-image:
+            linear-gradient(180deg, rgba(0, 0, 0, 1) 50%,  transparent 78%);
+}
+.bg_image_container{
+    /*filter: blur(2.5px) brightness(0.5) grayscale(65%) drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5)) hue-rotate(10deg);*/
+    filter: grayscale(15%) drop-shadow(0px 0px 1000px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 100px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 500px rgba(0, 0, 0, 1));
+}
+.movie_details{
+    z-index: 1;
+    position: absolute;
+    top: -4vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 100vw;
+    backdrop-filter: brightness(0.7) blur(0.5px);
+    -webkit-backdrop-filter: brightness(0.75) blur(2px);
+    padding-left: 3vw;
+    @apply pt-[5vh];
+    @apply md:pb-[5vh];
+    @apply xl:pt-0;
+}
+.genre{
+    font-weight: bold;
+    @apply text-secondary-300;
+    @apply border border-secondary-300;
+    padding: 2px 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.about_movie{
+    z-index: 1;
+    position: absolute;
+}
+.cast_review_movie{
+
+}
+.pictures_movie{
+
+}
+.similar_movies{
+
+}
+
+/* ANIMATIONS */
+@keyframes gradient-opacity-0-03 {
+    0% {
+        opacity: 0.2;
+    }
+    12% {
+        opacity: 0.3;
+    }
+    25%{
+        opacity: 0.4;
+    }
+    37% {
+        opacity: 0.5;
+    }
+    50%{
+        opacity: 0.6;
+    }
+    62% {
+        opacity: 0.7;
+    }
+    75%{
+        opacity: 0.8;
+    }
+    87% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 1;
+    }
+}

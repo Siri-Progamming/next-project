@@ -6,10 +6,15 @@ export const ConfigService = {
             movie: "https://api.themoviedb.org/3/movie/{movie_id}",
             movie_videos: "https://api.themoviedb.org/3/movie/{movie_id}/videos",
             movie_top_rated: "https://api.themoviedb.org/3/movie/top_rated",
+            movie_upcoming: "https://api.themoviedb.org/3/movie/upcoming",
+            movie_popular: "https://api.themoviedb.org/3/movie/popular",
+            movie_trending: "https://api.themoviedb.org/3/trending/movie/{time_window}",
             movie_similar: "https://api.themoviedb.org/3/movie/{movie_id}/similar",
+            movie_genres:"https://api.themoviedb.org/3/genre/movie/list",
             movie_recommanded: "https://api.themoviedb.org/3/movie/{movie_id}/recommendations",
             movie_images: "https://api.themoviedb.org/3/movie/{movie_id}/images",
-            search_movie: "https://api.themoviedb.org/3/search/movie"
+            search_movie: "https://api.themoviedb.org/3/search/movie",
+            image_view: "https://image.tmdb.org/t/p"
         },
         //C'est mieux dans un .env les keys
         keys:{

@@ -3,7 +3,7 @@ import SwaggerUI from 'swagger-ui-react';
 import 'swagger-ui-react/swagger-ui.css';
 const Swagger = () => {
     return (
-        <div>
+        <div id="swagger">
             <Head>
                 <title>Swagger next-project API</title>
                 <meta name="description" content="Swagger next-project API" />

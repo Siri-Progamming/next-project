@@ -4,8 +4,8 @@
 // movie_id int64 required
 // include_image_language string optional (specify a comma separated list of ISO-639-1 values to query, for example: en,null)
 // language string optional
-import {switchGetData} from "/services/IMDB.API/fetch.service";
-import {buildURL_movies_id_images} from "/services/IMDB.API/urlBuilder.service";
+import {switchGetData} from "/src/services/IMDB.API/fetch.service";
+import {buildURL_movies_id_images} from "/src/services/IMDB.API/urlBuilder.service";
 /**
  * @swagger
  * /api/movies/{idMovie}/images:

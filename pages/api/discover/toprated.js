@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { ConfigService } from "/services/IMDB.API/config.service"
+import { ConfigService } from "/src/services/IMDB.API/config.service"
 
 /**
  * @swagger
@@ -36,5 +36,5 @@ export default async function handler(req, res) {
     const apiResponse = await fetch(url, options)
         .then(r => r.json())
         .catch(err => console.error('error:' + err));
-    res.json({ status: 200, data: apiResponse.results });
+    res.json({ status: 200, data: apiResponse});
 }
