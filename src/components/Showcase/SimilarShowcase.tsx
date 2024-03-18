@@ -23,9 +23,9 @@ const SimilarShowcase: React.FC<SimilarShowcaseProps> = ({movie, nbToShow, title
             <ul className=" flex flex-wrap  justify-center gap-3">
                 {similars?.slice(0, nbToShow).map(similar => (
 
-                    <li key={similar.id} className="flex-column relative w-[110px] cursor-pointer" onClick={() => handleClick(similar.id)}>
+                    <li key={similar.id} className="flex-column relative w-[110px] cursor-pointer transform transition-transform hover:scale-110 hover:z-[10]" onClick={() => handleClick(similar.id)}>
                         <div
-                            className="h-[160px] rounded-xl"
+                            className="h-[160px] rounded-xl "
                             style={{
                                 backgroundImage: `url(${ConfigService.themoviedb.urls.image_view + "/w220_and_h330_face" + similar.poster_path})`,
                                 backgroundSize: 'cover',

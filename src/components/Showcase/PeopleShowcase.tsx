@@ -14,7 +14,7 @@ const PeopleShowcase: React.FC<MoviesProps> = ({movie, nbToShow, title}) => {
             <ul className=" flex flex-wrap justify-center gap-3">
                 {casts?.slice(0, nbToShow).map(cast => (
 
-                    <li key={cast.id} className="flex-column relative w-[95px] min-w-[95px]">
+                    <li key={cast.id} className="flex-column relative w-[95px] min-w-[95px] transform transition-transform hover:scale-125 hover:z-[10] hover:backdrop-blur-lg">
                         <div
                             className="h-[130px] rounded-xl"
                             style={{
