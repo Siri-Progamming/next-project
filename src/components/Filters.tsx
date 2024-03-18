@@ -6,7 +6,10 @@ interface FiltersProps {
 const Filters: React.FC<FiltersProps> = ({}) => {
     return (
         <div>
-            Filters
+            {/*language, page, sort_by, vote_average.gte, vote_average.lte, vote_count.gte, vote_count.lte, with_genres*/}
+            <form id="movie-filters">
+
+            </form>
         </div>
     );
 }
