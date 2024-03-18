@@ -10,9 +10,7 @@ interface MovieItemProps {
 const MovieItem: React.FC<MovieItemProps> = ({movie}) => {
     const router = useRouter();
     const handleClick = () => {
-        router.push({
-            pathname: '/ui/movies/'+movie.id,
-        });
+        router.push('/ui/movies/'+movie.id);
     };
     return (
         <li key={movie.id} className="flex-column relative mb-10 mt-5 cursor-pointer" onClick={handleClick}>

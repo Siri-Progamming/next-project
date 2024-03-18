@@ -16,7 +16,6 @@
 }
 
 main, .ui_page, #swagger{
-    margin-top: 10vh;
     min-height: 90vh;
     max-width: 79.5vw;
     margin-left: auto;
@@ -115,7 +114,6 @@ footer{
 #main_movie_page{
     position: relative;
     max-width: 100vw;
-    margin-top: 10vh;
     max-height: fit-content;
 }
 .main_title{
@@ -126,6 +124,24 @@ footer{
     @apply text-white;
     letter-spacing: -0.3vw;
     margin-bottom: 15px;
+    text-shadow: 8px 2px 4px rgba(0, 0, 0, 0.7);
+}
+.background_image_repeat{
+    background-repeat: repeat;
+    background-position:top;
+    margin-top: -4vh;
+    z-index: 0;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom:0;
+    right: 0;
+    animation: gradient-opacity-0-03 1400ms, glow 5s ease-in-out infinite;
+    mask-image:
+            linear-gradient(180deg, rgba(0, 0, 0, 1) 50%,  transparent 78%);
+    filter: blur(50px) ;
+    transform: scaleX(-1);
 }
 .background_image{
     background-repeat: no-repeat;
@@ -141,10 +157,11 @@ footer{
     animation: gradient-opacity-0-03 1400ms;
     mask-image:
             linear-gradient(180deg, rgba(0, 0, 0, 1) 50%,  transparent 78%);
+    filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 .bg_image_container{
     /*filter: blur(2.5px) brightness(0.5) grayscale(65%) drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5)) hue-rotate(10deg);*/
-    filter: grayscale(15%) drop-shadow(0px 0px 1000px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 100px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 500px rgba(0, 0, 0, 1));
+    /*filter: grayscale(15%) drop-shadow(0px 0px 1000px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 100px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 500px rgba(0, 0, 0, 1));*/
 }
 .movie_details{
     z-index: 1;
@@ -158,8 +175,11 @@ footer{
     -webkit-backdrop-filter: brightness(0.75) blur(2px);
     padding-left: 3vw;
     @apply pt-[5vh];
-    @apply md:pb-[5vh];
+    @apply md:pb-[15vh];
     @apply xl:pt-0;
+}
+.movie-review, .movie-note{
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 .genre{
     font-weight: bold;
@@ -182,6 +202,17 @@ footer{
 
 }
 
+/* STYLES */
+.glassmorphism{
+    height: fit-content;
+    width: fit-content;
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.70);
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
 /* ANIMATIONS */
 @keyframes gradient-opacity-0-03 {
     0% {
@@ -212,3 +243,40 @@ footer{
         opacity: 1;
     }
 }
+@keyframes glow {
+    0% {
+        filter: saturate(500%) blur(70px) brightness(2)  hue-rotate(0deg) ;
+    }
+    25% {
+        filter: saturate(500%) blur(70px) brightness(1.5)  hue-rotate(40deg) ;
+    }
+    50% {
+        filter: saturate(500%) blur(70px) brightness(2)  hue-rotate(0deg) ;
+    }
+    75% {
+        filter: saturate(500%) blur(70px) brightness(1.5)  hue-rotate(-40deg);
+    }
+    100% {
+        filter: saturate(500%)  blur(70px) brightness(2)  hue-rotate(0deg);
+    }
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0); /* Aucun déplacement vertical */
+    }
+    40% {
+        transform: translateY(-30px); /* Déplacement vers le haut */
+    }
+    60% {
+        transform: translateY(-15px); /* Déplacement vers le haut moins prononcé */
+    }
+}
+@keyframes scale {
+    0%, 100% {
+        transform: scale(1); /* Taille normale */
+    }
+    50% {
+        transform: scale(1.2) translate(-10%, -10%); /* Zoom à 120% avec un décalage négatif */
+    }
+}
+

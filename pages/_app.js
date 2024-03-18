@@ -4,6 +4,7 @@ import {AuthProvider} from '/src/contexts/auth';
 import '/src/styles/globals.css';
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
+import {NameSearchProvider} from "../src/contexts/NameSearchContext";
 
 export default function MyApp(props) {
     const {Component, pageProps} = props;
@@ -15,9 +16,11 @@ export default function MyApp(props) {
 
     return (
         <AuthProvider>
-            <Header onSearch={handleSearch}/>
-            <Component {...pageProps} searchQuery={searchQuery}/>
-            {/*<Footer/>*/}
+            <NameSearchProvider>
+                <Header onSearch={handleSearch}/>
+                <Component {...pageProps} searchQuery={searchQuery}/>
+                {/*<Footer/>*/}
+            </NameSearchProvider>
         </AuthProvider>
     );
 }
