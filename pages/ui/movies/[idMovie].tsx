@@ -41,15 +41,20 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     <div className="background_image_repeat bg-cover xl:bg-contain h-[115vh]" style={{
                         backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
                     }}></div>
-                    <div className="background_image bg-cover xl:bg-contain h-[100vh]" style={{
+                    <div className="background_image bg-cover 2xl:bg-contain h-[100vh]" style={{
                         backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
-                    }}>
-                    </div>
+                    }}></div>
+                    <div className="background_image bg-cover 2xl:bg-contain h-[100vh]" style={{
+                        backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
+                    }}></div>
+                    <div className="background_image bg-cover 2xl:bg-contain h-[100vh]" style={{
+                        backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
+                    }}></div>
                 </div>
                 <div className="movie_details lg:w-full h-[100vh] overflow-clip xl:justify-center">
                     {/*<div className="glassmorphism">*/}
-                        {movie?.title && (
-                            <h2 className={`main_title leading-none ${movieTitleSize(movie.title)} xl:w-[30vw]`}>
+                    {movie?.title && (
+                        <h2 className={`main_title leading-none ${movieTitleSize(movie.title)} xl:w-[30vw]`}>
                                 {movie.title}
                             </h2>
                         )}
