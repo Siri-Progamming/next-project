@@ -16,7 +16,7 @@
 }
 
 main, .ui_page, #swagger{
-    min-height: 90vh;
+    min-height: calc(100vh - var(--nav-height));
     max-width: 79.5vw;
     margin-left: auto;
     margin-right: auto;
@@ -26,18 +26,15 @@ main, .ui_page, #swagger{
 
 header{
     position: fixed;
-    height: 10vh;
+    height: var(--nav-height);
     width: 100%;
     /*@apply bg-secondary-500;*/
     background: linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
     top: 0;
     left:0;
     z-index: 1000;
-    transition: top 0.2s ease-in-out;
 }
-header.hidden {
-    transform: translateY(-100%);
-}
+
 header img{
     margin-top: -12px;
 }
@@ -138,15 +135,14 @@ footer{
     bottom:0;
     right: 0;
     animation: gradient-opacity-0-03 1400ms, glow 5s ease-in-out infinite;
-    mask-image:
-            linear-gradient(180deg, rgba(0, 0, 0, 1) 50%,  transparent 78%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%,  transparent 85%);
     filter: blur(50px) ;
     transform: scaleX(-1);
 }
 .background_image{
     background-repeat: no-repeat;
     background-position:top;
-    margin-top: -4vh;
+    margin-top: 5vh;
     z-index: 0;
     width: 100%;
     position: absolute;
@@ -155,8 +151,8 @@ footer{
     bottom:0;
     right: 0;
     animation: gradient-opacity-0-03 1400ms;
-    mask-image:
-            linear-gradient(180deg, rgba(0, 0, 0, 1) 50%,  transparent 78%);
+    /*mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 1) 7%, rgba(0, 0, 0, 1) 70%, transparent 85%);*/
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 75%,  transparent 90%);
     filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 .bg_image_container{
@@ -174,9 +170,9 @@ footer{
     backdrop-filter: brightness(0.7) blur(0.5px);
     -webkit-backdrop-filter: brightness(0.75) blur(2px);
     padding-left: 3vw;
-    @apply pt-[5vh];
+    @apply pt-[14vh];
     @apply md:pb-[15vh];
-    @apply xl:pt-0;
+    @apply xl:pt-[9vh];
 }
 .movie-review, .movie-note{
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);

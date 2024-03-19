@@ -38,7 +38,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
             <div className="movie_page relative">
                 <div className="bg_image_container">
                     {/*h-[calc(100vh_-_var(--nav-height,0))*/}
-                    <div className="background_image_repeat bg-cover xl:bg-contain h-[100vh]" style={{
+                    <div className="background_image_repeat bg-cover xl:bg-contain h-[115vh]" style={{
                         backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
                     }}></div>
                     <div className="background_image bg-cover xl:bg-contain h-[100vh]" style={{
@@ -46,7 +46,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     }}>
                     </div>
                 </div>
-                <div className="movie_details lg:w-full h-[80vh] overflow-clip xl:justify-center">
+                <div className="movie_details lg:w-full h-[100vh] overflow-clip xl:justify-center">
                     {/*<div className="glassmorphism">*/}
                         {movie?.title && (
                             <h2 className={`main_title leading-none ${movieTitleSize(movie.title)} xl:w-[30vw]`}>
@@ -75,7 +75,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     </div>
                 {/*</div>*/}
                 <div
-                    className="about_movie absolute top-[50vh] md:top-[55vh] lg:top-[55vh] xl:top-[60vh] bottom-[0] left-[3vw] right-0 flex flex-col md:flex-row">
+                    className="about_movie absolute top-[75vh] md:top-[80vh] xl:top-[80vh] bottom-[0] left-[3vw] right-0 flex flex-col md:flex-row">
                     <div className="cast_review_movie grow max-w-[100vw] md:max-w-[40vw] md:mr-10">
                         <PeopleShowcase movie={movie ? movie : null} nbToShow={7} title={"Cast"}/>
                     </div>
