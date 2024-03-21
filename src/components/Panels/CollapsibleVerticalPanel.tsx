@@ -17,7 +17,7 @@ const CollapsibleVerticalPanel: React.FC = () => {
                 <div className="relative">
                     <div
                         onMouseOver={handleMouseEnter}
-                        className={`absolute left-0 z-[499] w-[1vw] h-screen`}></div>
+                        className={`absolute left-0 z-[499] w-[40px] h-screen`}></div>
                     <div id="collapsible-vertical-panel"
                             onMouseLeave={handleMouseLeave}
                             className={`flex flex-row relative overflow-hidden text-wrap ${

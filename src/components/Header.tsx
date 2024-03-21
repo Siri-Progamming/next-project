@@ -25,7 +25,7 @@ const Header: React.FC = () => {
                 <div className="relative">
                     <div
                         onMouseOver={handleMouseEnter}
-                        className={`absolute inset-0 z-[999] w-full h-[1vh]`}></div>
+                        className={`absolute inset-0 z-[999] w-full h-[50px]`}></div>
                     <header onMouseLeave={handleMouseLeave}
                             className={`flex flex-row relative overflow-hidden text-wrap ${
                                 showHeader ? '' : 'hidden'}`}>
