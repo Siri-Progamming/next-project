@@ -60,7 +60,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                            style={{textAlign: 'justify'}}>{movie?.overview}</p>
                         <p className="mt-5 flex flex-row flex-wrap items-center space-x-4 justify-start">
                             <span>{movie?.release_date.slice(0, 4)}</span> {movie?.genres.map((genre) => (
-                            <span className="genre">{genre.name}</span>))}
+                            <span key={genre.id} className="genre">{genre.name}</span>))}
                         </p>
                         <p className="relative mt-5">
                             {/*@ts-ignore*/}

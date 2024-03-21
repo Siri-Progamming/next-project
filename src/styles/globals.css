@@ -95,12 +95,11 @@ footer{
     margin: 4px;
     padding: 2px 8px;
 }
-.genre_filter:hover{
+.genre_filter:hover, .genre_filter.selected{
     @apply bg-secondary-300;
     @apply border border-secondary-300;
     @apply text-black;
 }
-
 /* SCROLLBAR */
 ::-webkit-scrollbar {
     width: 9px;

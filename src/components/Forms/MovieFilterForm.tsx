@@ -79,8 +79,8 @@ const MovieFilterForm: React.FC = ({}) => {
                     <label htmlFor="genres">Genres</label>
                     <div className="flex flex-wrap">
                         {MOVIE_GENRES.map((genre) => (
-                            <button key={genre.id} type="button" onClick={(e) => {e.currentTarget.classList.add('active'); handleSelectGenre; }}
-                                    className="genre_filter active:bg-secondary-300"
+                            <button key={genre.id} type="button" onClick={(event) => handleSelectGenre(event, genre.id)}
+                                    className="genre_filter"
                                     >
                                 {genre.name}
                             </button>

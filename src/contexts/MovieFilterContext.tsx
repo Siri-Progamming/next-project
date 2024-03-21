@@ -1,4 +1,4 @@
-import React, {createContext, SyntheticEvent, useContext, useState} from "react";
+import React, {createContext, SyntheticEvent, useContext, useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useConstantes} from "./ConstantesContext";
 interface MovieFilterContextProps {
@@ -34,7 +34,7 @@ interface MovieFilterContextProps {
     handleChangeNoteMin: (event: SyntheticEvent<Element, Event>, value: number | null) => void;
     handleChangeNoteMax: (event: Event, value: number | number[], activeThumb: number) => void;
     handleChangeNbVotesMin: (event: Event, value: number | number[], activeThumb: number) => void;
-    handleSelectGenre: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleSelectGenre: (e: React.MouseEvent<HTMLButtonElement>, genreId:number) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleReset: () => void;
 }
@@ -62,6 +62,10 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     const [nbVotesMin, setNbVotesMin] = useState<number>(100);
     const [nbPages, setNbPages] = useState<number>(1);
     const [activePage, setActivePage] = useState<number>(1);
+
+    useEffect(() => {
+        console.log("MovieFilterContext - Genres : ", genres);
+    }, [genres]);
 
     // Fonction pour gérer la soumission du formulaire de recherche
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -98,11 +102,15 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     const handleChangeNbVotesMin = (e: Event, value: number | number[], activeThumb: number) => {
         setNbVotesMin(Number(value));
     }
-    const handleSelectGenre = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const genreId = Number(e.target.value);
-        if (e.target.checked) {
+    const handleSelectGenre = (e: React.MouseEvent<HTMLButtonElement>, genreId:number) => {
+        e.preventDefault();
+        const isActive = e.currentTarget.classList.contains('selected');
+        if (!isActive) {
+            e.currentTarget.classList.add('selected');
             setGenres([...genres, genreId]);
+            console.log("MovieFilterContext - Genre Selected : ", genreId);
         } else {
+            e.currentTarget.classList.remove('selected');
             setGenres(genres.filter((id) => id !== genreId));
         }
     }
