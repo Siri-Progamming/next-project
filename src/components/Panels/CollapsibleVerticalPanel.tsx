@@ -20,7 +20,7 @@ const CollapsibleVerticalPanel: React.FC = () => {
                         className={`absolute left-0 z-[499] w-[40px] h-screen`}></div>
                     <div id="collapsible-vertical-panel"
                             onMouseLeave={handleMouseLeave}
-                            className={`flex flex-row relative overflow-hidden text-wrap ${
+                            className={`flex flex-row relative overflow-hidden text-wrap w-[80vw] md:w-[40vw] lg:w-[35vw] xl:w-[30vw] 2xl:w-[20vw] ${
                                 showPanel ? '' : 'hidden'}`}>
                         <h1 className="">Rechercher des films</h1>
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

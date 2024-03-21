@@ -69,7 +69,6 @@ footer{
 #collapsible-vertical-panel{
     position: fixed;
     height: 100%;
-    width: 18vw;
     top: 0;
     left:0;
     z-index: 500;
