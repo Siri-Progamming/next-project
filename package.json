@@ -16,7 +16,6 @@
     "btoa": "^1.2.1",
     "formdata-node": "^6.0.3",
     "js-cookie": "^3.0.5",
-    "js-yaml": "^4.1.0",
     "mongodb": "^4.8.1",
     "next": "latest",
     "next-swagger-doc": "^0.1.9",
@@ -24,8 +23,7 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "swagger-ui-react": "^3.52.3",
-    "webpack": "^5.91.0"
+    "swagger-ui-react": "^3.52.3"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.0",
