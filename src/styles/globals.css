@@ -205,8 +205,8 @@ footer{
     flex-wrap: wrap;
     flex-direction: column;
     max-width: 100vw;
-    backdrop-filter: brightness(0.7) blur(0.5px);
-    -webkit-backdrop-filter: brightness(0.75) blur(2px);
+    backdrop-filter: brightness(0.9) blur(0.5px);
+    /*-webkit-backdrop-filter: brightness(0.7) blur(0.5px);*/
     padding-left: 3vw;
     @apply pt-[14vh];
     @apply md:pb-[15vh];
