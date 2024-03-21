@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     const handleMouseLeave = () => {
        setTimeout(() => {
             setShowHeader(false);
-        }, 300);
+        }, 150);
     };
 
     return (
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
                 <div className="relative">
                     <div
                         onMouseOver={handleMouseEnter}
-                        className={`absolute inset-0 z-[999] w-full h-[10vh]`}></div>
+                        className={`absolute inset-0 z-[999] w-full h-[1vh]`}></div>
                     <header onMouseLeave={handleMouseLeave}
                             className={`flex flex-row relative overflow-hidden text-wrap ${
                                 showHeader ? '' : 'hidden'}`}>

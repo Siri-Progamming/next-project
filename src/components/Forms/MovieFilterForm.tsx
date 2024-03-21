@@ -23,7 +23,7 @@ const MovieFilterForm: React.FC = ({}) => {
                     <select id="language" name="language"
                             value={language}
                             onChange={handleChangeLanguage}
-                            className="select select-bordered w-full max-w-xs text-black">
+                            className="select select-bordered w-full max-w-xs text-black bg-white">
                         {LANGUAGES.map((lang) => (
                             <option key={lang.id} value={lang.name}>{lang.display_name}</option>
                         ))}
@@ -34,7 +34,7 @@ const MovieFilterForm: React.FC = ({}) => {
                     <select id="sort_by" name="sort_by"
                             value={sortBy}
                             onChange={handleChangeSortBy}
-                            className="select select-bordered w-full max-w-xs text-black">
+                            className="select select-bordered w-full max-w-xs text-black bg-white">
                         {SORT_BY.map((sort) => (
                             <option key={sort.name} value={sort.name}>{sort.display_name}</option>
                         ))}
@@ -67,6 +67,12 @@ const MovieFilterForm: React.FC = ({}) => {
                         max={VOTES.find(vote => vote.id === '5')?.value}
                         onChange={handleChangeNbVotesMin}
                         className="text-secondary-500"
+                        sx={{
+                            '& .MuiSlider-markLabel': {
+                                color: 'white',
+                                opacity: 0.6,
+                            },
+                        }}
                     />
                 </div>
                 <div className="form-group">

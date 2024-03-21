@@ -50,10 +50,10 @@ header img{
     color: #F3ECE5;
 }
 #title_sloggan h1{
-    font-size: 3.5rem;
+    font-size: 6.5vh;
 }
 #title_sloggan h2{
-    font-size: 1.5rem;
+    font-size: 2.5vh;
     margin-top: -28px;
     margin-left: 30px;
 }
@@ -83,7 +83,7 @@ footer{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     gap: 20px;
     max-height: 80vh;
     padding-top:20px;

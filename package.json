@@ -24,7 +24,8 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "swagger-ui-react": "^3.52.3"
+    "swagger-ui-react": "^3.52.3",
+    "webpack": "^5.91.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.0",

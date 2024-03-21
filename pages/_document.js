@@ -14,7 +14,7 @@ export default class MyDocument extends Document {
                     <link rel="shortcut icon" href="/favicon.ico"/>
 
                     <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true"/>
                     <script src="https://kit.fontawesome.com/49446fd286.js" crossOrigin="anonymous"></script>
                     <link
                         href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Leckerli+One&family=Mandali&family=Noto+Sans+Gurmukhi:wght@100..900&display=swap"
