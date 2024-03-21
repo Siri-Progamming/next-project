@@ -1,5 +1,5 @@
-import {FullMovie, Movie} from "../../interfaces/movie";
-import {Cast, Crew} from "../../interfaces/cast";
+import {FullMovie, Movie} from "../../interfaces/Movie";
+import {Cast, Crew} from "../../interfaces/Cast";
 
 export function createMovie(data: any): Movie {
     return {

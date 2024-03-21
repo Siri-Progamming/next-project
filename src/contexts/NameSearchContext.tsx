@@ -35,8 +35,9 @@ export const NameSearchProvider: React.FC<NameSearchProviderProps> = ({ children
         e.preventDefault();
         // console.log("SearchBar - handleSubmit : ", query);
         if(query !== '' && query.trim().length > 0){
-            router.push('/ui/movies/search?query='+query).then(() => {
-                setQuery('');
+            let finalQuery = "?query="+query;
+            router.push('/ui/movies/name-search'+finalQuery).then(() => {
+                // setQuery('');
             });
         }
         // console.log("SearchBar - handleSubmit reset query  : ", query);

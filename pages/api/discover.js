@@ -55,6 +55,7 @@ import {buildURL_movies_discover} from "../../src/services/IMDB.API/urlBuilder.s
  */
 export default async function handler(req, res) {
     const url = buildURL_movies_discover(req, ConfigService.themoviedb.urls.discover);
+    console.log('discover url:', url);
     const apiResponse = await fetch(url, tmdbGetOption)
         .then(r => r.json())
         .catch(err => console.error('error:' + err));

@@ -43,10 +43,19 @@ export function buildURL_movies_onlyLanguage(language, url) {
 
 export function buildURL_movies_discover(req, url){
     // language, page, sort_by, vote_average.gte, vote_average.lte, vote_count.gte, vote_count.lte, with_genres
+    console.log("buildURL_movies_discover req.query:", req.query);
     let severalParams = false;
-    if (req.query.language) {
-        url = url + '?language=' + req.query.language;
+    if(req.query.query === '?include_adult=false'){
+        url = url + '?include_adult=false';
         severalParams = true;
+    }
+    if (req.query.language) {
+        if (!severalParams) {
+            url = url + '?language=' + req.query.language;
+            severalParams = true;
+        }else{
+            url = url + '&language=' + req.query.language;
+        }
     }
     if (req.query.page) {
         if (!severalParams) {

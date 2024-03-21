@@ -13,7 +13,7 @@ import {ConfigService} from "/src/services/IMDB.API/config.service"
 
 /**
  * @swagger
- * /api/movies/search:
+ * /api/movies/nameSearch:
  *  get:
  *      summary: Renvoie les films selon une recherche
  *      description: Renvoie les films selon une recherche
@@ -38,7 +38,7 @@ import {ConfigService} from "/src/services/IMDB.API/config.service"
  *              description: Liste des films correspondant à la recherche
  */
 export default async function handler(req, res) {
-    console.log("api/movies/search req.query : ", req.query);
+    console.log("api/movies/nameSearch req.query : ", req.query);
     let url = ConfigService.themoviedb.urls.search_movie
     let query;
     if (req.query.query) {
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
         const page = req.query.page;
         url = url + '&page=' + page;
     }
-    console.log("api/movies/search url : ", url);
+    console.log("api/movies/nameSearch url : ", url);
     const options = {
         method: 'GET',
         headers: {

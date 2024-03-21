@@ -64,6 +64,16 @@ footer{
     background-color: rgba(57, 36, 1, 0.6);
 }
 
+#collapsible-vertical-panel{
+    position: fixed;
+    height: 100%;
+    width: 35vw;
+    background: linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    top: 0;
+    left:0;
+    z-index: 1000;
+}
+
 ::-webkit-scrollbar {
     width: 9px;
     height: 7px;

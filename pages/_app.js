@@ -5,21 +5,21 @@ import '/src/styles/globals.css';
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import {NameSearchProvider} from "../src/contexts/NameSearchContext";
+import CollapsibleVerticalPanel from "../src/components/Panels/CollapsibleVerticalPanel";
+import {MovieFilterProvider} from "../src/contexts/MovieFilterContext";
 
 export default function MyApp(props) {
     const {Component, pageProps} = props;
-    const [searchQuery, setSearchQuery] = useState(null);
-
-    const handleSearch = (results) => {
-        setSearchQuery(results);
-    };
 
     return (
         <AuthProvider>
             <NameSearchProvider>
-                <Header onSearch={handleSearch}/>
-                <Component {...pageProps} searchQuery={searchQuery}/>
+                <MovieFilterProvider>
+                <Header />
+                <CollapsibleVerticalPanel/>
+                <Component {...pageProps} />
                 {/*<Footer/>*/}
+                </MovieFilterProvider>
             </NameSearchProvider>
         </AuthProvider>
     );

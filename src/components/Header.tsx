@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import SearchBar from "./SearchBar";
+import SearchBar from "./Forms/SearchBar";
 import React, {useState} from "react";
 
 const Header: React.FC = () => {

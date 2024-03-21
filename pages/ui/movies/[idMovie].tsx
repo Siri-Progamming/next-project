@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from 'next/router';
-import {FullMovie} from "../../../src/interfaces/movie";
+import {FullMovie} from "../../../src/interfaces/Movie";
 import {getFullMovie} from "../../../src/services/API/call.api.service";
 import {createFullMovie} from "../../../src/services/API/object.creator.service";
 import {ConfigService} from "../../../src/services/IMDB.API/config.service";
@@ -33,23 +33,21 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
         }
     }, [movie]);
 
+
     return (
         <main id="main_movie_page">
             <div className="movie_page relative">
                 <div className="bg_image_container">
                     {/*h-[calc(100vh_-_var(--nav-height,0))*/}
-                    <div className="background_image_repeat bg-cover xl:bg-contain h-[115vh]" style={{
-                        backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
-                    }}></div>
-                    <div className="background_image bg-cover 2xl:bg-contain h-[100vh]" style={{
-                        backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
-                    }}></div>
-                    <div className="background_image bg-cover 2xl:bg-contain h-[100vh]" style={{
-                        backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
-                    }}></div>
-                    <div className="background_image bg-cover 2xl:bg-contain h-[100vh]" style={{
-                        backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
-                    }}></div>
+                    {[...Array(4)].map((_, index) => (
+                        <div
+                            key={`background_image_${index}`}
+                            className={index === 0 ? "background_image_repeat bg-cover xl:bg-contain h-[115vh]" : "background_image bg-cover 2xl:bg-contain h-[100vh]"}
+                            style={{
+                                backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
+                            }}
+                        ></div>
+                    ))}
                 </div>
                 <div className="movie_details lg:w-full h-[100vh] overflow-clip xl:justify-center">
                     {/*<div className="glassmorphism">*/}
@@ -65,9 +63,11 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                             <span className="genre">{genre.name}</span>))}
                         </p>
                         <p className="relative mt-5">
+                            {/*@ts-ignore*/}
                             {movie?.vote_average.toFixed(1) >= 7.5 &&
                                 <span className="absolute left-[0] top-[6px] w-6 h-6 "><i
                                     className="fa-solid fa-fire fa-xl fa-beat-fade text-secondary-500"></i></span>}
+                            {/*@ts-ignore*/}
                             {movie?.vote_average.toFixed(1) < 5.0 &&
                                 <span className="absolute left-[0] top-[6px] w-6 h-6 "><i
                                     className="fa-solid fa-face-frown fa-xl text-primary-400"></i></span>}
@@ -85,13 +85,15 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                         <PeopleShowcase movie={movie ? movie : null} nbToShow={7} title={"Cast"}/>
                     </div>
                     <div className="pictures_movie grow-0 max-w-[100vw] md:max-w-[30vw] md:mr-14 lg:mr-24">
+                        {/*@ts-ignore*/}
                         {movie?.images.length > 0 && <PicturesShowcase movie={movie} nbToShow={3}/>}
                     </div>
                     <div className="similar_movies grow-0 max-w-[100vw] lg:max-w-[20vw] xl:max-w-[14vw] md:mr-10">
+                        {/*@ts-ignore*/}
                         {movie?.recommendations.length > 0 ?
                             <SimilarShowcase movie={movie} nbToShow={4} title={"Recommendations"}/>
                             :
-                            movie?.similar.length > 0 &&
+                            (movie && movie?.similar.length > 0) &&
                             <SimilarShowcase movie={movie} nbToShow={4} title={"Similar"}/>}
                     </div>
                 </div>

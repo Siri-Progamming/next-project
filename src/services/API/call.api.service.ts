@@ -10,6 +10,7 @@ export const getMovies = async (api:string) => {
 
 export const getMoviesSearch = async (api:string) => {
     try {
+        console.log("getMoviesSearch - API : ", api)
         const response = await fetch(api);
         const data = await response.json();
         return data.data;

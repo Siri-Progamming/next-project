@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Movie} from '../../interfaces/movie';
+import {Movie} from '../../interfaces/Movie';
 import MovieItem from "../MovieItem";
 import { createMovie } from "../../services/API/object.creator.service";
 import {getMovies, getMovie} from "../../services/API/call.api.service";
@@ -15,10 +15,11 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, tit
         if (moviesDiscover.length > 0) {
             let tempMovies: Array<Movie> = [];
             for(const m of moviesDiscover) {
-                const movie = await getMovie(m.id);
-                if (movie) {
-                    tempMovies.push(createMovie(movie));
-                }
+                // const movie = await getMovie(m.id);
+                // if (movie) {
+                //     tempMovies.push(createMovie(movie));
+                // }
+                tempMovies.push(createMovie(m));
             }
             setMovies(tempMovies);
         }

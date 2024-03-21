@@ -1,6 +1,6 @@
 import React from "react";
 import {ConfigService} from "../../services/IMDB.API/config.service";
-import {FullMovie} from "../../interfaces/movie";
+import {FullMovie} from "../../interfaces/Movie";
 import {useRouter} from "next/router";
 
 interface SimilarShowcaseProps {

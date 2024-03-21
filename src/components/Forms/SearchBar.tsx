@@ -1,5 +1,5 @@
 import React from "react";
-import {useNameSearch} from "../contexts/NameSearchContext";
+import {useNameSearch} from "../../contexts/NameSearchContext";
 
 const SearchBar: React.FC = () => {
     const {query, handleSubmit, handleChange} = useNameSearch();

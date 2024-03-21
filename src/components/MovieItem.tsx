@@ -1,5 +1,5 @@
 import React from "react";
-import {Movie} from '../interfaces/movie';
+import {Movie} from '../interfaces/Movie';
 import {ConfigService} from "../services/IMDB.API/config.service";
 import { useRouter } from 'next/router';
 
