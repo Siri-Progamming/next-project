@@ -1,5 +1,6 @@
-import React, {createContext, useContext, useState} from "react";
+import React, {createContext, SyntheticEvent, useContext, useState} from "react";
 import {useRouter} from "next/router";
+import {useConstantes} from "./ConstantesContext";
 interface MovieFilterContextProps {
     query: string;
     setQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -30,9 +31,9 @@ interface MovieFilterContextProps {
 
     handleChangeLanguage: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     handleChangeSortBy: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    handleChangeNoteMin: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleChangeNoteMax: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleChangeNbVotesMin: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleChangeNoteMin: (event: SyntheticEvent<Element, Event>, value: number | null) => void;
+    handleChangeNoteMax: (event: Event, value: number | number[], activeThumb: number) => void;
+    handleChangeNbVotesMin: (event: Event, value: number | number[], activeThumb: number) => void;
     handleSelectGenre: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleReset: () => void;
@@ -51,31 +52,27 @@ interface MovieFilterProviderProps{
 // Fournisseur de contexte de recherche par nom
 export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ children }) => {
     const router = useRouter();
+    const {MOVIE_GENRES} = useConstantes();
     const [query, setQuery] = useState<string>('');
     const [genres, setGenres] = useState<number[]>([]);
-    const [language, setLanguage] = useState<string>('en-US');
+    const [language, setLanguage] = useState<string>('fr-FR');
     const [sortBy, setSortBy] = useState<string>('popularity.desc');
-    const [noteMin, setNoteMin] = useState<number>(0);
+    const [noteMin, setNoteMin] = useState<number>(8);
     const [noteMax, setNoteMax] = useState<number>(10);
-    const [nbVotesMin, setNbVotesMin] = useState<number>(0);
+    const [nbVotesMin, setNbVotesMin] = useState<number>(100);
     const [nbPages, setNbPages] = useState<number>(1);
     const [activePage, setActivePage] = useState<number>(1);
-
 
     // Fonction pour gérer la soumission du formulaire de recherche
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const queryParams = generateMovieFilterQueryParams(language, sortBy, noteMin, noteMax, nbVotesMin, genres, activePage);
+        const queryParams = generateMovieFilterQueryParams(language, sortBy, noteMin, noteMax, nbVotesMin, genres, activePage, MOVIE_GENRES);
         setQuery(queryParams);
         // console.log("MovieFilterContext - Query Params : ", queryParams);
         router.push('/ui/movies/search').then(() => {
             // setQuery('');
         });
-        // if(query !== '' && query.trim().length > 0){
-        //     router.push('/ui/movies/nameSearch?query='+query).then(() => {
-        //         setQuery('');
-        //     });
-        }
+    }
     const handleReset = () => {
     setGenres([]);
     setLanguage('en-US');
@@ -85,7 +82,6 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     setNbVotesMin(0);
     //TODO uncheck les boxes, reset les inputs
 };
-
     const handleChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
         console.log("MovieFilterContext - Language Selected : ", e.target.value);
         setLanguage(e.target.value);
@@ -93,16 +89,15 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     const handleChangeSortBy = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSortBy(e.target.value);
     }
-    const handleChangeNoteMin = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNoteMin(Number(e.target.value));
+    const handleChangeNoteMin =(event: SyntheticEvent<Element, Event>, value: number | null) => {
+        setNoteMin(Number(value));
     }
-    const handleChangeNoteMax = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNoteMax(Number(e.target.value));
+    const handleChangeNoteMax = (e: Event, value: number | number[], activeThumb: number) => {
+        setNoteMax(Number(value));
     }
-    const handleChangeNbVotesMin = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNbVotesMin(Number(e.target.value));
+    const handleChangeNbVotesMin = (e: Event, value: number | number[], activeThumb: number) => {
+        setNbVotesMin(Number(value));
     }
-
     const handleSelectGenre = (e: React.ChangeEvent<HTMLInputElement>) => {
         const genreId = Number(e.target.value);
         if (e.target.checked) {
@@ -150,7 +145,8 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     );
 };
 
-function generateMovieFilterQueryParams(language: string, sortBy: string, noteMin: number, noteMax: number, nbVotesMin: number, genres: number[], activePage: number) {
+function generateMovieFilterQueryParams(language: string, sortBy: string, noteMin: number, noteMax: number, nbVotesMin: number, genres: number[], activePage: number, MOVIE_GENRES: any[]){
+
     // let queryParams = `?language=${language}&sort_by=${sortBy}&vote_average.gte=${noteMin}&vote_average.lte=${noteMax}&vote_count.gte=${nbVotesMin}&page=${activePage}`;
     let queryParams = '?include_adult=false';
     //TODO pas oublier ?include_adult=false
@@ -186,6 +182,8 @@ function generateMovieFilterQueryParams(language: string, sortBy: string, noteMi
     }
     if(genres.length > 0) {
         queryParams += `&with_genres=${genres.join(',')}`;
+    }else{
+        queryParams += `&with_genres=${MOVIE_GENRES.map((genre) => genre.id).join('|')}`;
     }
     return queryParams;
 }

@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
-import {tmdbGetOption} from "./config.service";
+import {ConfigService, tmdbGetOption} from "./config.service";
+import {buildURL_movies_onlyLanguage} from "./urlBuilder.service";
 
 async function getData(res, url) {
     const response = await fetch(url, tmdbGetOption);
@@ -18,4 +19,12 @@ export async function switchGetData(req, res, url) {
         default:
             res.status(405).json({status: 405, error: "Method Not Allowed"});
     }
+}
+
+export async function fetchMoviesGenres(language) {
+    const url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.movie_genres);
+    const apiResponse = await fetch(url, tmdbGetOption)
+        .then(r => r.json())
+        .catch(err => console.error('error:' + err));
+    return apiResponse.genres;
 }

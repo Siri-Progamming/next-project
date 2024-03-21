@@ -22,7 +22,7 @@ const CollapsibleVerticalPanel: React.FC = () => {
                             className={`flex flex-row relative overflow-hidden text-wrap ${
                                 showPanel ? '' : 'hidden'}`}>
                         <div className="cursor-pointer">
-                            <h1 className="">Movie Form</h1>
+                            <h1 className="">Rechercher des films</h1>
                         </div>
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                             <MovieFilterForm/>

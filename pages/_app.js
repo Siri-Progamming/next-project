@@ -7,21 +7,26 @@ import Footer from "../src/components/Footer";
 import {NameSearchProvider} from "../src/contexts/NameSearchContext";
 import CollapsibleVerticalPanel from "../src/components/Panels/CollapsibleVerticalPanel";
 import {MovieFilterProvider} from "../src/contexts/MovieFilterContext";
+import {ConstantesProvider} from "../src/contexts/ConstantesContext";
 
 export default function MyApp(props) {
     const {Component, pageProps} = props;
 
     return (
-        <AuthProvider>
-            <NameSearchProvider>
-                <MovieFilterProvider>
-                <Header />
-                <CollapsibleVerticalPanel/>
-                <Component {...pageProps} />
-                {/*<Footer/>*/}
-                </MovieFilterProvider>
-            </NameSearchProvider>
-        </AuthProvider>
+        <ConstantesProvider>
+            <AuthProvider>
+                <NameSearchProvider>
+                    <MovieFilterProvider>
+
+                        <Header/>
+                        <CollapsibleVerticalPanel/>
+                        <Component {...pageProps} />
+                        {/*<Footer/>*/}
+
+                    </MovieFilterProvider>
+                </NameSearchProvider>
+            </AuthProvider>
+        </ConstantesProvider>
     );
 }
 MyApp.propTypes = {

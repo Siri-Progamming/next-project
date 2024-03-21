@@ -27,7 +27,7 @@ export interface FullMovie extends Movie {
     similar : Array<Movie>;
     videos: Array<Video>;
 }
-interface Genre {
+export interface Genre {
     id: number;
     name: string | '';
 }

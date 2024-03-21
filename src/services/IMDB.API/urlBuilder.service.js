@@ -73,36 +73,36 @@ export function buildURL_movies_discover(req, url){
             url = url + '&sort_by=' + req.query.sort_by;
         }
     }
-    if(req.query.vote_average_gte >= 0){
+    if(req.query['vote_average.gte'] >= 0){
         if (!severalParams) {
-            url = url + '?vote_average.gte=' + req.query.vote_average_gte;
+            url = url + '?vote_average.gte=' + req.query['vote_average.gte'];
             severalParams = true;
         } else {
-            url = url + '&vote_average.gte=' + req.query.vote_average_gte;
+            url = url + '&vote_average.gte=' + req.query['vote_average.gte'];
         }
     }
-    if(req.query.vote_average_lte  >= 0){
+    if(req.query['vote_average.lte']  >= 0){
         if (!severalParams) {
-            url = url + '?vote_average.lte=' + req.query.vote_average_lte;
+            url = url + '?vote_average.lte=' + req.query['vote_average.lte'];
             severalParams = true;
         } else {
-            url = url + '&vote_average.lte=' + req.query.vote_average_lte;
+            url = url + '&vote_average.lte=' + req.query['vote_average.lte'];
         }
     }
-    if(req.query.vote_count_gte  >= 0){
+    if(req.query['vote_count.gte']  >= 0){
         if (!severalParams) {
-            url = url + '?vote_count.gte=' + req.query.vote_count_gte;
+            url = url + '?vote_count.gte=' + req.query['vote_count.gte'];
             severalParams = true;
         } else {
-            url = url + '&vote_count.gte=' + req.query.vote_count_gte;
+            url = url + '&vote_count.gte=' + req.query['vote_count.gte'];
         }
     }
-    if(req.query.vote_count_lte  >= 0){
+    if(req.query['vote_count.lte']  >= 0){
         if (!severalParams) {
-            url = url + '?vote_count.lte=' + req.query.vote_count_lte;
+            url = url + '?vote_count.lte=' + req.query['vote_count.lte'];
             severalParams = true;
         } else {
-            url = url + '&vote_count.lte=' + req.query.vote_count_lte;
+            url = url + '&vote_count.lte=' + req.query['vote_count.lte'];
         }
     }
     if(req.query.with_genres){
