@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Movie} from '../../interfaces/Movie';
 import MovieItem from "../MovieItem";
 import { createMovie } from "../../services/API/object.creator.service";
-import {getMovie, getMoviesSearch} from "../../services/API/call.api.service";
+import {getMoviesSearch} from "../../services/API/call.api.service";
 interface VerticalListShowcase {
     api: string;
     title: string;
