@@ -92,7 +92,6 @@ const MovieFilterForm: React.FC = ({}) => {
         </div>
     );
 }
-
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
         color: '#ff3d47',
@@ -101,5 +100,4 @@ const StyledRating = styled(Rating)({
         color: '#ff3d47',
     },
 });
-
 export default MovieFilterForm;

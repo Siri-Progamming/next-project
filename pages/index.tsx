@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useRouter} from 'next/router';
-// @ts-ignore
-import {useAuth} from '/src/contexts/auth';
+import {useAuth} from "../src/contexts/AuthContext";
 import HomeShowcases from "../src/components/HomeShowcases";
-import VerticalListShowcase from "../src/components/Showcase/VerticalListShowcase";
 interface IndexProps {
     searchQuery: string;
 }
@@ -13,7 +11,7 @@ const Index:React.FC<IndexProps> = ({searchQuery}) => {
 
     useEffect(() => {
         if (!user) {
-            //router.push('/ui/sign-in');
+            router.push('/ui/login').then();
         }
     }, [user, router]);
 

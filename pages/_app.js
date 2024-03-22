@@ -1,6 +1,6 @@
 import {useState} from "react";
 import PropTypes from "prop-types";
-import {AuthProvider} from '/src/contexts/auth';
+import {AuthProvider} from '/src/contexts/AuthContext';
 import '/src/styles/globals.css';
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";

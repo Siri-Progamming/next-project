@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import {ConfigService, tmdbGetOption} from "/src/services/IMDB.API/config.service";
 import {buildURL_movies_full, buildURL_movies_onlyLanguage} from "/src/services/IMDB.API/urlBuilder.service";
-import {getLikesCountForAMovie} from "/src/services/MONGODB.BDD/likes.service";
+import {getLikesCountForAMovie} from "/src/services/MONGODB.BDD/queries.service";
 
 /**
  * @swagger

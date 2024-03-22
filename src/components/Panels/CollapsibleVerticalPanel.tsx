@@ -17,11 +17,12 @@ const CollapsibleVerticalPanel: React.FC = () => {
                 <div className="relative">
                     <div
                         onMouseOver={handleMouseEnter}
-                        className={`absolute left-0 z-[499] w-[40px] h-screen`}></div>
+                        className={`absolute left-0 z-[499] w-[2vw] h-screen`}></div>
                     <div id="collapsible-vertical-panel"
                             onMouseLeave={handleMouseLeave}
-                            className={`flex flex-row relative overflow-hidden text-wrap w-[80vw] md:w-[40vw] lg:w-[35vw] xl:w-[30vw] 2xl:w-[20vw] ${
-                                showPanel ? '' : 'hidden'}`}>
+                         className={`flex flex-row relative overflow-hidden text-wrap transition-width duration-500 ${
+                             showPanel ? 'w-[80vw] md:w-[40vw] lg:w-[35vw] xl:w-[30vw] 2xl:w-[20vw]' : 'w-0'
+                         }`}>
                         <h1 className="">Rechercher des films</h1>
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                             <MovieFilterForm/>
