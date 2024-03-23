@@ -42,15 +42,11 @@ header:not(.showHeader){
 header.showHeader{
     overflow: visible;
 }
-header.showHeader div:not(#title_sloggan, #movie-search-bar), header.showHeader img{
-    opacity: 100%;
-    transition: opacity 0.5s ease;
-}
 header.showHeader #title_sloggan{
     opacity: 100%;
     transition: opacity 0.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.45s;
 }
-header.showHeader #movie-search-bar{
+header.showHeader img, header.showHeader div:not(#title_sloggan){
     opacity: 100%;
     transition: opacity 0.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.25s;
 }

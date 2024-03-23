@@ -37,7 +37,7 @@ const Header: React.FC = () => {
                             <h1 className="">Fennext</h1>
                             <h2>What'ch next ?</h2>
                         </div>
-                        <div id="movie-search-bar" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                             <SearchBar/>
                         </div>
                         <div className="self-center absolute right-2">
