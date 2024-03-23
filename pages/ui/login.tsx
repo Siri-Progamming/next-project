@@ -4,7 +4,10 @@ import LoginForm from "../../src/components/Forms/LoginForm";
 const login: React.FC = () => {
     return (
         <main>
-            <LoginForm/>
+            <div className="mt-[150px] ml-[150px]">
+                <LoginForm/>
+            </div>
+
         </main>
     );
 }

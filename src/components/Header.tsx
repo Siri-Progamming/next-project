@@ -2,10 +2,13 @@ import {useRouter} from "next/router";
 import SearchBar from "./Forms/SearchBar";
 import React, {useState} from "react";
 import IcoDropdown from "./Utils/IcoDropdown";
+import {useAuth} from "../contexts/AuthContext";
+import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 
 const Header: React.FC = () => {
     const router = useRouter();
     const [showHeader, setShowHeader] = useState(false);
+    const {user} = useAuth();
     const handleClick = () => {
         router.push('/');
     };
@@ -15,7 +18,7 @@ const Header: React.FC = () => {
     };
 
     const handleMouseLeave = () => {
-       setTimeout(() => {
+        setTimeout(() => {
             setShowHeader(false);
         }, 150);
     };
@@ -40,12 +43,16 @@ const Header: React.FC = () => {
                             <SearchBar/>
                         </div>
                         <div className="self-center absolute top-1/2 right-2 transform -translate-y-1/2">
-                            <IcoDropdown />
+                            {user ? <IcoDropdown/> : <div className="avatar placeholder btn btn-lg btn-ghost btn-circle">
+                                <div className="bg-neutral text-neutral-content rounded-full">
+                                    <span className="text-2xl"><AccountCircleTwoToneIcon className="text-[80px] text-white opacity-93" /></span>
+                                </div>
+                            </div>}
                         </div>
                     </header>
                 </div>
             </div>
-            </>
-            );
-            }
-            export default Header;
+        </>
+    );
+}
+export default Header;

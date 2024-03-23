@@ -4,7 +4,10 @@ import SignupForm from "../../src/components/Forms/SignupForm";
 const signup: React.FC = () => {
     return (
         <main>
-            <SignupForm/>
+            <div  className="mt-[150px] ml-[150px]">
+                <SignupForm />
+            </div>
+
         </main>
     );
 }
