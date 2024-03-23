@@ -41,7 +41,7 @@ const Header: React.FC = () => {
                             <SearchBar/>
                         </div>
                         <div className="self-center absolute right-2">
-                            <IcoDropdown/>
+                            <IcoDropdown showHeader={showHeader}/>
                         </div>
                     </header>
                 </div>

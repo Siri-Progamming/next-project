@@ -85,18 +85,31 @@ footer{
 }
 
 /* MOVIE FILTERS PANEL */
+.collapsible-element{
+
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 6px 0px 10px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(9.6px);
+    -webkit-backdrop-filter: blur(9.6px);
+    opacity:100%;
+}
+.collapsible-element a:hover{
+    background: rgba(255,255,255,0.2);
+}
 #collapsible-vertical-panel{
     position: fixed;
     height: 100%;
     top: 0;
     left:0;
     z-index: 500;
-    background: rgba(0, 0, 0, 0.39);
-    box-shadow: 6px 0px 10px rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(9.6px);
-    -webkit-backdrop-filter: blur(9.6px);
     overflow-y: auto;
+    transition: width 0.5s ease, opacity 0.2s ease;
 }
+/*#collapsible-vertical-panel:not(.showPanel){*/
+/*    opacity:50%;*/
+/*    transition: width 0.5s ease, opacity 0.5s ease;*/
+/*}*/
+
 #movie-filters{
     display: flex;
     flex-wrap: wrap;
@@ -181,18 +194,23 @@ footer{
 .background_image_repeat{
     background-repeat: repeat;
     background-position:top;
+    background-size: cover;
+    @apply xl:bg-contain;
+    height: 115vh;
     margin-top: -4vh;
     z-index: 0;
     width: 100%;
+    animation: gradient-opacity-0-03 1400ms, glow 5s ease-in-out infinite;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%,  transparent 85%);
+    filter: blur(50px) ;
+    transform: scaleX(-1);
+}
+.absolute0{
     position: absolute;
     top: 0;
     left: 0;
     bottom:0;
     right: 0;
-    animation: gradient-opacity-0-03 1400ms, glow 5s ease-in-out infinite;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%,  transparent 85%);
-    filter: blur(50px) ;
-    transform: scaleX(-1);
 }
 .background_image{
     background-repeat: no-repeat;
@@ -200,19 +218,15 @@ footer{
     margin-top: 5vh;
     z-index: 0;
     width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom:0;
-    right: 0;
+    height: 100vh;
+    background-size: cover;
+    @apply 2xl:bg-contain;
     animation: gradient-opacity-0-03 1400ms;
     /*mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 1) 7%, rgba(0, 0, 0, 1) 70%, transparent 85%);*/
     mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 75%,  transparent 90%);
-    filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
-.bg_image_container{
-    /*filter: blur(2.5px) brightness(0.5) grayscale(65%) drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5)) hue-rotate(10deg);*/
-    /*filter: grayscale(15%) drop-shadow(0px 0px 1000px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 100px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 500px rgba(0, 0, 0, 1));*/
+.dropShadow{
+    filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 .movie_details{
     z-index: 1;
@@ -243,16 +257,6 @@ footer{
     z-index: 1;
     position: absolute;
 }
-.cast_review_movie{
-
-}
-.pictures_movie{
-
-}
-.similar_movies{
-
-}
-
 /* SOME STYLES */
 .glassmorphism{
     height: fit-content;

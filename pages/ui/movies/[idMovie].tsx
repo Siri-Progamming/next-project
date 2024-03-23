@@ -42,7 +42,8 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     {[...Array(4)].map((_, index) => (
                         <div
                             key={`background_image_${index}`}
-                            className={index === 0 ? "background_image_repeat bg-cover xl:bg-contain h-[115vh]" : "background_image bg-cover 2xl:bg-contain h-[100vh]"}
+                            className={index === 0 ? "background_image_repeat absolute0"
+                                                : index === 1 ? "background_image dropShadow absolute0" : "background_image absolute0"}
                             style={{
                                 backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
                             }}
@@ -85,12 +86,10 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                         <PeopleShowcase movie={movie ? movie : null} nbToShow={7} title={"Cast"}/>
                     </div>
                     <div className="pictures_movie grow-0 max-w-[100vw] md:max-w-[30vw] md:mr-14 lg:mr-24">
-                        {/*@ts-ignore*/}
-                        {movie?.images.length > 0 && <PicturesShowcase movie={movie} nbToShow={3}/>}
+                        {movie && movie?.images.length > 0 && <PicturesShowcase movie={movie} nbToShow={3}/>}
                     </div>
                     <div className="similar_movies grow-0 max-w-[100vw] lg:max-w-[20vw] xl:max-w-[14vw] md:mr-10">
-                        {/*@ts-ignore*/}
-                        {movie?.recommendations.length > 0 ?
+                        {movie && movie?.recommendations.length > 0 ?
                             <SimilarShowcase movie={movie} nbToShow={4} title={"Recommendations"}/>
                             :
                             (movie && movie?.similar.length > 0) &&
