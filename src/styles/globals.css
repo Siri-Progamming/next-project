@@ -36,6 +36,28 @@ header{
     z-index: 1000;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.7);
 }
+header:not(.showHeader){
+    overflow: hidden;
+}
+header.showHeader{
+    overflow: visible;
+}
+header.showHeader div:not(#title_sloggan, #movie-search-bar), header.showHeader img{
+    opacity: 100%;
+    transition: opacity 0.5s ease;
+}
+header.showHeader #title_sloggan{
+    opacity: 100%;
+    transition: opacity 0.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.45s;
+}
+header.showHeader #movie-search-bar{
+    opacity: 100%;
+    transition: opacity 0.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.25s;
+}
+header:not(.showHeader) div, header:not(.showHeader) img{
+    opacity:0;
+    transition: opacity 0.7s ease;
+}
 header #logo{
     margin-top: -12px;
 }
