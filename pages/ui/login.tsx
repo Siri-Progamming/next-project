@@ -25,7 +25,7 @@ const login: React.FC = () => {
         <main>
         {isLoading ?
             <div>Loading...</div> :
-            <div className="mt-[150px] ml-[150px]">
+            <div className="flex justify-center items-center h-screen">
                 <LoginForm/>
             </div>
         }

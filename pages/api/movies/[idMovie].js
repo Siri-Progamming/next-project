@@ -37,9 +37,29 @@ export default async function handler(req, res) {
     switch (req.method) {
         case "GET":
             // console.log("API CALL - GET - URL : ", url);
-            const movie = await fetch(url, tmdbGetOption)
-                .then(r => r.json())
-                .catch(err => console.error('error:' + err));
+           let movie;
+            if(req.query.language === 'fr-FR'){
+                let movieEnUs;
+                movie = await fetch(url, tmdbGetOption)
+                    .then(r => r.json())
+                    .catch(err => console.error('error:' + err));
+                if(movie){
+                    if(movie.images.backdrops.length < 4){
+                        const urlEnUs = url.replace('&language=fr-FR','');
+                        movieEnUs = await fetch(urlEnUs, tmdbGetOption)
+                            .then(r => r.json())
+                            .catch(err => console.error('error:' + err));
+                        if(movieEnUs){
+                            movie.images.backdrops = movieEnUs.images.backdrops;
+                            movie.recommendations = movieEnUs.recommendations;
+                        }
+                    }
+                }
+            }else{
+                movie = await fetch(url, tmdbGetOption)
+                    .then(r => r.json())
+                    .catch(err => console.error('error:' + err));
+            }
             if (movie) {
                 movie.likes = await getLikesCountForAMovie(idMovie);
                 res.json({status: 200, data: {movie: movie}});

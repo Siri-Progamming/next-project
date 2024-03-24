@@ -33,7 +33,8 @@ export const getMovie = async (id: number) => {
 export const getFullMovie = async (id: number) => {
     const append_to_response:string = 'credits%2Cimages%2Ckeywords%2Crecommendations%2Creviews%2Csimilar%2Cvideos';
     try {
-        const response = await fetch('/api/movies/' + id+'?append_to_response='+append_to_response);
+        const response = await fetch('/api/movies/' + id+'?language=fr-FR'+'&append_to_response='+append_to_response);
+        // const response = await fetch('/api/movies/' + id+'?append_to_response='+append_to_response);
         const data = await response.json();
         const m = data.data.movie;
         console.log("Full movie : ", m);

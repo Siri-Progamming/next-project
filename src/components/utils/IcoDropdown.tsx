@@ -24,7 +24,7 @@ const IcoDropdown: React.FC = () => {
                     </div>
                 </div>}
             <ul tabIndex={1}
-                className={`collapsible-element menu menu-sm dropdown-content mt-3 z-[2500] p-2 shadow bg-base-100 rounded-box w-52`}>
+                className={`collapsible-element menu menu-sm dropdown-content mt-3 z-[2500] p-2 shadow bg-base-100 rounded-box w-52 rounded-t-none mr-[-8px]`}>
                 {!user ? <IcoDropdownOffList /> : <IcoDropdownOnList/>}
             </ul>
         </div>
