@@ -8,10 +8,10 @@ export const getMovies = async (api:string) => {
     }
 }
 
-export const getMoviesSearch = async (api:string) => {
+export const getMoviesSearch = async (url:string) => {
     try {
-        console.log("getMoviesSearch - API : ", api)
-        const response = await fetch(api);
+        console.log("getMoviesSearch - URL : ", url)
+        const response = await fetch(url);
         const data = await response.json();
         return data.data;
     } catch (error) {

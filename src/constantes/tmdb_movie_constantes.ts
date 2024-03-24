@@ -11,8 +11,8 @@ export const SORT_BY: Array<SortByEnumInterface> = [
     {name: SortByEnum.voteAverageAsc, display_name: "Note - / +"},
     {name: SortByEnum.primaryReleaseDateDesc, display_name: "Date de sortie + / -"},
     {name: SortByEnum.primaryReleaseDateAsc, display_name: "Date de sortie - / +"},
-    {name: SortByEnum.originalTitleAsc, display_name: "Titre (A-Z)"},
-    {name: SortByEnum.originalTitleDesc, display_name: "Titre (Z-A)"}
+    {name: SortByEnum.titleAsc, display_name: "Titre (A-Z)"},
+    {name: SortByEnum.titleDesc, display_name: "Titre (Z-A)"}
 ];
 
 export const NOTES = [

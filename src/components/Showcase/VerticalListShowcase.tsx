@@ -13,7 +13,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     const [movies, setMovies] = useState<Array<Movie>>([]);
     const [resultsNb, setResultsNb] = useState<number>(0);
     const [pagesNb, setPagesNb] = useState<number>(0);
-    const urlApi = api+"?query="+searchQuery;
+    const urlApi = api+"?query="+searchQuery+"&language=fr-FR";
     const [isSearchEmpty, setIsSearchEmpty] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

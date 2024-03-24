@@ -17,7 +17,7 @@ const search: React.FC<searchProps> = () => {
     }, [query]);
 
     useEffect(() => {
-        console.log("nameSearch - searchQuery : ", searchQuery);
+        console.log("search - searchQuery : ", searchQuery);
     }, [searchQuery]);
 
     return(

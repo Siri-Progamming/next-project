@@ -44,6 +44,7 @@ export function buildURL_movies_onlyLanguage(language, url) {
 export function buildURL_movies_discover(req, url){
     // language, page, sort_by, vote_average.gte, vote_average.lte, vote_count.gte, vote_count.lte, with_genres
     // console.log("buildURL_movies_discover req.query:", req.query);
+    // console.log("req.query.language:", req.query.language);
     let severalParams = false;
     if(req.query.query === '?include_adult=false'){
         url = url + '?include_adult=false';
@@ -51,10 +52,10 @@ export function buildURL_movies_discover(req, url){
     }
     if (req.query.language) {
         if (!severalParams) {
-            url = url + '?language=' + req.query.language;
+            url = url + '?language=' + req.query.language[0];
             severalParams = true;
         }else{
-            url = url + '&language=' + req.query.language;
+            url = url + '&language=' + req.query.language[0];
         }
     }
     if (req.query.page) {
@@ -113,5 +114,6 @@ export function buildURL_movies_discover(req, url){
             url = url + '&with_genres=' + req.query.with_genres;
         }
     }
+    console.log("url:", url);
     return url;
 }
