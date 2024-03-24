@@ -5,6 +5,8 @@ import {ConfigService} from "../../../../src/services/IMDB.API/config.service";
  * @swagger
  * /api/movies/{idMovie}/videos:
  *   get:
+ *     tags:
+ *       - Movie
  *     summary: Renvoie les vidéos d'un film par ID
  *     description: Renvoie les vidéos d'un film par ID
  *     parameters:

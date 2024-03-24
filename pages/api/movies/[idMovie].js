@@ -7,6 +7,8 @@ import {getLikesCountForAMovie} from "/src/services/MONGODB.BDD/queries.service"
  * @swagger
  * /api/movies/{idMovie}:
  *   get:
+ *     tags:
+ *       - Movie
  *     summary: Renvoie les détails d'un film par ID
  *     description: Renvoie les détails d'un film par ID
  *     parameters:

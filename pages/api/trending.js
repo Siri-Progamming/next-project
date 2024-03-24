@@ -6,6 +6,8 @@ import {buildURL_movies_onlyLanguage} from "../../src/services/IMDB.API/urlBuild
  * @swagger
  * /api/trending:
  *   get:
+ *     tags:
+ *       - Movie
  *     summary: Renvoie les films populaires [day/week]
  *     description: Renvoie les films populaires [day/week]
  *     parameters:

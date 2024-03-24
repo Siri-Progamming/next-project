@@ -5,6 +5,8 @@ import { ConfigService } from "/src/services/IMDB.API/config.service"
  * @swagger
  * /api/discover/toprated:
  *   get:
+ *     tags:
+ *       - Movie
  *     summary: Renvoie les films les mieux notés
  *     description: Renvoie les films les mieux notés
  *     parameters:

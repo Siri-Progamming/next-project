@@ -4,6 +4,8 @@ import clientPromise from "/lib/mongodb";
  * @swagger
  * /api/users/{idUser}/movies/{idMovie}/likes:
  *  get:
+ *      tags:
+ *       - Utilisateur
  *      summary: Get le compteur de likes pour un utilisateur et un film by ID
  *      description: Get le compteur de likes pour un utilisateur et un film by ID
  *      parameters:
@@ -21,6 +23,8 @@ import clientPromise from "/lib/mongodb";
  *          200:
  *              description: true/false (liké/pas liké)
  *  put:
+ *      tags:
+ *       - Utilisateur
  *      summary: Incrémente/décrémente le compteur de likes pour un utilisateur et un film by ID
  *      description: Incrémente/décrémente le compteur de likes pour un utilisateur et un film by ID
  *      parameters:

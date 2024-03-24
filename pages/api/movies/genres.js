@@ -6,6 +6,8 @@ import {buildURL_movies_onlyLanguage} from "../../../src/services/IMDB.API/urlBu
  * @swagger
  * /api/movies/genres:
  *   get:
+ *     tags:
+ *       - Movie
  *     summary: Renvoie tous les genres de films
  *     description: Renvoie tous les genres de films
  *     parameters:

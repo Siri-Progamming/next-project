@@ -10,6 +10,8 @@ import fetch from "node-fetch";
  * @swagger
  * /api/users/{idUser}/movies/recommanded:
  *   get:
+ *     tags:
+ *       - Utilisateur
  *     summary: Renvoie une liste de films recommandé pour un utilisateur par ID
  *     description: Renvoie une liste de films recommandé pour un utilisateur par ID
  *     parameters:

@@ -10,6 +10,8 @@ import {buildURL_movies_id_images} from "/src/services/IMDB.API/urlBuilder.servi
  * @swagger
  * /api/movies/{idMovie}/images:
  *   get:
+ *     tags:
+ *       - Movie
  *     summary: Renvoie les images d'un film par ID
  *     description: Renvoie les images d'un film par ID
  *     parameters:

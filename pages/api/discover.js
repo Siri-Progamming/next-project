@@ -6,6 +6,8 @@ import {buildURL_movies_discover} from "../../src/services/IMDB.API/urlBuilder.s
  * @swagger
  * /api/discover:
  *   get:
+ *     tags:
+ *       - Movie
  *     summary: Renvoie les films à découvrir
  *     description: Renvoie les films à découvrir
  *     parameters:

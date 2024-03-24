@@ -15,8 +15,10 @@ import {ConfigService} from "/src/services/IMDB.API/config.service"
  * @swagger
  * /api/movies/nameSearch:
  *  get:
- *      summary: Renvoie les films selon une recherche
- *      description: Renvoie les films selon une recherche
+ *      tags:
+ *       - Movie
+ *      summary: Renvoie les films selon une recherche par nom
+ *      description: Renvoie les films selon une recherche par nom
  *      parameters:
  *        - in: query
  *          name: query
