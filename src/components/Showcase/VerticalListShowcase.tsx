@@ -3,6 +3,7 @@ import {Movie} from '../../interfaces/Movie';
 import MovieItem from "../MovieItem";
 import { createMovie } from "../../services/API/object.creator.service";
 import {getMoviesSearch} from "../../services/API/call.api.service";
+import Loader from "../utils/Loader";
 interface VerticalListShowcase {
     api: string;
     title: string;
@@ -13,12 +14,15 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     const [resultsNb, setResultsNb] = useState<number>(0);
     const [pagesNb, setPagesNb] = useState<number>(0);
     const urlApi = api+"?query="+searchQuery;
+    const [isSearchEmpty, setIsSearchEmpty] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const initMovies = async () => {
         const results = await getMoviesSearch(urlApi);
         // console.log("VerticalListShowcase - Results : ", results);
         const items = results.results;
         if (items.length > 0) {
+            setIsSearchEmpty(false);
             setPagesNb(results.total_pages);
             setResultsNb(results.total_results);
             // console.log("VerticalListShowcase - Pages : ", results.total_pages, " - Results : ", results.total_results);
@@ -32,6 +36,8 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
             }
             setMovies(tempMovies);
             // console.log("VerticalListShowcase - Movies : ", tempMovies);
+        }else{
+            setIsSearchEmpty(true);
         }
     }
 
@@ -45,15 +51,38 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
         initMovies();
     }, [searchQuery]);
 
+    useEffect(() => {
+        if(movies.length > 0){
+            setIsLoading(false);
+            setIsSearchEmpty(false);
+        }else if(movies.length === 0 && isSearchEmpty){
+            setIsLoading(false);
+        }else{
+            setIsLoading(true);
+        }
+    }, [movies]);
+
+    useEffect(() => {
+        console.log("Search for : ", searchQuery, " - Is empty : ", isSearchEmpty);
+    }, [isSearchEmpty]);
     return (
-        <div className="category_movies">
-            <h1 className="category_title">{title}</h1>
-            <ul id="vertical-list-showcase" className="">
-                {movies.map(movie => (
-                    <MovieItem key={movie.id} movie={movie}/>
-                ))}
-            </ul>
-        </div>
+        <>
+        {
+            isLoading ?
+                <div className="flex justify-center items-center h-screen"><Loader/></div>
+                    : isSearchEmpty ?
+                        <div className="flex justify-center items-center h-screen">La recherche n'a retourné aucun résultat :-(</div>
+                        :
+                        <div className="category_movies">
+                    <h1 className="category_title">{title}</h1>
+                    <ul id="vertical-list-showcase" className="">
+                        {movies.map(movie => (
+                            <MovieItem key={movie.id} movie={movie}/>
+                        ))}
+                    </ul>
+                </div>
+        }
+        </>
     );
 }
 export default VerticalListShowcase;
