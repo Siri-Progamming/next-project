@@ -1,7 +1,7 @@
 import {useRouter} from "next/router";
 import SearchBar from "./Forms/SearchBar";
 import React, {useState} from "react";
-import IcoDropdown from "./Utils/IcoDropdown";
+import IcoDropdown from "./utils/IcoDropdown";
 import {useAuth} from "../contexts/AuthContext";
 
 

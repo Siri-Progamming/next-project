@@ -7,6 +7,7 @@ import {ConfigService} from "../../../src/services/IMDB.API/config.service";
 import PeopleShowcase from "../../../src/components/Showcase/PeopleShowcase";
 import PicturesShowcase from "../../../src/components/Showcase/PicturesShowcase";
 import SimilarShowcase from "../../../src/components/Showcase/SimilarShowcase";
+import Loader from "../../../src/components/utils/Loader";
 
 interface IdMovieProps {
 }
@@ -15,6 +16,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
     const router = useRouter();
     const {idMovie} = router.query;
     const [movie, setMovie] = useState<FullMovie | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const initMovie = async () => {
         const movie = await getFullMovie(Number(idMovie as string));
         if (movie != null) {
@@ -27,23 +29,27 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
         }
     }, [idMovie]);
     useEffect(() => {
-        if (movie != null) {
-            // console.log("similar : ", movie.similar);
-            // console.log("similar : ", movie.similar[0].title);
+        if (movie?.id == idMovie) {
+            setIsLoading(false);
+        }else{
+            setIsLoading(true);
         }
     }, [movie]);
 
 
     return (
         <main id="main_movie_page">
-            <div className="movie_page relative">
+            {isLoading ?
+                <div className="flex justify-center items-center h-screen"><Loader/></div>
+                :
+                <div className="movie_page relative">
                 <div className="bg_image_container">
                     {/*h-[calc(100vh_-_var(--nav-height,0))*/}
                     {[...Array(4)].map((_, index) => (
                         <div
                             key={`background_image_${index}`}
                             className={index === 0 ? "background_image_repeat absolute0"
-                                                : index === 1 ? "background_image dropShadow absolute0" : "background_image absolute0"}
+                                : index === 1 ? "background_image dropShadow absolute0" : "background_image absolute0"}
                             style={{
                                 backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
                             }}
@@ -54,31 +60,31 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     {/*<div className="glassmorphism">*/}
                     {movie?.title && (
                         <h2 className={`main_title leading-none ${movieTitleSize(movie.title)} xl:w-[30vw]`}>
-                                {movie.title}
-                            </h2>
-                        )}
-                        <p className="movie-review font-bold xl:w-[30vw] mr-5"
-                           style={{textAlign: 'justify'}}>{movie?.overview}</p>
-                        <p className="mt-5 flex flex-row flex-wrap items-center space-x-4 justify-start">
-                            <span>{movie?.release_date.slice(0, 4)}</span> {movie?.genres.map((genre) => (
-                            <span key={genre.id} className="genre">{genre.name}</span>))}
-                        </p>
-                        <p className="relative mt-5">
-                            {/*@ts-ignore*/}
-                            {movie?.vote_average.toFixed(1) >= 7.5 &&
-                                <span className="absolute left-[0] top-[6px] w-6 h-6 "><i
-                                    className="fa-solid fa-fire fa-xl fa-beat-fade text-secondary-500"></i></span>}
-                            {/*@ts-ignore*/}
-                            {movie?.vote_average.toFixed(1) < 5.0 &&
-                                <span className="absolute left-[0] top-[6px] w-6 h-6 "><i
-                                    className="fa-solid fa-face-frown fa-xl text-primary-400"></i></span>}
-                            <span
-                                className="font-extrabold text-3xl text-secondary-500 -tracking-widest absolute left-[35px] movie-note">{movie?.vote_average.toFixed(1)}
+                            {movie.title}
+                        </h2>
+                    )}
+                    <p className="movie-review font-bold xl:w-[30vw] mr-5"
+                       style={{textAlign: 'justify'}}>{movie?.overview}</p>
+                    <p className="mt-5 flex flex-row flex-wrap items-center space-x-4 justify-start">
+                        <span>{movie?.release_date.slice(0, 4)}</span> {movie?.genres.map((genre) => (
+                        <span key={genre.id} className="genre">{genre.name}</span>))}
+                    </p>
+                    <p className="relative mt-5">
+                        {/*@ts-ignore*/}
+                        {movie?.vote_average.toFixed(1) >= 7.5 &&
+                            <span className="absolute left-[0] top-[6px] w-6 h-6 "><i
+                                className="fa-solid fa-fire fa-xl fa-beat-fade text-secondary-500"></i></span>}
+                        {/*@ts-ignore*/}
+                        {movie?.vote_average.toFixed(1) < 5.0 &&
+                            <span className="absolute left-[0] top-[6px] w-6 h-6 "><i
+                                className="fa-solid fa-face-frown fa-xl text-primary-400"></i></span>}
+                        <span
+                            className="font-extrabold text-3xl text-secondary-500 -tracking-widest absolute left-[35px] movie-note">{movie?.vote_average.toFixed(1)}
                         </span>
-                            <span className="absolute text-sm left-[85px] top-[2.5px] tracking-wide movie-note"><span
-                                className="font-extralight text-neutral-400">/</span>10</span>
-                        </p>
-                    </div>
+                        <span className="absolute text-sm left-[85px] top-[2.5px] tracking-wide movie-note"><span
+                            className="font-extralight text-neutral-400">/</span>10</span>
+                    </p>
+                </div>
                 {/*</div>*/}
                 <div
                     className="about_movie absolute top-[75vh] md:top-[80vh] xl:top-[80vh] bottom-[0] left-[3vw] right-0 flex flex-col md:flex-row">
@@ -97,6 +103,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     </div>
                 </div>
             </div>
+            }
         </main>
     );
 }
