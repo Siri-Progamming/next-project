@@ -20,13 +20,13 @@ import clientPromise from "/lib/mongodb";
  *      responses:
  *          200:
  *              description: true/false (liké/pas liké)
- *  patch:
+ *  put:
  *      summary: Incrémente/décrémente le compteur de likes pour un utilisateur et un film by ID
  *      description: Incrémente/décrémente le compteur de likes pour un utilisateur et un film by ID
  *      parameters:
  *       - in: path
  *         name: idUser
- *         type: number
+ *         type: string
  *         required: true
  *         description: ID de l'utilisateur qui veut liker/dislike le film
  *       - in: path
@@ -40,7 +40,7 @@ import clientPromise from "/lib/mongodb";
  */
 export default async function handler(req, res) {
     //TODO parser le JWT
-    const idUser =  parseInt(req.query.idUser, 10);
+    const idUser =  req.query.idUser;
     const idMovie = parseInt(req.query.idMovie, 10);
     const client = await clientPromise;
     const db = client.db("bdd");
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     let resMongo, data;
 
     switch (req.method) {
-        case "PATCH":
+        case "PUT":
             if (like) {
                 resMongo = await db.collection("likes").updateOne(
                     {idTMDB: idMovie, idUser: idUser},

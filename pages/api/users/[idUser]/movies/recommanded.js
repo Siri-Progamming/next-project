@@ -15,7 +15,7 @@ import fetch from "node-fetch";
  *     parameters:
  *       - in: path
  *         name: idUser
- *         type: number
+ *         type: string
  *         required: true
  *         description: ID de l'utilisateur dont on veut visualiser les recommandations
  *       - in: query
@@ -28,7 +28,7 @@ import fetch from "node-fetch";
  *         description: Liste des films recommandés pour l'utilisateur
  */
 export default async function handler(req, res) {
-    const idUser =  parseInt(req.query.idUser, 10);
+    const idUser = req.query.idUser
     const client = await clientPromise;
     const db = client.db("bdd");
     const movies_liked = await db.collection("likes").find({idUser: idUser, liked: true}).toArray();
@@ -50,8 +50,10 @@ export default async function handler(req, res) {
                     if (apiResponse.results) {
 
                         // On trie les résultats par score pondéré
-                        const sortedByScoreResults = sortByScore(apiResponse.results);
-                        list_similar_movies.push(...sortedByScoreResults);
+                        // const sortedByScoreResults = sortByScore(apiResponse.results);
+                        const results = apiResponse.results;
+                        // list_similar_movies.push(...sortedByScoreResults);
+                        list_similar_movies.push(...results);
                     }
                 }
             }else{
