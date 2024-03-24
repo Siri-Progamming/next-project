@@ -42,8 +42,8 @@ const Header: React.FC = () => {
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                             <SearchBar/>
                         </div>
-                        <div className="self-center absolute right-2">
-                            <p>Bonjour {user?.name}</p>
+                        <div className="self-center absolute right-2 flex flex-row">
+                            {user && <div  className="self-center mr-2 font-bold"><p>Bonjour {user?.name} !</p></div>}
                             <IcoDropdown/>
                         </div>
                     </header>
