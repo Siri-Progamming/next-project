@@ -13,6 +13,7 @@
 
 ## <p style="background: #F3ECE5; color:black">Fonctionnalités 🛠️ </p>
 
+- Inscription/Connexion avec JWT et cookies.
 -  Recherche par filtres
 - Recherche par nom
 - Visualisation des détails d'un film empowered by Ambilight.
