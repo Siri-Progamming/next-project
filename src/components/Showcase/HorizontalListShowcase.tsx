@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Movie} from '../../interfaces/Movie';
 import MovieItem from "../MovieItem";
 import { createMovie } from "../../services/API/object.creator.service";
-import {getMovies, getMovie} from "../../services/API/call.api.service";
+import {getMovies} from "../../services/API/call.api.service";
 interface HorizontalListShowcaseProps {
     api: string;
     title: string;
@@ -24,7 +24,6 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, tit
             setMovies(tempMovies);
         }
     }
-
     useEffect(() => {
         initMovies();
     }, []);
