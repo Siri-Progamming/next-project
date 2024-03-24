@@ -19,35 +19,27 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
 
     const initMovies = async () => {
         const results = await getMoviesSearch(urlApi);
-        // console.log("VerticalListShowcase - Results : ", results);
         const items = results.results;
         if (items.length > 0) {
             setIsSearchEmpty(false);
             setPagesNb(results.total_pages);
             setResultsNb(results.total_results);
-            // console.log("VerticalListShowcase - Pages : ", results.total_pages, " - Results : ", results.total_results);
             let tempMovies: Array<Movie> = [];
             for(const item of items) {
-                // const movie = await getMovie(item.id);
-                // if (movie) {
-                //     tempMovies.push(createMovie(movie));
-                // }
                 tempMovies.push(createMovie(item))
             }
             setMovies(tempMovies);
-            // console.log("VerticalListShowcase - Movies : ", tempMovies);
         }else{
             setIsSearchEmpty(true);
         }
     }
 
     useEffect(() => {
-        // console.log("VerticalListShowcase - To nameSearch : ", searchQuery);
         initMovies();
     }, []);
 
+    //Pour re-render le composant à chaque changement de la query
     useEffect(() => {
-        // console.log("VerticalListShowcase - To nameSearch : ", searchQuery);
         initMovies();
     }, [searchQuery]);
 
@@ -62,9 +54,6 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
         }
     }, [movies]);
 
-    useEffect(() => {
-        console.log("Search for : ", searchQuery, " - Is empty : ", isSearchEmpty);
-    }, [isSearchEmpty]);
     return (
         <>
         {
