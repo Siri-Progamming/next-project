@@ -51,9 +51,9 @@ export default async function handler(req, res) {
                             .catch(err => console.error('error:' + err));
                         if(movieEnUs){
                             movie.images.backdrops = movieEnUs.images.backdrops;
-                            movie.recommendations = movieEnUs.recommendations;
                         }
                     }
+                    movie.recommendations = movieEnUs.recommendations;
                 }
             }else{
                 movie = await fetch(url, tmdbGetOption)
