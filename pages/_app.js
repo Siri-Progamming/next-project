@@ -1,4 +1,3 @@
-import {useState} from "react";
 import PropTypes from "prop-types";
 import {AuthProvider} from '/src/contexts/AuthContext';
 import '/src/styles/globals.css';

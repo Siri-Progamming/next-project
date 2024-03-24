@@ -1,11 +1,7 @@
 import React from "react";
 import {useAuth} from "../../contexts/AuthContext";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
-
-interface IcoDropdownProps{
-    showHeader:boolean;
-}
-const IcoDropdown: React.FC<IcoDropdownProps> = () => {
+const IcoDropdown: React.FC = () => {
     const {user} = useAuth();
 
     return (
@@ -22,12 +18,12 @@ const IcoDropdown: React.FC<IcoDropdownProps> = () => {
                 <div tabIndex={0} role="button" className="btn btn-lg  btn-circle btn-white avatar">
                     <div className="w-32 rounded-full">
                         <img alt="User Avatar"
-                             src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+                             src="/avatar2.jfif"/>
                     </div>
                 </div>}
             <ul tabIndex={1}
-                className="collapsible-element menu menu-sm dropdown-content mt-3 z-[2500] p-2 shadow bg-base-100 rounded-box w-52 ">
-                {!user ? <IcoDropdownOffList/> : <IcoDropdownOnList/>}
+                className={`collapsible-element menu menu-sm dropdown-content mt-3 z-[2500] p-2 shadow bg-base-100 rounded-box w-52`}>
+                {!user ? <IcoDropdownOffList /> : <IcoDropdownOnList/>}
             </ul>
         </div>
 );
@@ -43,6 +39,7 @@ const IcoDropdownOffList: React.FC = () => {
     );
 }
 const IcoDropdownOnList: React.FC = () => {
+    const {logout} = useAuth();
     return (
         <>
             <li>
@@ -51,7 +48,7 @@ const IcoDropdownOnList: React.FC = () => {
                     {/*<span className="badge">New</span>*/}
                 </a>
             </li>
-            <li><a>Déconnexion</a></li>
+            <li><a onClick={logout}>Déconnexion</a></li>
         </>
     );
 }

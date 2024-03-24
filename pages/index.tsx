@@ -6,14 +6,12 @@ interface IndexProps {
     searchQuery: string;
 }
 const Index:React.FC<IndexProps> = ({searchQuery}) => {
-    const {user} = useAuth();
+    const {user, verifyToken} = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        if (!user) {
-            router.push('/ui/login').then();
-        }
-    }, [user, router]);
+            // verifyToken();
+    },[] );
 
     return (
         <main>

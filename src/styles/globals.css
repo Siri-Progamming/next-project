@@ -131,22 +131,27 @@ footer{
     @apply border border-secondary-300;
     @apply text-black;
 }
+
 /* SCROLLBAR */
 ::-webkit-scrollbar {
     width: 9px;
     height: 7px;
-}
-::-webkit-scrollbar-track {
     background-color: transparent;
-    border: 1px solid transparent;
-}
-::-webkit-scrollbar-thumb {
-    /*background-color: rgba(156, 158, 160, 0.7);*/
-    @apply bg-neutral-400;
     background-clip: content-box;
 }
+/*le fond de la scrollbar*/
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    border: 10px solid transparent;
+}
+/*la barre*/
+::-webkit-scrollbar-thumb {
+    @apply bg-tertiary-500;
+    background-clip: content-box;
+    border-radius: 50px;
+}
 ::-webkit-scrollbar-thumb:hover {
-    @apply bg-neutral-500;
+    @apply bg-tertiary-700;
 }
 
 /* MOVIES GRID */

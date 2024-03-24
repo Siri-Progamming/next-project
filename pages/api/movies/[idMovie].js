@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     const url = buildURL_movies_full(idMovie, req.query.append_to_response,req.query.language);
     switch (req.method) {
         case "GET":
-            console.log("API CALL - GET - URL : ", url);
+            // console.log("API CALL - GET - URL : ", url);
             const movie = await fetch(url, tmdbGetOption)
                 .then(r => r.json())
                 .catch(err => console.error('error:' + err));

@@ -6,9 +6,9 @@ export async function getLikesCountForAMovie(idMovie){
 export async function getUserByEmail(email){
     return await db.collection('users').findOne({ email});
 }
-export async function createUser(email, password){
+export async function createUser(email, name,password){
     return await db.collection("users").insertOne(
-        {email: email, password: password}
+        {email: email, name: name,password: password}
     )
 }
 

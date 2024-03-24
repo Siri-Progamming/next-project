@@ -2,11 +2,13 @@ import {useRouter} from "next/router";
 import SearchBar from "./Forms/SearchBar";
 import React, {useState} from "react";
 import IcoDropdown from "./Utils/IcoDropdown";
+import {useAuth} from "../contexts/AuthContext";
 
 
 const Header: React.FC = () => {
     const router = useRouter();
     const [showHeader, setShowHeader] = useState(false);
+    const {user} = useAuth();
     const handleClick = () => {
         router.push('/');
     };
@@ -41,7 +43,8 @@ const Header: React.FC = () => {
                             <SearchBar/>
                         </div>
                         <div className="self-center absolute right-2">
-                            <IcoDropdown showHeader={showHeader}/>
+                            <p>Bonjour {user?.name}</p>
+                            <IcoDropdown/>
                         </div>
                     </header>
                 </div>

@@ -1,82 +1,88 @@
-## Example app using MongoDB
+<div style="background: linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)">
+<h1 style="text-align: center">Fennext</h1>
 
-[MongoDB](https://www.mongodb.com/) is a general purpose, document-based, distributed database built for modern application developers and for the cloud era. This example will show you how to connect to and use MongoDB as your backend for your Next.js app.
+<div style="display: flex; align-items: center; height: 160px; overflow-y: scroll; margin-top: 15px">
+    <div style="float: left; margin-right: 10px; min-height: 160px; min-width: 160px; max-height:160px; max-width:160px">
+        <img src="https://firebasestorage.googleapis.com/v0/b/loreact-666d4.appspot.com/o/Others%2FOIG3_2-removebg-preview.png?alt=media&token=50545b6e-dbae-43a6-aa59-1d322a936d71" alt="Logo">
+    </div>
+    <p style="text-align: justify;">
+        Fennext est une application qui permet de lister tous les films existant ainsi que leurs acteurs, résumés, la note attribuée par les utilisateurs...
+        Une fonction de recherche avancée est disponible pour trouver un film en particulier. Une recherche par nom est aussi présente
+    </p>
+</div>
 
-If you want to learn more about MongoDB, visit the following pages:
+## <p style="background: #F3ECE5; color:black">Fonctionnalités 🛠️ </p>
 
-- [MongoDB Atlas](https://mongodb.com/atlas)
-- [MongoDB Documentation](https://docs.mongodb.com/)
+-  Recherche par filtres
+- Recherche par nom
+- Visualisation des détails d'un film empowered by Ambilight.
+- Listes "Trending" (Populaire aujourd'hui), "Discover" (Les derniers films récents), "Top Rated" (Les mieux notés de tous les temps).
 
-## Deploy your own
+## <p style="background: #F3ECE5; color:black">Technologies 🚀</p>
 
-Once you have access to the environment variables you'll need, deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+Projet réalisé avec NextJS (router pages), l'API TMDB et MongoDB.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?project-name=with-mongodb&repository-name=with-mongodb&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-mongodb&integration-ids=oac_jnzmjqM10gllKmSrG0SGrHOH)
+Librairies utilisées : React, Typescript, 
 
-## How to use
+Librairies UI : TailwindCSS, DaisyUI, MaterialUI.
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+## <p style="background: #F3ECE5; color:black">Utilisation 🖥️</p>
 
+-  Cloner le repository dans un dossier de votre choix (un workspace de préférence)
 ```bash
-npx create-next-app --example with-mongodb with-mongodb-app
+cd mon-super-workspace
+git clone https://github.com/Siri-Progamming/next-project.git
+cd next-project
 ```
 
-```bash
-yarn create next-app --example with-mongodb with-mongodb-app
-```
+### Configuration des variables d'environnement
 
-```bash
-pnpm create next-app --example with-mongodb with-mongodb-app
-```
-
-## Configuration
-
-### Set up a MongoDB database
-
-Set up a MongoDB database either locally or with [MongoDB Atlas for free](https://mongodb.com/atlas).
-
-### Set up environment variables
-
-Copy the `env.local.example` file in this directory to `.env.local` (which will be ignored by Git):
+- Copier le contenu du fichier `env.local.example` dans le fichier `.env.local`
 
 ```bash
 cp .env.local.example .env.local
 ```
 
-Set each variable on `.env.local`:
+### Installer et démarrer l'application
 
-- `MONGODB_URI` - Your MongoDB connection string. If you are using [MongoDB Atlas](https://mongodb.com/atlas) you can find this by clicking the "Connect" button for your cluster.
-
-### Run Next.js in development mode
-
+- Installer toutes les dépendances utiles au fonctionnement du projet
 ```bash
 npm install
-npm run dev
-
 # or
-
 yarn install
+```
+- Lancer le projet
+```bash
+npm run dev
+# or
 yarn dev
 ```
+- Aller sur l'URL renseignée dans la console, en principe [localhost](http://localhost:3000)
 
-Your app should be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
+## <p style="background: #F3ECE5; color:black">Evolutions 🔄</p>
 
-You will either see a message stating "You are connected to MongoDB" or "You are NOT connected to MongoDB". Ensure that you have provided the correct `MONGODB_URI` environment variable.
+- ### Utilisateur connecté
 
-When you are successfully connected, you can refer to the [MongoDB Node.js Driver docs](https://mongodb.github.io/node-mongodb-native/3.4/tutorials/collections/) for further instructions on how to query your database.
+  - Affichage des recommandations personnalisées d'un user (code API prêt)
+  - Ajout de la possibilité de liker un film (ajout dans la liste des films aimés)
+  - Ajout de l'option "A regarder plus tard" (ajout dans la liste des films à regarder plus tard
+  - Ajout de l'option "Déjà vu" (ajout dans la liste des films déjà vus)
+  - Ajout de la possibilité de noter un film (Réflexion sur la façon dont je peux combiner ça avec la note TMDB existante)
 
-## Deploy on Vercel
+- ### Acteurs 
 
-You can deploy this app to the cloud with [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+  - Page dédiée à un acteur avec les films dans lesquels il a joué
 
-#### Deploy Your Local Project
+- ### Séries
+  - Intégration des mêmes fonctionnalités que pour les films
 
-To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [import to Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example).
+- ### Langue
+  - Ajout de la possibilité de changer la langue de l'application (toggle EN/FR pour commencer)
 
-**Important**: When you import your project on Vercel, make sure to click on **Environment Variables** and set them to match your `.env.local` file.
+## <p style="background: #F3ECE5; color:black">Bugs connus 🐞</p>
 
-#### Deploy from Our Template
+- Tests non fonctionnels (montée en compétence à prévoir sur ce module)
 
-Alternatively, you can deploy using our template by clicking on the Deploy button below.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?project-name=with-mongodb&repository-name=with-mongodb&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-mongodb&integration-ids=oac_jnzmjqM10gllKmSrG0SGrHOH)
+<p style="text-align: right">Auteur : HILAIRE Sirika.</p>
+</div>

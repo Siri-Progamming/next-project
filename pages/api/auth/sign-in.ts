@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import {getUserByEmail} from "../../../src/services/MONGODB.BDD/queries.service";
 import {JWT_SECRET, TOKEN_EXP, COOKIE_EXP} from "../../../src/constantes/api_constantes";
-import { cookies } from 'next/headers'
 
 /**
  * @swagger
@@ -40,7 +39,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { email, password } = req.body;
 
     try {
-        console.log("JWT_SECRET : ",JWT_SECRET);
         // Vérification si l'utilisateur existe dans la base de données
         const user = await getUserByEmail(email);
         if (!user) {
@@ -57,14 +55,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         // Génération du token JWT avec l'ID de l'utilisateur
-        const payload = {id: user._id, email: user.email};
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: TOKEN_EXP });
+        const token = jwt.sign(user, JWT_SECRET, { expiresIn: TOKEN_EXP });
 
         // Définition du cookie avec le token JWT
         res.setHeader('Set-Cookie', `token=${token}; Max-Age=${COOKIE_EXP}; Path=/; HttpOnly; SameSite=Strict; Secure`);
 
         // Réponse indiquant que la connexion est réussie
-        res.status(200).json({ message: 'Connexion réussie', user: { email: user.email, id: user._id }, token: token});
+        res.status(200).json({ message: 'Connexion réussie', user:user});
     } catch (error:any) {
         // En cas d'erreur, renvoyer un message d'erreur approprié
         res.status(401).json({ message: error.message });

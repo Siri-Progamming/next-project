@@ -4,7 +4,7 @@ import {useAuth} from "../../contexts/AuthContext";
 
 const LoginForm = () => {
     const [error, setError] = useState<string>('');
-    const { login } = useAuth();
+    const { login, user } = useAuth();
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -25,7 +25,8 @@ const LoginForm = () => {
                 throw new Error(errorData.message);
             }else{
                 const data = await response.json();
-                login(data.user, data.token);
+                login(data.user);
+                console.log("LoginForm user :",user);
                 router.push('/').then();
             }
         } catch (error: any) {
@@ -38,11 +39,11 @@ const LoginForm = () => {
             {error && <div style={{ color: 'red' }}>{error}</div>}
             <div>
                 <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" />
+                <input type="email" id="email" name="email" required/>
             </div>
             <div>
                 <label htmlFor="password">Mot de passe:</label>
-                <input type="password" id="password" name="password" />
+                <input type="password" id="password" name="password" required/>
             </div>
             <button type="submit">Se connecter</button>
         </form>

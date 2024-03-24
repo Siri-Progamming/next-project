@@ -36,9 +36,9 @@ import {getUserByEmail, createUser} from "../../../src/services/MONGODB.BDD/quer
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
-        const { email, password } = req.body;
+        const { email, name, password } = req.body;
         try {
-            console.log("Inscription de : ", email, " - ",password);
+            console.log("Inscription de : ", email, " - ",name," - ",password);
             const existingUser = await getUserByEmail(email);
             if (existingUser) {
                 return res.status(400).send('Un compte existe déjà avec cette adresse e-mail');
@@ -49,11 +49,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 hashedPassword = await bcrypt.hash(password, 10);
             }
 
-            const resMongo = await createUser(email, hashedPassword);
+            const resMongo = await createUser(email,name, hashedPassword);
             if(resMongo){
                 const data = {
                     action: 'user created',
                     email: email,
+                    name: name,
                     id: resMongo.insertedId.toString()
                 }
                 res.status(201).json({ status: 201, data: data });

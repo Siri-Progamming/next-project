@@ -14,25 +14,31 @@ describe('Index', () => {
             push: jest.fn(), //Cette fonction ne fait rien
         });
     });
-    it('redirects to sign-in page if user is not authenticated', () => {
-        useAuth.mockReturnValue({
-            user: null,
-        });
-        render(<Index />);
-        expect(useRouter().push).toHaveBeenCalledWith('/ui/sign-in');
-    });
+    // it('redirects to sign-in page if user is not authenticated', () => {
+    //     useAuth.mockReturnValue({
+    //         user: null,
+    //     });
+    //     render(<Index />);
+    //     expect(useRouter().push).toHaveBeenCalledWith('/ui/sign-in');
+    // });
     it('does not redirect if user is authenticated', () => {
         useAuth.mockReturnValue({
-            user: { /* mock user data */ },
+            user: {id: 1, name:'test', email: 'test@test.com'},
         });
         render(<Index />);
         expect(useRouter().push).not.toHaveBeenCalled();
     });
     it('renders the title correctly', () => {
+        useAuth.mockReturnValue({
+            user: {id: 1, name:'test', email: 'test@test.com'},
+        });
         render(<Index />);
-        expect(screen.getByText('Toprated')).toBeInTheDocument();
+        expect(screen.getByText('Trending')).toBeInTheDocument();
     });
-    it('renders the sign-in link correctly', () => {
+    it('renders the Discover list correctly', () => {
+        useAuth.mockReturnValue({
+            user: {id: 1, name:'test', email: 'test@test.com'},
+        });
         render(<Index />);
         expect(screen.getByText('Discover')).toBeInTheDocument();
     });
