@@ -8,15 +8,13 @@ import {useAuth} from "../contexts/AuthContext";
 const Header: React.FC = () => {
     const router = useRouter();
     const [showHeader, setShowHeader] = useState(false);
-    const {user} = useAuth();
+    const {user, logout} = useAuth();
     const handleClick = () => {
         router.push('/');
     };
-
     const handleMouseEnter = () => {
         setShowHeader(true);
     };
-
     const handleMouseLeave = () => {
         setTimeout(() => {
             setShowHeader(false);

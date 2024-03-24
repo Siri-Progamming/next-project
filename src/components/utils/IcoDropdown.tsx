@@ -1,8 +1,10 @@
 import React from "react";
+import {useRouter} from "next/router";
 import {useAuth} from "../../contexts/AuthContext";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import BuildIcon from '@mui/icons-material/Build';
 const IcoDropdown: React.FC = () => {
-    const {user} = useAuth();
+    const {user, logout} = useAuth();
 
     return (
         <div className="dropdown dropdown-end">
@@ -31,10 +33,17 @@ const IcoDropdown: React.FC = () => {
 export default IcoDropdown;
 
 const IcoDropdownOffList: React.FC = () => {
+    const router = useRouter();
+    const handleClickOnLogin = () => {
+        router.push('/ui/login').then();
+    }
+    const handleClickOnRegister = () => {
+        router.push('/ui/signup').then();
+    }
     return (
         <>
-            <li><a>Connexion</a></li>
-            <li><a>Inscription</a></li>
+            <li><a onClick={handleClickOnLogin}>Connexion</a></li>
+            <li><a onClick={handleClickOnRegister}>Inscription</a></li>
         </>
     );
 }
@@ -43,9 +52,9 @@ const IcoDropdownOnList: React.FC = () => {
     return (
         <>
             <li>
-                <a className="justify-between">
+                <a className="justify-between pointer-events-none">
                     Profile
-                    {/*<span className="badge">New</span>*/}
+                    {<span className="badge badge-warning"><BuildIcon className="text-[16px]"></BuildIcon> Upcoming</span>}
                 </a>
             </li>
             <li><a onClick={logout}>Déconnexion</a></li>
