@@ -12,7 +12,7 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, tit
 
     const initMovies = async () => {
         const moviesDiscover = await getMovies(api);
-        if (moviesDiscover.length > 0) {
+        if (moviesDiscover && moviesDiscover.length > 0) {
             let tempMovies: Array<Movie> = [];
             for(const m of moviesDiscover) {
                 // const movie = await getMovie(m.id);
