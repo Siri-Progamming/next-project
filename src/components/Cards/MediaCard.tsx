@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import {Movie} from '../../interfaces/Movie';
 import {ConfigService} from "../../services/IMDB.API/config.service";
 import {useRouter} from 'next/router';
-import MovieItemSkeleton from "../Skeleton/MovieItemSkeleton";
 import PercentSticker from "../utils/PercentSticker";
+import MediaCardSkeleton from "../Skeleton/MediaCardSkeleton";
 
 interface MediaCardProps {
     movie: Movie;
@@ -31,7 +31,7 @@ const MediaCard: React.FC<MediaCardProps> = ({movie}) => {
         <>
             {
                 isLoading ?
-                    <MovieItemSkeleton/>
+                    <MediaCardSkeleton/>
                     :
                     (
                         <li key={movie.id} className="media-card"
@@ -45,7 +45,7 @@ const MediaCard: React.FC<MediaCardProps> = ({movie}) => {
                             </div>
                             <div className="media-card-details">
                                 <h2 className="font-bold">{movie.title}</h2>
-                                <p className="text-gray-600 italic text-sm">{movie.release_date}</p>
+                                <p className="text-gray-300 italic text-sm">{movie.release_date}</p>
                             </div>
                         </li>
                     )

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Movie} from '../../interfaces/Movie';
-import MovieItem from "../Cards/MovieItem";
+import MediaCard from "../Cards/MediaCard";
 import { createMovie } from "../../services/API/object.creator.service";
 import {getMovies} from "../../services/API/call.api.service";
 interface HorizontalListShowcaseProps {
@@ -31,9 +31,9 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, tit
     return (
         <div className="category_movies">
             <h1 className="category_title">{title}</h1>
-            <ul id="movies-list" className="flex space-x-4">
+            <ul id="movies-horizontal-showcase" className="flex space-x-4 pb-5">
                 {movies.map(movie => (
-                    <MovieItem key={movie.id} movie={movie}/>
+                    <MediaCard key={movie.id} movie={movie}/>
                 ))}
             </ul>
         </div>
