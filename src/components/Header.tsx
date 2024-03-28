@@ -3,12 +3,14 @@ import SearchBar from "./Forms/SearchBar";
 import React, {useState} from "react";
 import IcoDropdown from "./utils/IcoDropdown";
 import {useAuth} from "../contexts/AuthContext";
+import Pin from "./utils/Pin";
 
 
 const Header: React.FC = () => {
     const router = useRouter();
     const [showHeader, setShowHeader] = useState(false);
     const {user, logout} = useAuth();
+    const [isPinned, setIsPinned] = React.useState(false);
     const handleClick = () => {
         router.push('/');
     };
@@ -16,10 +18,16 @@ const Header: React.FC = () => {
         setShowHeader(true);
     };
     const handleMouseLeave = () => {
-        setTimeout(() => {
-            setShowHeader(false);
-        }, 150);
+        if(!isPinned){
+            setTimeout(() => {
+                setShowHeader(false);
+            }, 150);
+        }
     };
+
+    const handlePin = () => {
+        setIsPinned(!isPinned);
+    }
 
     return (
         <>
@@ -40,9 +48,12 @@ const Header: React.FC = () => {
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                             <SearchBar/>
                         </div>
-                        <div className="self-center absolute right-2 flex flex-row">
+                        <div className="self-center absolute right-10 flex flex-row">
                             {user && <div  className="self-center mr-2 font-bold"><p>Bonjour {user?.name} !</p></div>}
                             <IcoDropdown/>
+                        </div>
+                        <div className="absolute self-end right-2 bottom-2">
+                            <Pin isPinned={isPinned} handlePin={handlePin}/>
                         </div>
                     </header>
                 </div>

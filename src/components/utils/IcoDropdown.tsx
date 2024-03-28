@@ -49,13 +49,6 @@ const IcoDropdownOffList: React.FC = () => {
 }
 const IcoDropdownOnList: React.FC = () => {
     const {logout} = useAuth();
-    const router = useRouter();
-    const handleClickOnLogin = () => {
-        router.push('/ui/login').then();
-    }
-    const handleClickOnRegister = () => {
-        router.push('/ui/signup').then();
-    }
     return (
         <>
             <li>
@@ -66,8 +59,6 @@ const IcoDropdownOnList: React.FC = () => {
                 </a>
             </li>
             <li><a onClick={logout}>Déconnexion</a></li>
-            <li><a onClick={handleClickOnLogin}>Connexion</a></li>
-            <li><a onClick={handleClickOnRegister}>Inscription</a></li>
         </>
     );
 }

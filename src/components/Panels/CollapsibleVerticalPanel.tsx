@@ -13,7 +13,7 @@ const CollapsibleVerticalPanel: React.FC = () => {
     };
     return (
         <>
-            <div className="sticky top-0 z-[499]">
+            <div className="sticky top-0 z-[1200]">
                 <div className="relative">
                     <div
                         onMouseOver={handleMouseEnter}
