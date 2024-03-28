@@ -146,12 +146,12 @@ footer{
 }
 /*la barre*/
 ::-webkit-scrollbar-thumb {
-    @apply bg-tertiary-500;
+    @apply bg-[#718096];
     background-clip: content-box;
     border-radius: 50px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    @apply bg-tertiary-700;
+    @apply bg-[#4a5568];
 }
 
 /* MOVIES GRID */
@@ -180,6 +180,37 @@ footer{
     text-overflow: ellipsis;
 }
 
+/* MEDIA CARDS */
+.media-card{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.media-card-bg{
+    background-size: cover;
+    background-position: center;
+    max-width: 220px;
+    min-width: 220px;
+    max-height: 330px;
+    min-height: 330px;
+    border: 2px solid white;
+    border-bottom: none;
+}
+
+.media-card-details{
+    @apply text-white bg-black bg-opacity-70;
+    border: 2px solid white;
+    border-top: none;
+    padding: 1.3rem 1rem 1rem 1rem;
+    max-width: 220px;
+    min-width: 220px;
+    height: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 /* MOVIE PAGE */
 #main_movie_page{
     position: relative;

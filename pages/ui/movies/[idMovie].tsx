@@ -17,6 +17,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
     const {idMovie} = router.query;
     const [movie, setMovie] = useState<FullMovie | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
     const initMovie = async () => {
         const movie = await getFullMovie(Number(idMovie as string));
         if (movie != null) {
@@ -24,6 +25,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
         }
     }
     useEffect(() => {
+        // localStorage.setItem('previousLocation', router.asPath);
         if (idMovie) {
             initMovie();
         }
@@ -92,7 +94,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                         <PeopleShowcase movie={movie ? movie : null} nbToShow={7} title={"Cast"}/>
                     </div>
                     <div className="pictures_movie grow-0 max-w-[100vw] md:max-w-[30vw] md:mr-14 lg:mr-24">
-                        {movie && movie?.images.length > 0 && <PicturesShowcase movie={movie} nbToShow={3}/>}
+                        {movie && movie?.images.length > 0 && <PicturesShowcase movie={movie} nbToShow={3} startFrom={5}/>}
                     </div>
                     <div className="similar_movies grow-0 max-w-[100vw] lg:max-w-[20vw] xl:max-w-[14vw] md:mr-10">
                         {movie && movie?.recommendations.length > 0 ?
@@ -108,7 +110,6 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
     );
 }
 export default IdMovie;
-
 function countSpaces(str: string) {
     if (str === null || str === undefined) return 0;
     let spaceCount = 0;
@@ -119,7 +120,6 @@ function countSpaces(str: string) {
     }
     return spaceCount;
 }
-
 function movieTitleSize(title: string) {
     const spaces = countSpaces(title);
     if (spaces === 0 && title.length > 8) {

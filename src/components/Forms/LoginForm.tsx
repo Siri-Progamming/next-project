@@ -26,8 +26,7 @@ const LoginForm = () => {
             }else{
                 const data = await response.json();
                 login(data.user);
-                console.log("LoginForm user :",user);
-                router.push('/').then();
+                router.push(localStorage.getItem('previousLocation') ?? '/').then();
             }
         } catch (error: any) {
             setError(error.message as string);
@@ -39,11 +38,11 @@ const LoginForm = () => {
             {error && <div style={{ color: 'red' }}>{error}</div>}
             <div>
                 <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" required/>
+                <input type="email" id="email" name="email" required autoComplete="username"/>
             </div>
             <div>
                 <label htmlFor="password">Mot de passe:</label>
-                <input type="password" id="password" name="password" required/>
+                <input type="password" id="password" name="password" required autoComplete="current-password"/>
             </div>
             <button type="submit">Se connecter</button>
         </form>

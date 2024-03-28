@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Movie} from '../../interfaces/Movie';
-import MovieItem from "../MovieItem";
+import MediaCard from "../Cards/MediaCard";
 import { createMovie } from "../../services/API/object.creator.service";
 import {getMoviesSearch} from "../../services/API/call.api.service";
 import Loader from "../utils/Loader";
@@ -14,7 +14,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     const [resultsNb, setResultsNb] = useState<number>(0);
     const [pagesNb, setPagesNb] = useState<number>(0);
     const urlApi = api+"?query="+searchQuery+"&language=fr-FR";
-    const [isSearchEmpty, setIsSearchEmpty] = useState<boolean>(true);
+    const [isSearchEmpty, setIsSearchEmpty] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const initMovies = async () => {
@@ -66,7 +66,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
                     <h1 className="category_title">{title}</h1>
                     <ul id="vertical-list-showcase" className="">
                         {movies.map(movie => (
-                            <MovieItem key={movie.id} movie={movie}/>
+                            <MediaCard key={movie.id} movie={movie}/>
                         ))}
                     </ul>
                 </div>

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Movie} from '../interfaces/Movie';
-import {ConfigService} from "../services/IMDB.API/config.service";
+import {Movie} from '../../interfaces/Movie';
+import {ConfigService} from "../../services/IMDB.API/config.service";
 import {useRouter} from 'next/router';
-import MovieItemSkeleton from "./Skeleton/MovieItemSkeleton";
-import PercentSticker from "./utils/PercentSticker";
+import MovieItemSkeleton from "../Skeleton/MovieItemSkeleton";
+import PercentSticker from "../utils/PercentSticker";
 
 interface MovieItemProps {
     movie: Movie;

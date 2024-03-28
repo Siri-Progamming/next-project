@@ -49,15 +49,25 @@ const IcoDropdownOffList: React.FC = () => {
 }
 const IcoDropdownOnList: React.FC = () => {
     const {logout} = useAuth();
+    const router = useRouter();
+    const handleClickOnLogin = () => {
+        router.push('/ui/login').then();
+    }
+    const handleClickOnRegister = () => {
+        router.push('/ui/signup').then();
+    }
     return (
         <>
             <li>
                 <a className="justify-between pointer-events-none">
                     Profile
-                    {<span className="badge badge-warning"><BuildIcon className="text-[16px]"></BuildIcon> Upcoming</span>}
+                    {<span className="badge badge-warning"><BuildIcon
+                        className="text-[16px]"></BuildIcon> Upcoming</span>}
                 </a>
             </li>
             <li><a onClick={logout}>Déconnexion</a></li>
+            <li><a onClick={handleClickOnLogin}>Connexion</a></li>
+            <li><a onClick={handleClickOnRegister}>Inscription</a></li>
         </>
     );
 }

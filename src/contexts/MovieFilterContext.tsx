@@ -79,11 +79,11 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     }
     const handleReset = () => {
     setGenres([]);
-    setLanguage('en-US');
+    setLanguage('fr-FR');
     setSortBy('popularity.desc');
-    setNoteMin(0);
+    setNoteMin(8);
     setNoteMax(10);
-    setNbVotesMin(0);
+    setNbVotesMin(100);
     //TODO uncheck les boxes, reset les inputs
 };
     const handleChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {

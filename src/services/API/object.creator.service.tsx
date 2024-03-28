@@ -33,6 +33,7 @@ export function createFullMovie(data: any): FullMovie {
         recommendations: data.recommendations.results,
         similar: data.similar.results,
         videos: data.videos.results,
+        runtime: data.runtime,
     }
 }
 

@@ -26,6 +26,7 @@ export interface FullMovie extends Movie {
     recommendations: Array<Movie>;
     similar : Array<Movie>;
     videos: Array<Video>;
+    runtime: number;
 }
 export interface Genre {
     id: number;

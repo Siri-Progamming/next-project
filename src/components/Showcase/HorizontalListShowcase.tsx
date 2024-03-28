@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Movie} from '../../interfaces/Movie';
-import MovieItem from "../MovieItem";
+import MovieItem from "../Cards/MovieItem";
 import { createMovie } from "../../services/API/object.creator.service";
 import {getMovies} from "../../services/API/call.api.service";
 interface HorizontalListShowcaseProps {

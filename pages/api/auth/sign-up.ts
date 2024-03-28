@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import bcrypt from 'bcryptjs';
+import argon2 from 'argon2';
 import {getUserByEmail, createUser} from "../../../src/services/MONGODB.BDD/queries.service";
-
 /**
  * @swagger
  * /api/auth/sign-up:
@@ -9,7 +8,7 @@ import {getUserByEmail, createUser} from "../../../src/services/MONGODB.BDD/quer
  *     tags:
  *       - Inscription
  *     summary: Inscription de l'utilisateur
- *     description: nscription de l'utilisateur
+ *     description: Inscription de l'utilisateur
  *     requestBody:
  *       required: true
  *       content:
@@ -38,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'POST') {
         const { email, name, password } = req.body;
         try {
-            console.log("Inscription de : ", email, " - ",name," - ",password);
+            // console.log("Inscription de : ", email, " - ",name," - ",password);
             const existingUser = await getUserByEmail(email);
             if (existingUser) {
                 return res.status(400).send('Un compte existe déjà avec cette adresse e-mail');
@@ -46,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             // Hasher le mot de passe sauf pour Donatien héhé, joyeuses Pâques
             let hashedPassword = password;
             if(!email.includes("donatien")){
-                hashedPassword = await bcrypt.hash(password, 10);
+                hashedPassword = await argon2.hash(password);
             }
 
             const resMongo = await createUser(email,name, hashedPassword);
@@ -62,7 +61,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 throw new Error('Une erreur s\'est produite lors de l\'insertion en base de données.');
             }
         } catch (error:any) {
-            console.error('Erreur lors de l\'inscription:', error);
+            // console.error('Erreur lors de l\'inscription:', error);
             return res.status(500).send('Une erreur s\'est produite lors de l\'inscription.');
         }
     } else {

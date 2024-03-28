@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // console.log("verify-token.ts - token : ", token);
     if (!token) {
         // console.log("verify-token.ts - No token provided");
-        return res.status(401).json({ message: 'Aucun token fourni. Authentification nécessaire.' });
+        return res.status(401).end();
     }
     try {
         const jwtSecret = process.env.JWT_KEY;

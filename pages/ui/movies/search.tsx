@@ -10,7 +10,6 @@ const search: React.FC<searchProps> = () => {
     const isSearch = searchQuery !== '' && searchQuery.trim().length > 0;
 
     useEffect(() => {
-        // @ts-ignore
         if (query){
             setSearchQuery(query);
         }

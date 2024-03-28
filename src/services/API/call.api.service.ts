@@ -19,16 +19,15 @@ export const getMoviesSearch = async (url:string) => {
     }
 }
 
-export const getMovie = async (id: number) => {
-    try {
-        const response = await fetch('/api/movies/' + id);
-        const data = await response.json();
-        const m = data.data.movie;
-        return m;
-    } catch (error) {
-        console.error(error);
-    }
-}
+// export const getMovie = async (id: number) => {
+//     try {
+//         const response = await fetch('/api/movies/' + id);
+//         const data = await response.json();
+//         const m = data.data.movie;
+//         return m;
+//         console.error(error);
+//     }
+// }
 
 export const getFullMovie = async (id: number) => {
     const append_to_response:string = 'credits%2Cimages%2Ckeywords%2Crecommendations%2Creviews%2Csimilar%2Cvideos';

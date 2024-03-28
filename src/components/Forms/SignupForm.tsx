@@ -35,15 +35,15 @@ const SignupForm = () => {
                 {error && <div style={{color: 'red'}}>{error}</div>}
                 <div>
                     <label>Email:</label>
-                    <input type="email" id="email" name="email" required/>
+                    <input type="email" id="email" name="email" required autoComplete="username"/>
                 </div>
                 <div>
                     <label>Prénom:</label>
-                    <input type="text" id="name" name="name" required/>
+                    <input type="text" id="name" name="name" required autoComplete="username"/>
                 </div>
                 <div>
                     <label>Mot de passe:</label>
-                    <input type="password" id="password" name="password" required/>
+                    <input type="password" id="password" name="password" required autoComplete="current-password"/>
                 </div>
                 <button type="submit">S'inscrire</button>
             </form>

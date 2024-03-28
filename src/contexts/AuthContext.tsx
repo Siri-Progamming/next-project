@@ -7,8 +7,6 @@ interface AuthContextProps {
     logout: () => void;
     verifyToken: () => void;
     isTokenVerified: boolean;
-    location: string;
-    previousLocation: string;
 }
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const useAuth = () => {
@@ -25,8 +23,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
     const [isTokenVerified, setIsTokenVerified] = useState(false);
-    const [location, setLocation] = useState(router.asPath);
-    const [previousLocation, setPreviousLocation] = useState(location);
     const verifyToken = async () => {
         // console.log("AuthContext gonna call verify-token.ts");
         try {
@@ -55,38 +51,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
 
     //Vérification du token à chaque changement de route
     useEffect(() => {
-        // console.log("AuthContext useEffect router.asPath : ", router.asPath);
         const checkToken = async () => {
-            if(location !== router.asPath) {
-                setPreviousLocation(location);
-            }
-            if(isTokenVerified){
-                setLocation(router.asPath);
-            }
             try{
                 await verifyToken();
                 setIsTokenVerified(true);
-            }catch (error){
+            }catch (error:any){
                 setIsTokenVerified(false);
             }
         }
         checkToken().then();
     }, [router.asPath]);
 
-    useEffect(() => {
-        console.log("AuthContext useEffect previousLocation : ", previousLocation);
-    }, [previousLocation]);
-
-    useEffect(() => {
-        console.log("AuthContext useEffect location : ", location);
-    }, [location]);
-
     const login = (userData: User) => {
         setUser(userData);
     };
-    const logout = () => {
+    const logout = async () => {
         // console.log("Login out");
         setUser(null);
+        try {
+            await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (error) {
+            console.error("error : ", error);
+        }
         // router.push('/ui/login').then();
     };
 
@@ -95,9 +86,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         login,
         logout,
         verifyToken,
-        isTokenVerified,
-        location,
-        previousLocation
+        isTokenVerified
     };
     return (
         <AuthContext.Provider value={contextValue}>

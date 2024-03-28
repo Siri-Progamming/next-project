@@ -4,7 +4,7 @@ import {useAuth} from "../../src/contexts/AuthContext";
 import {useRouter} from "next/router";
 
 const login: React.FC = () => {
-    const {user, isTokenVerified, previousLocation, location} = useAuth();
+    const {user, isTokenVerified} = useAuth();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +14,7 @@ const login: React.FC = () => {
             return;
         }else{
             if(user){
-                router.push(previousLocation).then();
+                    router.push(localStorage.getItem('previousLocation') ?? '/').then();
             }else{
                 setIsLoading(false);
             }
