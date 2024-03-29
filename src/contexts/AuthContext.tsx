@@ -34,18 +34,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                // console.log("veriToken AuthContext data received from OK : ", data);
-                if(data) {
+                if(data && data.payload) {
                     setUser(data.payload);
                 }else{
-                    logout();
+                    console.error("No data received from response.ok");
+                    await logout();
                 }
             } else {
-                logout();
+                console.error("Réponse non-ok lors de la vérification du token :", response.statusText);
+                await logout();
             }
         } catch (error) {
-            console.error("error : ", error);
-            logout();
+            console.error("Erreur lors de la vérification du token :", error);
+            await logout();
         }
     }
 
@@ -66,7 +67,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         setUser(userData);
     };
     const logout = async () => {
-        // console.log("Login out");
         setUser(null);
         try {
             await fetch('/api/auth/logout', {

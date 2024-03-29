@@ -8,6 +8,7 @@ import PeopleShowcase from "../../../src/components/Showcase/PeopleShowcase";
 import PicturesShowcase from "../../../src/components/Showcase/PicturesShowcase";
 import SimilarShowcase from "../../../src/components/Showcase/SimilarShowcase";
 import Loader from "../../../src/components/utils/Loader";
+import {showNoImage} from "../../../src/components/Skeleton/NoData/NoImage";
 
 interface IdMovieProps {
 }
@@ -47,16 +48,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                 <div className="movie_page relative">
                 <div className="bg_image_container">
                     {/*h-[calc(100vh_-_var(--nav-height,0))*/}
-                    {[...Array(4)].map((_, index) => (
-                        <div
-                            key={`background_image_${index}`}
-                            className={index === 0 ? "background_image_repeat absolute0"
-                                : index === 1 ? "background_image dropShadow absolute0" : "background_image absolute0"}
-                            style={{
-                                backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
-                            }}
-                        ></div>
-                    ))}
+                    {movie?.backdrop_path ? showBackground(movie) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto")}
                 </div>
                 <div className="movie_details lg:w-full h-[100vh] overflow-clip xl:justify-center">
                     {/*<div className="glassmorphism">*/}
@@ -94,7 +86,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                         <PeopleShowcase movie={movie ? movie : null} nbToShow={7} title={"Cast"}/>
                     </div>
                     <div className="pictures_movie grow-0 max-w-[100vw] md:max-w-[30vw] md:mr-14 lg:mr-24">
-                        {movie && movie?.images.length > 0 && <PicturesShowcase movie={movie} nbToShow={3} startFrom={5}/>}
+                        {movie && <PicturesShowcase movie={movie} nbToShow={3} startFrom={5}/>}
                     </div>
                     <div className="similar_movies grow-0 max-w-[100vw] lg:max-w-[20vw] xl:max-w-[14vw] md:mr-10">
                         {movie && movie?.recommendations.length > 0 ?
@@ -108,6 +100,21 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
             }
         </main>
     );
+
+    function showBackground(movie:FullMovie){
+        return (
+            [...Array(4)].map((_, index) => (
+            <div
+                key={`background_image_${index}`}
+                className={index === 0 ? "background_image_repeat absolute0"
+                    : index === 1 ? "background_image dropShadow absolute0" : "background_image absolute0"}
+                style={{
+                    backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${movie?.backdrop_path})`
+                }}
+            ></div>
+        ))
+        )
+    }
 }
 export default IdMovie;
 function countSpaces(str: string) {

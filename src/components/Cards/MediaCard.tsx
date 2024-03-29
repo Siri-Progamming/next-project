@@ -4,6 +4,7 @@ import {ConfigService} from "../../services/IMDB.API/config.service";
 import {useRouter} from 'next/router';
 import PercentSticker from "../utils/PercentSticker";
 import MediaCardSkeleton from "../Skeleton/MediaCardSkeleton";
+import {showNoImage} from "../Skeleton/NoData/NoImage";
 
 interface MediaCardProps {
     movie: Movie;
@@ -36,10 +37,7 @@ const MediaCard: React.FC<MediaCardProps> = ({movie}) => {
                     (
                         <li key={movie.id} className="media-card"
                             onClick={handleClick}>
-
-                            <div className="media-card-bg"
-                                style={{backgroundImage: `url(${ConfigService.themoviedb.urls.image_view + "/w220_and_h330_face" + movie.poster_path})`}}>
-                            </div>
+                            {movie.poster_path ? showImage(movie) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
                                 <PercentSticker note={movie.vote_average} />
                             </div>
@@ -52,5 +50,13 @@ const MediaCard: React.FC<MediaCardProps> = ({movie}) => {
             }
         </>
     )
+
+    function showImage(movie:Movie){
+        return (
+            <div className="media-card-bg"
+                 style={{backgroundImage: `url(${ConfigService.themoviedb.urls.image_view + "/w220_and_h330_face" + movie.poster_path})`}}>
+            </div>
+        )
+    }
 }
 export default MediaCard;

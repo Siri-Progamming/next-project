@@ -11,11 +11,6 @@ interface PicturesShowProps {
 
 const PicturesShowcase: React.FC<PicturesShowProps> = ({movie, nbToShow, startFrom}) => {
 
-    useEffect(() => {
-        console.log("Nombres d'images disponibles : ", movie?.images?.length);
-        console.log("Nombres d'images à afficher : ", nbToShow);
-        console.log("Début d'affichage à partir de : ", startFrom);
-    }, []);
     function showPictures() {
         let pictures = movie?.images;
         if (pictures != null && pictures.length > 0) {
