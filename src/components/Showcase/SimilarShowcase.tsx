@@ -24,9 +24,17 @@ const SimilarShowcase: React.FC<SimilarShowcaseProps> = ({movie, nbToShow, title
             <ul className=" flex flex-wrap  justify-center gap-3">
                 {similars?.slice(0, nbToShow).map(similar => (
                     <li key={similar.id} className="flex-column relative w-[110px] cursor-pointer transform transition-transform hover:scale-110 hover:z-[10]" onClick={() => handleClick(similar.id)}>
-                        {similar.poster_path ? showImage(similar) : showNoImage("w-[110px]", "h-[160px]", "text-[90px]", "rounded-xl")}
+                        {similar.poster_path ?
+                            showImage(similar)
+                            :
+                            <>
+                                <div className="relative">
+                                    {showNoImage("w-[110px]", "h-[160px]", "text-[90px]", "rounded-xl")}
+                                    <p className="text-white bold font-bold text-xs bg-black bg-opacity-80 absolute bottom-2 left-2">{similar.title.toUpperCase()}</p>
+                                </div>
+                            </>
+                        }
                         <div className="pt-2 text-white absolute bottom-[15px] left-[10px] pr-[10px]">
-                            {/*<p className="text-white"></p>*/}
                             {/*<p className="text-white bold font-bold text-xs bg-black bg-opacity-80">{similar.title.toUpperCase()}</p>*/}
                         </div>
                     </li>

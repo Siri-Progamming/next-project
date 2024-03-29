@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {ConfigService} from "../../services/IMDB.API/config.service";
 import {FullMovie} from "../../interfaces/Movie";
-import InsertPhotoTwoToneIcon from '@mui/icons-material/InsertPhotoTwoTone';
+import {showNoImage} from "../Skeleton/NoData/NoImage";
 
 interface PicturesShowProps {
     movie: FullMovie | null;
@@ -31,11 +31,19 @@ const PicturesShowcase: React.FC<PicturesShowProps> = ({movie, nbToShow, startFr
                 </>
             );
         } else {
-            return <InsertPhotoTwoToneIcon fontSize="large" />;
+            return (
+                <>
+                    {Array(nbToShow).fill(null).map((_, index) => (
+                        <div key={index}>
+                            {showNoImage(`min-w-[80vw] ${index !== 0 ? 'md:min-w-[14vw]' : 'md:min-w-[30vw]'} `, `${index === 0 ? ' h-56 xl:h-96 grow' : 'h-36'}`, "text-[95px]", `mx-auto m-2 ml-2 rounded-xl flex-col`, "bg-white bg-opacity-10")}
+                        </div>
+                    ))}
+                </>
+            )
         }
     }
 
-    return(
+    return (
         <div className="flex flex-row flex-wrap justify-center items-center">
             {showPictures()}
         </div>

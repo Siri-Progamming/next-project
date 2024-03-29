@@ -26,9 +26,8 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
         }
     }
     useEffect(() => {
-        // localStorage.setItem('previousLocation', router.asPath);
         if (idMovie) {
-            initMovie();
+            initMovie().then();
         }
     }, [idMovie]);
     useEffect(() => {
@@ -48,7 +47,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                 <div className="movie_page relative">
                 <div className="bg_image_container">
                     {/*h-[calc(100vh_-_var(--nav-height,0))*/}
-                    {movie?.backdrop_path ? showBackground(movie) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto")}
+                    {movie?.backdrop_path ? showBackground(movie) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto", "bg-black bg-opacity-25", "text-white opacity-20")}
                 </div>
                 <div className="movie_details lg:w-full h-[100vh] overflow-clip xl:justify-center">
                     {/*<div className="glassmorphism">*/}

@@ -13,7 +13,7 @@ const PeopleShowcase: React.FC<MoviesProps> = ({movie, nbToShow, title}) => {
     return (
         <div className="">
             <h1 className="category_title">{title}</h1>
-            <ul className=" flex flex-wrap justify-center gap-3">
+            <ul className=" flex flex-wrap gap-3">
                 {casts?.slice(0, nbToShow).map(cast => (
                     <li key={cast.id} className="flex-column relative min-w-[95px] max-w-[95px] transform transition-transform hover:scale-125 hover:z-[10] hover:backdrop-blur-lg">
                         {cast.profile_path ? showImage(cast) : showNoImage("min-w-[95px] max-w-[95px]", "h-[130px]", "text-[75px]", "rounded-xl")}
