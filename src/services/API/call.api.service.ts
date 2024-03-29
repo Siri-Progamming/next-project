@@ -33,12 +33,34 @@ export const getFullMovie = async (id: number) => {
     const append_to_response:string = 'credits%2Cimages%2Ckeywords%2Crecommendations%2Creviews%2Csimilar%2Cvideos';
     try {
         const response = await fetch('/api/movies/' + id+'?language=fr-FR'+'&append_to_response='+append_to_response);
-        // const response = await fetch('/api/movies/' + id+'?append_to_response='+append_to_response);
         const data = await response.json();
-        const m = data.data.movie;
-        console.log("Full movie : ", m);
-        return m;
+        return data.data.movie;
     } catch (error) {
         console.error(error);
+    }
+}
+
+export const getMovieLike = async (idUser: string, idMovie:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/likes');
+        const data = await response.json();
+        return data.liked;
+    }catch (error) {
+        console.error("Erreur lors de la récupération du like : ",error);
+    }
+}
+
+export const updateMovieLike = async (idUser: string, idMovie:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/likes', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        return data.data.liked;
+    }catch (error) {
+        console.error("Erreur lors de la récupération du like : ",error);
     }
 }

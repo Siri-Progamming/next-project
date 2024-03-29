@@ -9,6 +9,7 @@ import PicturesShowcase from "../../../src/components/Showcase/PicturesShowcase"
 import SimilarShowcase from "../../../src/components/Showcase/SimilarShowcase";
 import Loader from "../../../src/components/utils/Loader";
 import {showNoImage} from "../../../src/components/Skeleton/NoData/NoImage";
+import Like from "../../../src/components/utils/Like";
 
 interface IdMovieProps {
 }
@@ -54,6 +55,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     {movie?.title && (
                         <h2 className={`main_title leading-none ${movieTitleSize(movie.title)} xl:w-[30vw]`}>
                             {movie.title}
+                            <Like idMovie={movie.id}/>
                         </h2>
                     )}
                     <p className="movie-review font-bold xl:w-[30vw] mr-5"

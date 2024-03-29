@@ -11,7 +11,7 @@ import clientPromise from "/lib/mongodb";
  *      parameters:
  *       - in: path
  *         name: idUser
- *         type: number
+ *         type: string
  *         required: true
  *         description: ID de l'utilisateur dont on visualise le compteur de likes
  *       - in: path
@@ -62,7 +62,8 @@ export default async function handler(req, res) {
                 data = {
                     action: 'IdMovie liked : ' + !like.liked,
                     idMovie: idMovie,
-                    idUser: idUser
+                    idUser: idUser,
+                    liked: !like.liked
                 }
                 res.status(201).json({ status: 201, data: data });
             } else {
