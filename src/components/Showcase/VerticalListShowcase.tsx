@@ -7,7 +7,7 @@ import Loader from "../utils/Loader";
 interface VerticalListShowcase {
     api: string;
     title: string;
-    searchQuery: string;
+    searchQuery?: string;
 }
 const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searchQuery}) => {
     const [movies, setMovies] = useState<Array<Movie>>([]);
@@ -20,7 +20,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     const initMovies = async () => {
         const results = await getMoviesSearch(urlApi);
         const items = results.results;
-        if (items.length > 0) {
+        if (items && items.length > 0) {
             setIsSearchEmpty(false);
             setPagesNb(results.total_pages);
             setResultsNb(results.total_results);

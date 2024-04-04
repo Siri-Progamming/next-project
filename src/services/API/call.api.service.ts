@@ -2,6 +2,9 @@ export const getMovies = async (api:string) => {
     try {
         const response = await fetch(api);
         const data = await response.json();
+        if(api.includes("recommanded")){
+            return data.data;
+        }
         return data.data.results;
     } catch (error) {
         console.error(error);

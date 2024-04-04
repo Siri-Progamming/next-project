@@ -1,4 +1,5 @@
 import clientPromise from "/lib/mongodb";
+import {processFavoriteMovie} from "../../../../../../src/services/BDD_TMDB";
 
 /**
  * @swagger
@@ -54,6 +55,7 @@ export default async function handler(req, res) {
 
     switch (req.method) {
         case "PUT":
+            await processFavoriteMovie(idMovie);
             if (like) {
                 resMongo = await db.collection("likes").updateOne(
                     {idTMDB: idMovie, idUser: idUser},

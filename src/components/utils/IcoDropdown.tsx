@@ -48,7 +48,13 @@ const IcoDropdownOffList: React.FC = () => {
     );
 }
 const IcoDropdownOnList: React.FC = () => {
-    const {logout} = useAuth();
+    const {user, logout} = useAuth();
+    const router = useRouter();
+
+    const handleClickOnLikes = () => {
+        router.push(`/ui/users/movies/likes`).then();
+    }
+
     return (
         <>
             <li>
@@ -58,6 +64,7 @@ const IcoDropdownOnList: React.FC = () => {
                         className="text-[16px]"></BuildIcon> Upcoming</span>}
                 </a>
             </li>
+            <li><a onClick={handleClickOnLikes}>J'aime 💕</a></li>
             <li><a onClick={logout}>Déconnexion</a></li>
         </>
     );

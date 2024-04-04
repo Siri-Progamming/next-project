@@ -28,3 +28,11 @@ export async function fetchMoviesGenres(language) {
         .catch(err => console.error('error:' + err));
     return apiResponse.genres;
 }
+
+export async function fetchMovie(idMovie,language) {
+    const url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.movie.replace("{movie_id}", idMovie.toString()));
+    const apiResponse = await fetch(url, tmdbGetOption)
+        .then(r => r.json())
+        .catch(err => console.error('error:' + err));
+    return apiResponse;
+}

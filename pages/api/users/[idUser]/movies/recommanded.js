@@ -59,17 +59,23 @@ export default async function handler(req, res) {
                     }
                 }
             }else{
-                //On retourne simplement les films les mieux notés ? ou le discover ?
                 res.status(404).json({ status: 404, error: "Not Found" });
             }
             //On supprime les doublons
             const uniqueMoviesSet = new Set(list_similar_movies.map(JSON.stringify));
             const list_similar_movies_nodouble = Array.from(uniqueMoviesSet).map(JSON.parse);
-            res.json({ status: 200, data: shuffleArray(list_similar_movies_nodouble).slice(0,15)});
+            // res.json({ status: 200, data: shuffleArray(list_similar_movies_nodouble).slice(0,15)});
+            const list_recommanded_no_liked = deleteAlreadyLikedMovies(list_similar_movies_nodouble, movies_liked);
+            res.json({ status: 200, data: shuffleArray(list_recommanded_no_liked).slice(0,15)});
             break;
         default:
             res.status(405).json({ status: 405, error: "Method Not Allowed" });
     }
+}
+
+function deleteAlreadyLikedMovies(movies, likedMovies) {
+    movies.filter(movie => !likedMovies.some(likedMovie => likedMovie.idTMDB === movie.id));
+    return movies;
 }
 function shuffleArray(array) {
     const shuffledArray = [...array]; // Crée une copie du tableau pour ne pas modifier l'original
