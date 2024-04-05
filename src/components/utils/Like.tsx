@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {getMovieLike, updateMovieLike} from "../../services/API/call.api.service";
 import {useAuth} from "../../contexts/AuthContext";
-import {useApp} from "../../contexts/AppContext";
 
 interface LikeProps{
     idMovie:number;
@@ -11,11 +10,11 @@ const [isLiked, setIsLiked] = useState<boolean>(false);
 const [isHovered, setIsHovered] = useState(false);
 const {user} = useAuth();
 const [isLoading, setIsLoading] = useState<boolean>(true);
-const {refresher} = useApp();
 
     const getLike = async () => {
         const like = await getMovieLike(user?.id!, idMovie);
-        if (like != null) {
+        console.log("état de like : "+like);
+        if (like) {
             setIsLiked(like);
         }else{
             setIsLiked(false);
@@ -32,7 +31,7 @@ const {refresher} = useApp();
 
     useEffect(() => {
         getLike().then();
-    }, []);
+    }, [idMovie]);
 
     const handleClick = () => {
         updateLike().then();

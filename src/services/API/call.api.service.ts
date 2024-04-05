@@ -47,7 +47,11 @@ export const getMovieLike = async (idUser: string, idMovie:number) => {
     try{
         const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/likes');
         const data = await response.json();
-        return data.liked;
+        if(data.liked){
+            return true;
+        }else{
+            return false;
+        }
     }catch (error) {
         console.error("Erreur lors de la récupération du like : ",error);
     }
