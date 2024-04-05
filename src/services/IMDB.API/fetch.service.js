@@ -29,7 +29,7 @@ export async function fetchMoviesGenres(language) {
     return apiResponse.genres;
 }
 
-export async function fetchMovie(idMovie,language) {
+export async function fetchMovie(language, idMovie) {
     const url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.movie.replace("{movie_id}", idMovie.toString()));
     const apiResponse = await fetch(url, tmdbGetOption)
         .then(r => r.json())

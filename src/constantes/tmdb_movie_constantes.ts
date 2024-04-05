@@ -1,5 +1,6 @@
 import {LanguagesEnumInterface, LanguagesEnum} from '../interfaces/Enums';
 import {SortByEnumInterface, SortByEnum} from '../interfaces/Enums';
+export const DEFAULT_LANGUAGE: LanguagesEnum = LanguagesEnum.frFR;
 export const LANGUAGES: Array<LanguagesEnumInterface> = [
     {id: 0, name: LanguagesEnum.frFR, display_name: "Français"},
     {id: 1, name: LanguagesEnum.enUS, display_name: "English"}

@@ -50,7 +50,6 @@ export default async function handler(req, res) {
                         .then(r => r.json())
                         .catch(err => console.error('error:' + err));
                     if (apiResponse.results) {
-
                         // On trie les résultats par score pondéré
                         // const sortedByScoreResults = sortByScore(apiResponse.results);
                         const results = apiResponse.results;
@@ -61,12 +60,17 @@ export default async function handler(req, res) {
             }else{
                 res.status(404).json({ status: 404, error: "Not Found" });
             }
-            //On supprime les doublons
-            const uniqueMoviesSet = new Set(list_similar_movies.map(JSON.stringify));
-            const list_similar_movies_nodouble = Array.from(uniqueMoviesSet).map(JSON.parse);
-            // res.json({ status: 200, data: shuffleArray(list_similar_movies_nodouble).slice(0,15)});
-            const list_recommanded_no_liked = deleteAlreadyLikedMovies(list_similar_movies_nodouble, movies_liked);
-            res.json({ status: 200, data: shuffleArray(list_recommanded_no_liked).slice(0,15)});
+
+            //On supprime les doublons en se basant sur les ids des films
+            const uniqueMoviesSet = new Set();
+            list_similar_movies.map(JSON.stringify).forEach(movie => {
+                if (!uniqueMoviesSet.has(movie.id)) {
+                    uniqueMoviesSet.add(movie);
+                }
+            });
+            const unique_movies = Array.from(uniqueMoviesSet).map(JSON.parse);
+            const recommanded_noliked = deleteAlreadyLikedMovies(unique_movies, movies_liked);
+            res.json({ status: 200, data: shuffleArray(recommanded_noliked).slice(0,15)});
             break;
         default:
             res.status(405).json({ status: 405, error: "Method Not Allowed" });
@@ -74,8 +78,20 @@ export default async function handler(req, res) {
 }
 
 function deleteAlreadyLikedMovies(movies, likedMovies) {
-    movies.filter(movie => !likedMovies.some(likedMovie => likedMovie.idTMDB === movie.id));
-    return movies;
+    let unlikedMovies = [];
+    for (let i = 0; i < movies.length; i++) {
+        let isLiked = false;
+        for (let j = 0; j < likedMovies.length; j++) {
+            if (movies[i].id === likedMovies[j].idTMDB) {
+                isLiked = true;
+                break;
+            }
+        }
+        if (!isLiked) {
+            unlikedMovies.push(movies[i]);
+        }
+    }
+    return unlikedMovies;
 }
 function shuffleArray(array) {
     const shuffledArray = [...array]; // Crée une copie du tableau pour ne pas modifier l'original

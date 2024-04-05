@@ -21,3 +21,15 @@ export async function processFavoriteMovie(idMovie){
         }
     }
 }
+
+//Boucle TMDB pour récupérer les films favoris (ça pue)
+export async function getFavoritesMoviesWithIdsInTMDB(language,idMovies){
+    let favoritesMovies = [];
+    for (const idMovie of idMovies) {
+        const tmdbMovie = await fetchMovie(language,idMovie);
+        if(tmdbMovie){
+            favoritesMovies.push(tmdbMovie);
+        }
+    }
+    return favoritesMovies;
+}

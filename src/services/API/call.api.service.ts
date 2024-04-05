@@ -53,6 +53,17 @@ export const getMovieLike = async (idUser: string, idMovie:number) => {
     }
 }
 
+export const getMoviesLiked = async (language:string,idUser: string) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/movies/likes?language='+language);
+        const data = await response.json();
+        console.log("API getMoviesLiked - data : ",data.data.movies);
+        return data.data.movies;
+    }catch (error) {
+        console.error("Erreur lors de la récupération du like : ",error);
+    }
+}
+
 export const updateMovieLike = async (idUser: string, idMovie:number) => {
     try{
         const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/likes', {

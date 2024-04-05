@@ -1,6 +1,7 @@
 import clientPromise from "/lib/mongodb";
 import {getFavoritesMoviesWithIds} from "../../../../../src/services/MONGODB.BDD/queries.service";
-
+import {getFavoritesMoviesWithIdsInTMDB} from "../../../../../src/services/BDD_TMDB";
+import {DEFAULT_LANGUAGE} from "../../../../../src/constantes/tmdb_movie_constantes";
 /**
  * @swagger
  * /api/users/{idUser}/movies/likes:
@@ -15,6 +16,11 @@ import {getFavoritesMoviesWithIds} from "../../../../../src/services/MONGODB.BDD
  *         type: string
  *         required: true
  *         description: ID de l'utilisateur dont on visualise le compteur de likes
+ *       - in: query
+ *         name: language
+ *         type: string
+ *         required: false
+ *         description: langue désirée pour l'affichage des films
  *      responses:
  *          200:
  *              description: La liste des films likés par l'utilisateur
@@ -24,6 +30,7 @@ export default async function handler(req, res) {
     const idUser =  req.query.idUser;
     const client = await clientPromise;
     const db = client.db("bdd");
+    const language = req.query.language || DEFAULT_LANGUAGE;
     let resMongo, data;
 
     switch (req.method) {
@@ -32,10 +39,10 @@ export default async function handler(req, res) {
                 {idUser: idUser, liked:true});
             const movies = await resMongo.toArray();
             if(resMongo && movies.length > 0){
-                console.log("Films likés par le user ", idUser, " : ", movies.map(movie => movie.idTMDB));
                 //On récupère les détails des films dans la table movies
                 const idMovies = movies.map(movie => movie.idTMDB);
-                const moviesFromBDD = await getFavoritesMoviesWithIds(idMovies);
+                // const moviesFromBDD = await getFavoritesMoviesWithIds(idMovies);
+                const moviesFromBDD = await getFavoritesMoviesWithIdsInTMDB(language,idMovies);
                 if(moviesFromBDD && moviesFromBDD.length > 0){
                     data = {
                         idUser: idUser,
@@ -45,7 +52,6 @@ export default async function handler(req, res) {
                 }else{
                     res.status(404).json({ status: 404, error: "Aucun film trouvé en BDD." });
                 }
-
             }else{
                 res.status(404).json({ status: 404, error: "L'utilisateur ne dispose d'aucun film dans ses préférences." });
             }
