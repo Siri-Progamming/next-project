@@ -4,8 +4,9 @@ import {useAuth} from "../../contexts/AuthContext";
 
 interface LikeProps{
     idMovie:number;
+    width?:string;
 }
-const Like: React.FC<LikeProps> = ({idMovie}) => {
+const Like: React.FC<LikeProps> = ({idMovie,width}) => {
 const [isLiked, setIsLiked] = useState<boolean>(false);
 const [isHovered, setIsHovered] = useState(false);
 const {user} = useAuth();
@@ -40,10 +41,10 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     return (
         <div>
             {user && (isLiked ?
-                <i className="fa-solid fa-heart fa-l text-tertiary-700" onClick={handleClick} ></i>
+                <i className={`fa-solid fa-heart fa-xl text-tertiary-700 ${width ? width : 'text-[50px]'}`} onClick={handleClick} ></i>
                 :
-                <i className={`fa-regular fa-heart fa-l text-tertiary-700 ${isHovered ? ' fa-bounce' : ''}`}
-                   onMouseEnter={() => setIsHovered(true)}
+                <i className={`fa-regular fa-heart fa-l text-tertiary-700 ${isHovered ? ' fa-bounce' : ''} ${width ? width : 'text-[50px]'}`}
+                   onMouseOver={() => setIsHovered(true)}
                    onMouseLeave={() => setIsHovered(false)}
                    onClick={handleClick}></i>)
             }

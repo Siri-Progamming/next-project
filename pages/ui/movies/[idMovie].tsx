@@ -47,6 +47,9 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                 :
                 <div className="movie_page relative">
                 <div className="bg_image_container">
+                    <div className="absolute right-0 top-[10vh] 2xl:right-[170px] 2xl:top-[100px] z-[2000]">
+                        <Like idMovie={movie?.id!} width="text-[60px]"/>
+                    </div>
                     {/*h-[calc(100vh_-_var(--nav-height,0))*/}
                     {movie?.backdrop_path ? showBackground(movie) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto", "bg-black bg-opacity-25", "text-white opacity-20")}
                 </div>
@@ -55,7 +58,6 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     {movie?.title && (
                         <h2 className={`main_title leading-none ${movieTitleSize(movie.title)} xl:w-[30vw]`}>
                             {movie.title}
-                            <Like idMovie={movie.id}/>
                         </h2>
                     )}
                     <p className="movie-review font-bold xl:w-[30vw] mr-5"

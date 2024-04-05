@@ -34,18 +34,25 @@ const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="auth-form">
-            {error && <div style={{ color: 'red' }}>{error}</div>}
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" required autoComplete="username"/>
-            </div>
-            <div>
-                <label htmlFor="password">Mot de passe:</label>
-                <input type="password" id="password" name="password" required autoComplete="current-password"/>
-            </div>
-            <button type="submit">Se connecter</button>
-        </form>
+        <div id="auth-form" className="bg-black bg-opacity-10 p-5">
+            <h1>Connexion</h1>
+            <img id="login-logo-fennext" src="/fennec.png" alt="picture of fennext" className="h-[250px]"/>
+            <form onSubmit={handleSubmit}>
+                {error && <div style={{color: 'red'}}>{error}</div>}
+                <div>
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" name="email" required autoComplete="username"/>
+                </div>
+                <div>
+                    <label htmlFor="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" required autoComplete="current-password"/>
+                </div>
+                <button type="submit">Se connecter</button>
+                <div>
+                    <a href="/auth/sign-up">S'inscrire</a>
+                </div>
+            </form>
+        </div>
     );
 };
 export default LoginForm;

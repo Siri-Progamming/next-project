@@ -308,6 +308,15 @@ footer{
     z-index: 1;
     position: absolute;
 }
+
+/* LOGIN-SIGNUP FORMS */
+#auth-form h1{
+    font-family: "Leckerli One", cursive;
+    font-weight: 400;
+    font-style: normal;
+    text-align: left;
+    @apply text-white text-4xl
+}
 /* SOME STYLES */
 .glassmorphism{
     height: fit-content;
