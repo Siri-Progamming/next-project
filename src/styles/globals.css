@@ -30,7 +30,7 @@ header{
     height: var(--nav-height);
     width: 100%;
     /*@apply bg-secondary-500;*/
-    background: linear-gradient(90deg, rgba(252,176,69,0.9) 0%, rgba(253,29,29,0.9) 50%, rgba(252,176,69,0.9) 100%);
+    background: linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,0.9) 50%, rgba(252,176,69,1) 100%);
     top: 0;
     left:0;
     z-index: 1000;
