@@ -22,7 +22,7 @@ const login: React.FC = () => {
     }, [isTokenVerified]);
 
     return (
-        <main>
+        <main className="p-0">
         {isLoading ?
             <div>Loading...</div> :
             <div className="flex justify-center items-center h-screen">

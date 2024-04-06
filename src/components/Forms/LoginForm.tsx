@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import {useRouter} from "next/router";
 import {useAuth} from "../../contexts/AuthContext";
+import InputPassword from "../Forms/FormElements/InputPassword";
+import InputEmail from "../Forms/FormElements/InputEmail";
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const LoginForm = () => {
     const [error, setError] = useState<string>('');
@@ -33,26 +38,42 @@ const LoginForm = () => {
         }
     };
 
+    const handleClickOnSignup = () => {
+        router.push('/ui/signup').then();
+    }
     return (
-        <div id="auth-form" className="bg-black bg-opacity-10 p-5">
-            <h1>Connexion</h1>
-            <img id="login-logo-fennext" src="/fennec.png" alt="picture of fennext" className="h-[250px]"/>
-            <form onSubmit={handleSubmit}>
-                {error && <div style={{color: 'red'}}>{error}</div>}
+        <>
+            {error && (
                 <div>
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" name="email" required autoComplete="username"/>
+                    <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={true} className="auth-error-msg">
+                        <Alert
+                            severity="error"
+                            variant="filled"
+                        >
+                            {error}
+                        </Alert>
+                    </Snackbar>
                 </div>
-                <div>
-                    <label htmlFor="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" required autoComplete="current-password"/>
-                </div>
-                <button type="submit">Se connecter</button>
-                <div>
-                    <a href="/auth/sign-up">S'inscrire</a>
-                </div>
-            </form>
-        </div>
+                )}
+            <div id="auth-form">
+                <h1>Connexion</h1>
+                <img id="login-logo-fennext" src="/fennec.png" alt="picture of fennext"/>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <InputEmail/>
+                    </div>
+                    <div>
+                        <InputPassword/>
+                    </div>
+                    <Button variant="contained" type="submit" className="form-btn auth-form-btn">
+                        Se connecter
+                    </Button>
+                    <div className="switch-form-text">
+                        <a onClick={handleClickOnSignup}>S'inscrire</a>
+                    </div>
+                </form>
+            </div>
+        </>
     );
 };
 export default LoginForm;

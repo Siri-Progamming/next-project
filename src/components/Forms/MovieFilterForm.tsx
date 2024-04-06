@@ -87,7 +87,7 @@ const MovieFilterForm: React.FC = ({}) => {
                         ))}
                     </div>
                 </div>
-                <button type="submit" className="btn bg-primary-600 text-white hover:bg-primary-400 border-none">Rechercher</button>
+                <button type="submit" className="form-btn w-full">Rechercher</button>
             </form>
         </div>
     );

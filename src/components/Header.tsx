@@ -1,6 +1,6 @@
 import {useRouter} from "next/router";
 import SearchBar from "./Forms/SearchBar";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import IcoDropdown from "./utils/IcoDropdown";
 import {useAuth} from "../contexts/AuthContext";
 import Pin from "./utils/Pin";
@@ -11,6 +11,7 @@ const Header: React.FC = () => {
     const [showHeader, setShowHeader] = useState(false);
     const {user, logout} = useAuth();
     const [isPinned, setIsPinned] = React.useState(false);
+    const [isHeaderFullyVisible, setIsHeaderFullyVisible] = React.useState(false);
     const handleClick = () => {
         router.push('/');
     };
@@ -18,16 +19,33 @@ const Header: React.FC = () => {
         setShowHeader(true);
     };
     const handleMouseLeave = () => {
-        if(!isPinned){
+        if(!isPinned && isHeaderFullyVisible){
             setTimeout(() => {
                 setShowHeader(false);
             }, 150);
         }
     };
 
+    const handleTransitionEnd = () => {
+        if(showHeader){
+            setIsHeaderFullyVisible(true);
+        }else{
+            setIsHeaderFullyVisible(false);
+        }
+    }
+
     const handlePin = () => {
         setIsPinned(!isPinned);
+        localStorage.setItem('isHeaderPinned', String(!isPinned));
     }
+
+    useEffect(() => {
+        const isHeaderPinned = localStorage.getItem('isHeaderPinned') === 'true';
+        if(isHeaderPinned){
+            setIsPinned(isHeaderPinned);
+            setShowHeader(isHeaderPinned);
+        }
+    }, []);
 
     return (
         <>
@@ -36,7 +54,7 @@ const Header: React.FC = () => {
                     <div
                         onMouseOver={handleMouseEnter}
                         className={`absolute inset-0 z-[999] w-full h-[10vh]`}></div>
-                    <header onMouseLeave={handleMouseLeave}
+                    <header onTransitionEnd={handleTransitionEnd} onMouseLeave={handleMouseLeave}
                             className={`flex flex-row text-wrap transition-height duration-700 ${
                                 showHeader ? 'h-[var(--nav-height)] showHeader' : 'h-0'
                             }`}>

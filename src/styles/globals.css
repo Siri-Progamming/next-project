@@ -30,7 +30,7 @@ header{
     height: var(--nav-height);
     width: 100%;
     /*@apply bg-secondary-500;*/
-    background: linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    background: linear-gradient(90deg, rgba(252,176,69,0.9) 0%, rgba(253,29,29,0.9) 50%, rgba(252,176,69,0.9) 100%);
     top: 0;
     left:0;
     z-index: 1000;
@@ -275,9 +275,10 @@ footer{
     animation: gradient-opacity-0-03 1400ms;
     /*mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 1) 7%, rgba(0, 0, 0, 1) 70%, transparent 85%);*/
     mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 75%,  transparent 90%);
+    /*filter: brightness(0.7);*/
 }
 .dropShadow{
-    filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 10px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+    filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5)) drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5)) drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 .movie_details{
     z-index: 1;
@@ -288,7 +289,7 @@ footer{
     flex-direction: column;
     max-width: 100vw;
     backdrop-filter: brightness(0.9) blur(0.5px);
-    /*-webkit-backdrop-filter: brightness(0.7) blur(0.5px);*/
+    -webkit-backdrop-filter: brightness(0.9) blur(0.5px);
     padding-left: 3vw;
     @apply pt-[14vh];
     @apply md:pb-[15vh];
@@ -310,12 +311,71 @@ footer{
 }
 
 /* LOGIN-SIGNUP FORMS */
+#auth-form{
+    @apply bg-black bg-opacity-70 p-10 mt-[10vh];
+    @apply border-l-8 border-r-8 border-transparent;
+    border-image: repeating-linear-gradient(260deg, rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5) 5px, rgba(255, 255, 255, 0.7) 5px, rgba(255, 255, 255, 0.7) 10px) 1;
+    position: relative;
+    @apply flex flex-col justify-center items-center;
+}
+#auth-form form{
+    @apply flex flex-col justify-items-center items-center;
+}
 #auth-form h1{
     font-family: "Leckerli One", cursive;
     font-weight: 400;
     font-style: normal;
     text-align: left;
-    @apply text-white text-4xl
+    @apply text-white text-[40px];
+    position: absolute;
+    top:-37px;
+    left:25px;
+}
+input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 100px #212942 inset; /* Ombre intérieure */
+    -webkit-text-fill-color: #F3ECE5; /* Couleur du texte */
+}
+#auth-form img{
+    @apply h-[250px];
+}
+.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline,
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline{
+    /*@apply border-secondary-300;*/
+    @apply border-white;
+}
+.MuiOutlinedInput-root{
+    @apply text-white;
+}
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+    /*@apply border-secondary-500;*/
+    @apply border-white;
+}
+.MuiInputLabel-outlined{
+    @apply text-white text-opacity-50;
+}
+.MuiInputLabel-outlined.Mui-focused{ /* Couleur du label qui s'affiche en haut */
+    /*@apply text-secondary-500;*/
+    @apply text-white;
+}
+.MuiInputLabel-outlined.MuiFormLabel-filled:not(.Mui-focused){
+    /*@apply text-secondary-300;*/
+    @apply text-white;
+}
+
+.form-btn{
+    @apply btn bg-primary-600 text-white hover:bg-primary-400 border-none;
+    @apply mx-auto;
+    @apply rounded-md;
+    @apply normal-case;
+}
+.auth-form-btn{
+    @apply flex justify-center w-[29.5ch];
+}
+.switch-form-text{
+    @apply self-end mt-8 opacity-50 hover:opacity-100 cursor-pointer;
+}
+.auth-error-msg{
+    @apply mt-[10vh]  lg:mt-[8.5vh] max-w-[356px];
 }
 /* SOME STYLES */
 .glassmorphism{

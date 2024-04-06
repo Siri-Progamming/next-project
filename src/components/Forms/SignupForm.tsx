@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import {useRouter} from "next/router";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import InputEmail from "./FormElements/InputEmail";
+import InputPassword from "./FormElements/InputPassword";
+import InputText from "./FormElements/InputText";
+import Button from "@mui/material/Button";
 
 const SignupForm = () => {
     const router = useRouter();
@@ -28,26 +34,45 @@ const SignupForm = () => {
             console.error('Erreur lors de la soumission du formulaire :', error);
         }
     };
+    const handleClickOnLogin = () => {
+        router.push('/ui/login').then();
+    }
     return (
-        <div>
-            <h1>Inscription</h1>
-            <form onSubmit={handleSubmit}>
-                {error && <div style={{color: 'red'}}>{error}</div>}
-                <div>
-                    <label>Email:</label>
-                    <input type="email" id="email" name="email" required autoComplete="username"/>
-                </div>
-                <div>
-                    <label>Prénom:</label>
-                    <input type="text" id="name" name="name" required autoComplete="username"/>
-                </div>
-                <div>
-                    <label>Mot de passe:</label>
-                    <input type="password" id="password" name="password" required autoComplete="current-password"/>
-                </div>
-                <button type="submit">S'inscrire</button>
-            </form>
-        </div>
+        <>
+        {error && (
+            <div>
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={true} className="auth-error-msg">
+                    <Alert
+                        severity="error"
+                        variant="filled"
+                    >
+                        {error}
+                    </Alert>
+                </Snackbar>
+            </div>
+        )}
+            <div id="auth-form">
+                <h1>Inscription</h1>
+                <img id="signup-logo-fennext" src="/fennec2.png" alt="picture of fennext"/>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <InputEmail/>
+                    </div>
+                    <div>
+                        <InputText type="text" label="Nom" id="name" name="name" required={true} autoComplete="username"/>
+                    </div>
+                    <div>
+                        <InputPassword/>
+                    </div>
+                    <Button variant="contained" type="submit" className="form-btn auth-form-btn">
+                        S'inscrire
+                    </Button>
+                    <div className="switch-form-text">
+                        <a onClick={handleClickOnLogin}>Se connecter</a>
+                    </div>
+                </form>
+            </div>
+        </>
     );
 };
 export default SignupForm;

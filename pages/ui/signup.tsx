@@ -22,7 +22,7 @@ const signup: React.FC = () => {
     }, [isTokenVerified]);
 
     return (
-        <main>
+        <main className="p-0">
             <div className="flex justify-center items-center h-screen">
                 <SignupForm/>
             </div>
