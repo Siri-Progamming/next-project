@@ -1,5 +1,6 @@
-export const getMovies = async (api:string) => {
+export const getMovies = async (language:string,api:string) => {
     try {
+        api = api + '?language=' + language;
         const response = await fetch(api);
         const data = await response.json();
         if(api.includes("recommanded")){
@@ -12,8 +13,8 @@ export const getMovies = async (api:string) => {
 }
 
 export const getMoviesSearch = async (url:string) => {
+    // console.log("getMoviesSearch - url : ",url);
     try {
-        console.log("getMoviesSearch - URL : ", url)
         const response = await fetch(url);
         const data = await response.json();
         return data.data;
@@ -32,10 +33,10 @@ export const getMoviesSearch = async (url:string) => {
 //     }
 // }
 
-export const getFullMovie = async (id: number) => {
+export const getFullMovie = async (language:string,id: number) => {
     const append_to_response:string = 'credits%2Cimages%2Ckeywords%2Crecommendations%2Creviews%2Csimilar%2Cvideos';
     try {
-        const response = await fetch('/api/movies/' + id+'?language=fr-FR'+'&append_to_response='+append_to_response);
+        const response = await fetch('/api/movies/' + id+'?language='+language+'&append_to_response='+append_to_response);
         const data = await response.json();
         return data.data.movie;
     } catch (error) {

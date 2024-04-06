@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import VerticalListShowcase from "../../../src/components/Showcase/VerticalListShowcase";
 import {useRouter} from "next/router";
+import {useNameSearch} from "../../../src/contexts/NameSearchContext";
 
 interface searchProps {
 }
@@ -8,16 +9,16 @@ const nameSearch: React.FC<searchProps> = () => {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
     const isSearch = searchQuery !== '' && searchQuery.trim().length > 0;
+    const {query,fullQuery} = useNameSearch();
 
     useEffect(() => {
-        const { query } = router.query;
-        if (query){
-            setSearchQuery(query as string);
+        if (fullQuery){
+            setSearchQuery(fullQuery);
         }
-    }, [router.query]);
+    }, [fullQuery]);
 
     useEffect(() => {
-        // console.log("nameSearch - searchQuery : ", searchQuery);
+        console.log("nameSearch - searchQuery : ", searchQuery);
     }, [searchQuery]);
 
     return(

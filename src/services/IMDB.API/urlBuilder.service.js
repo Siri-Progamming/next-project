@@ -52,10 +52,10 @@ export function buildURL_movies_discover(req, url){
     }
     if (req.query.language) {
         if (!severalParams) {
-            url = url + '?language=' + req.query.language[0];
+            url = url + '?language=' + req.query.language;
             severalParams = true;
         }else{
-            url = url + '&language=' + req.query.language[0];
+            url = url + '&language=' + req.query.language;
         }
     }
     if (req.query.page) {
@@ -114,6 +114,6 @@ export function buildURL_movies_discover(req, url){
             url = url + '&with_genres=' + req.query.with_genres;
         }
     }
-    console.log("url:", url);
+    // console.log("url:", url);
     return url;
 }

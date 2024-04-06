@@ -1,10 +1,12 @@
 // NameSearchContext.tsx
 import React, {createContext, FormEvent, useContext, useState} from "react";
 import {useRouter} from "next/router";
+import {useConstantes} from "./ConstantesContext";
 
 // Interface pour les valeurs du contexte de recherche par nom
 interface NameSearchContextProps {
     query: string;
+    fullQuery: string;
     setQuery: React.Dispatch<React.SetStateAction<string>>;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -29,13 +31,16 @@ interface NameSearchProviderProps{
 export const NameSearchProvider: React.FC<NameSearchProviderProps> = ({ children }) => {
     const router = useRouter();
     const [query, setQuery] = useState<string>('');
+    const {DISPLAY_LANGUAGE} = useConstantes();
+    const [fullQuery, setFullQuery] = useState<string>('');
 
     // Fonction pour gérer la soumission du formulaire de recherche
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // console.log("SearchBar - handleSubmit : ", query);
         if(query !== '' && query.trim().length > 0){
-            let finalQuery = "?query="+query;
+            let finalQuery = "?query="+query+"&include_adult=false&language="+DISPLAY_LANGUAGE+"&page=1";
+            setFullQuery(finalQuery);
             router.push('/ui/movies/name-search'+finalQuery).then(() => {
                 // setQuery('');
             });
@@ -51,6 +56,7 @@ export const NameSearchProvider: React.FC<NameSearchProviderProps> = ({ children
     // Valeurs fournies par le contexte
     const contextValue = {
         query,
+        fullQuery,
         setQuery,
         handleSubmit,
         handleChange

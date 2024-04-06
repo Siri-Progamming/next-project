@@ -3,6 +3,7 @@ import {Movie} from '../../interfaces/Movie';
 import MediaCard from "../Cards/MediaCard";
 import {createMovie} from "../../services/API/object.creator.service";
 import {getMovies} from "../../services/API/call.api.service";
+import {useConstantes} from "../../contexts/ConstantesContext";
 
 interface HorizontalListShowcaseProps {
     api: string;
@@ -14,9 +15,10 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, tit
     const [isListEmpty, setIsListEmpty] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const isUserRecommandation = api.includes("recommanded");
+    const {DISPLAY_LANGUAGE} = useConstantes();
 
     const initMovies = async () => {
-        const moviesDiscover = await getMovies(api);
+        const moviesDiscover = await getMovies(DISPLAY_LANGUAGE, api);
         if (moviesDiscover && moviesDiscover.length > 0) {
             setIsListEmpty(false);
             let tempMovies: Array<Movie> = [];

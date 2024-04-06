@@ -10,6 +10,7 @@ import SimilarShowcase from "../../../src/components/Showcase/SimilarShowcase";
 import Loader from "../../../src/components/utils/Loader";
 import {showNoImage} from "../../../src/components/Skeleton/NoData/NoImage";
 import Like from "../../../src/components/utils/Like";
+import {useConstantes} from "../../../src/contexts/ConstantesContext";
 
 interface IdMovieProps {
 }
@@ -19,9 +20,10 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
     const {idMovie} = router.query;
     const [movie, setMovie] = useState<FullMovie | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const {DISPLAY_LANGUAGE} = useConstantes();
 
     const initMovie = async () => {
-        const movie = await getFullMovie(Number(idMovie as string));
+        const movie = await getFullMovie(DISPLAY_LANGUAGE,Number(idMovie as string));
         if (movie != null) {
             setMovie(createFullMovie(movie));
         }

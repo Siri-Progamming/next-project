@@ -16,11 +16,11 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     const [movies, setMovies] = useState<Array<Movie>>([]);
     const [resultsNb, setResultsNb] = useState<number>(0);
     const [pagesNb, setPagesNb] = useState<number>(0);
-    const urlApi = api+"?query="+searchQuery+"&language=fr-FR";
     const [isSearchEmpty, setIsSearchEmpty] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const {user} = useAuth();
     const {DISPLAY_LANGUAGE} = useConstantes();
+    const urlApi = api+searchQuery
 
     const initMovies = async () => {
         const results = await getMoviesSearch(urlApi);
@@ -40,9 +40,9 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     }
 
     const initFavoriteMovies = async () => {
-        console.log("calling getMoviesLiked with user id : ",user?.id!);
+        // console.log("calling getMoviesLiked with user id : ",user?.id!);
         const results = await getMoviesLiked(DISPLAY_LANGUAGE,user?.id!);
-        console.log("initFavoriteMovies - results : ",results);
+        // console.log("initFavoriteMovies - results : ",results);
         if(results && results.length > 0){
             let tempMovies: Array<Movie> = [];
             for(const result of results) {
@@ -56,7 +56,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
         if(!api.includes("likes")){
             initMovies().then();
         }else {
-            console.log("VerticalListShowcase - useEffect - initFavoriteMovies");
+            // console.log("VerticalListShowcase - useEffect - initFavoriteMovies");
             initFavoriteMovies().then();
         }
 

@@ -52,10 +52,11 @@ interface MovieFilterProviderProps{
 // Fournisseur de contexte de recherche par nom
 export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ children }) => {
     const router = useRouter();
+    const {DISPLAY_LANGUAGE} = useConstantes();
     const {MOVIE_GENRES} = useConstantes();
     const [query, setQuery] = useState<string>('');
     const [genres, setGenres] = useState<number[]>([]);
-    const [language, setLanguage] = useState<string>('fr-FR');
+    const [language, setLanguage] = useState<string>(DISPLAY_LANGUAGE);
     const [sortBy, setSortBy] = useState<string>('popularity.desc');
     const [noteMin, setNoteMin] = useState<number>(8);
     const [noteMax, setNoteMax] = useState<number>(10);
@@ -64,7 +65,7 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     const [activePage, setActivePage] = useState<number>(1);
 
     useEffect(() => {
-        console.log("MovieFilterContext - Genres : ", genres);
+        // console.log("MovieFilterContext - Genres : ", genres);
     }, [genres]);
 
     // Fonction pour gérer la soumission du formulaire de recherche
@@ -79,7 +80,7 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     }
     const handleReset = () => {
     setGenres([]);
-    setLanguage('fr-FR');
+    setLanguage(DISPLAY_LANGUAGE);
     setSortBy('popularity.desc');
     setNoteMin(8);
     setNoteMax(10);
