@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Movie} from '../../interfaces/Movie';
 import MediaCard from "../Cards/MediaCard";
 import { createMovie } from "../../services/API/object.creator.service";
@@ -21,6 +21,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     const {user} = useAuth();
     const {DISPLAY_LANGUAGE} = useConstantes();
     let urlApi = api+searchQuery
+    const anchor = useRef<HTMLDivElement>(null);
 
     const initMovies = async (page?:number) => {
         if(page){
@@ -95,6 +96,9 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     }, [pagesNb, resultsNb]);
     const handlePageChange = async (event: React.ChangeEvent<unknown>, pageNumber: number) => {
         initMovies(pageNumber).then();
+        if (anchor.current) {
+            anchor.current.scrollIntoView({ behavior: 'smooth' });
+        }
     }
     return (
         <>
@@ -105,13 +109,13 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
                         <div className="flex justify-center items-center h-screen mt-[10vh]">La recherche n'a retourné aucun résultat :-(</div>
                         :
                         <div className="category_movies mt-[10vh] flex flex-col justify-center items-center">
-                            <h1 className="category_title self-start">{String(resultsNb)} {title}</h1>
+                            <h1 className="category_title self-start" ref={anchor}>{String(resultsNb)} {title}</h1>
                             <ul id="vertical-list-showcase" className="">
                                 {movies.map(movie => (
                                     <MediaCard key={movie.id} movie={movie}/>
                                 ))}
                             </ul>
-                            <div className="sticky bottom-0 z-[999]">
+                            <div className="sticky bottom-0 z-[999] h-fit w-screen flex flex-row items-center justify-center">
                                 <Paginations pages={pagesNb} handlePageChange={handlePageChange}/>
                             </div>
                         </div>

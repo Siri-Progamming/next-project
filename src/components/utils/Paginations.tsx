@@ -10,7 +10,7 @@ interface PaginationsProps{
 const Paginations: React.FC<PaginationsProps> = ({pages, handlePageChange}) => {
     return (
         <Stack spacing={2}>
-            <Pagination count={pages}  variant="outlined" color="primary" onChange={handlePageChange}/>
+            <Pagination count={pages}  shape="rounded" variant="outlined" color="primary" onChange={handlePageChange}/>
         </Stack>
     )
 }

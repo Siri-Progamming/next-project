@@ -35,8 +35,7 @@ const MediaCard: React.FC<MediaCardProps> = ({movie}) => {
                     <MediaCardSkeleton/>
                     :
                     (
-                        <li key={movie.id} className="media-card"
-                            onClick={handleClick}>
+                        <li key={movie.id} className="media-card">
                             {movie.poster_path ? showImage(movie) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
                                 <PercentSticker note={movie.vote_average} />
@@ -54,7 +53,9 @@ const MediaCard: React.FC<MediaCardProps> = ({movie}) => {
     function showImage(movie:Movie){
         return (
             <div className="media-card-bg"
-                 style={{backgroundImage: `url(${ConfigService.themoviedb.urls.image_view + "/w220_and_h330_face" + movie.poster_path})`}}>
+                 style={{backgroundImage: `url(${ConfigService.themoviedb.urls.image_view + "/w220_and_h330_face" + movie.poster_path})`}}
+                 onClick={handleClick}
+            >
             </div>
         )
     }

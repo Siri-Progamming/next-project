@@ -190,7 +190,6 @@ footer{
     position: relative;
     margin-bottom: 10px;
     margin-top: 5px;
-    cursor: pointer;
     /*box-shadow: 0 0 12px rgba(74, 0, 255, 0.5);*/
     box-shadow:
                           0 0 12px rgba(0, 0, 0, 1),
@@ -206,7 +205,7 @@ footer{
     min-width: 220px;
     max-height: 330px;
     min-height: 330px;
-
+    cursor: pointer;
     /*border: 2px solid white;*/
     border-bottom: none;
     border-top-left-radius: 15px;
@@ -382,9 +381,20 @@ input:-webkit-autofill{
 
 /* PAGINATION */
 .MuiPaginationItem-root:not(.Mui-selected){
-    @apply text-white;
-    background: rgba(255, 255, 255, 0.1);
-    border:  rgba(255, 255, 255, 0.5);
+    @apply text-white text-opacity-20;
+    @apply bg-black;
+    @apply border border-white border-opacity-20;
+}
+.MuiPaginationItem-root:not(.Mui-selected):hover{
+    @apply bg-black;
+}
+.MuiPaginationItem-root.Mui-selected{
+    @apply text-secondary-600 text-opacity-100;
+    @apply bg-secondary-300 bg-opacity-100;
+    @apply border border-secondary-600 border-opacity-100;
+}
+.MuiPaginationItem-root.Mui-selected:hover{
+    @apply bg-secondary-300 bg-opacity-90;
 }
 /* SOME STYLES */
 .glassmorphism{
@@ -396,6 +406,17 @@ input:-webkit-autofill{
     border-bottom-left-radius: 100px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+}
+
+.horizontal-fading::after{
+    content:"";
+    width:150px;
+    height:100%;
+    position:absolute;
+    top:0;
+    right:0;
+    background-image:linear-gradient(to right,rgba(0,0,0,0) 0,rgba(0,0,0,0.7) 100%);
+    pointer-events:none;
 }
 /* ANIMATIONS */
 @keyframes gradient-opacity-0-03 {
