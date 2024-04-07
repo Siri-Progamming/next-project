@@ -86,14 +86,14 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                 </div>
                 {/*</div>*/}
                 <div
-                    className="about_movie absolute top-[75vh] md:top-[80vh] xl:top-[80vh] bottom-[0] left-[3vw] right-0 flex flex-col md:flex-row">
-                    <div className="cast_review_movie grow max-w-[100vw] md:max-w-[40vw] md:mr-10">
-                        <PeopleShowcase movie={movie ? movie : null} nbToShow={7} title={"Cast"}/>
+                    className="about_movie flex flex-col justify-between absolute top-[75vh] bottom-[0] left-[3vw] right-0 md:top-[80vh] lg:flex-row">
+                    <div className="cast_review_movie grow max-w-[100vw] mr-[3vw]  lg:max-w-[40vw] ">
+                            <PeopleShowcase movie={movie ? movie : null} nbToShow={movie?.cast?.length || 0} title={"Têtes d'affiche"}/>
                     </div>
-                    <div className="pictures_movie grow-0 max-w-[100vw] md:max-w-[30vw] md:mr-14 lg:mr-24">
+                    <div className="pictures_movie grow-0 max-w-[100vw] mr-[3vw] lg:max-w-[30vw]">
                         {movie && <PicturesShowcase movie={movie} nbToShow={3} startFrom={5}/>}
                     </div>
-                    <div className="similar_movies grow-0 max-w-[100vw] lg:max-w-[20vw] xl:max-w-[14vw] md:mr-10">
+                    <div className="similar_movies grow-0 max-w-[100vw] mr-[3vw] lg:max-w-[20vw] xl:max-w-[14vw] lg:mr-10">
                         {movie && movie?.recommendations.length > 0 ?
                             <SimilarShowcase movie={movie} nbToShow={4} title={"Recommendations"}/>
                             :

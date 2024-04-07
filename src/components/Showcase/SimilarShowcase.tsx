@@ -21,9 +21,9 @@ const SimilarShowcase: React.FC<SimilarShowcaseProps> = ({movie, nbToShow, title
     return (
         <div className="">
             <h1 className="category_title">{title}</h1>
-            <ul className=" flex flex-wrap  justify-center gap-3">
+            <ul className=" flex flex-wrap  justify-center gap-[10px]">
                 {similars?.slice(0, nbToShow).map(similar => (
-                    <li key={similar.id} className="flex-column relative w-[110px] cursor-pointer transform transition-transform hover:scale-110 hover:z-[10]" onClick={() => handleClick(similar.id)}>
+                    <li key={similar.id} className="flex-column relative w-[110px] cursor-pointer" onClick={() => handleClick(similar.id)}>
                         {similar.poster_path ?
                             showImage(similar)
                             :

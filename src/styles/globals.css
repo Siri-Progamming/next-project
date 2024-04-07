@@ -118,6 +118,7 @@ footer{
     gap: 20px;
     max-height: 80vh;
     padding-top:20px;
+    @apply text-sm;
 }
 .genre_filter{
     @apply text-white;
@@ -139,21 +140,21 @@ footer{
     background-color: transparent;
     background-clip: content-box;
 }
-
 /*le fond de la scrollbar*/
 ::-webkit-scrollbar-track {
     /*background-color: rgba(0,0,0,0.1);*/
-    @apply bg-accent-700;
+    @apply bg-white bg-opacity-5;
     border: 10px solid transparent;
 }
 /*la barre*/
 ::-webkit-scrollbar-thumb {
-    @apply bg-white;
+    @apply bg-accent-700;
     background-clip: content-box;
     border-radius: 50px;
+    @apply cursor-pointer;
 }
 ::-webkit-scrollbar-thumb:hover {
-    @apply bg-white;
+    @apply bg-accent-500;
 }
 
 /* MOVIES GRID */
