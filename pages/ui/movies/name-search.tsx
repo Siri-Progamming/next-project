@@ -18,12 +18,12 @@ const nameSearch: React.FC<searchProps> = () => {
     }, [fullQuery]);
 
     useEffect(() => {
-        console.log("nameSearch - searchQuery : ", searchQuery);
+        // console.log("nameSearch - searchQuery : ", searchQuery);
     }, [searchQuery]);
 
     return(
         <main>
-            {isSearch ? <VerticalListShowcase api="/api/movies/search" title = "Résultats de la recherche : " searchQuery={searchQuery} /> : <h1>Effectuez une recherche.</h1>}
+            {isSearch ? <VerticalListShowcase api="/api/movies/search" title = "résultats : " searchQuery={searchQuery} /> : <h1>Effectuez une recherche.</h1>}
         </main>
     );
 }

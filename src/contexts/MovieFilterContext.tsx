@@ -1,6 +1,7 @@
 import React, {createContext, SyntheticEvent, useContext, useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useConstantes} from "./ConstantesContext";
+import {useApp} from "./AppContext";
 interface MovieFilterContextProps {
     query: string;
     setQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -63,6 +64,7 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     const [nbVotesMin, setNbVotesMin] = useState<number>(100);
     const [nbPages, setNbPages] = useState<number>(1);
     const [activePage, setActivePage] = useState<number>(1);
+    const {currentRequest, setCurrentRequest} = useApp();
 
     useEffect(() => {
         // console.log("MovieFilterContext - Genres : ", genres);
@@ -73,6 +75,8 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
         e.preventDefault();
         const queryParams = generateMovieFilterQueryParams(language, sortBy, noteMin, noteMax, nbVotesMin, genres, activePage, MOVIE_GENRES);
         setQuery(queryParams);
+        setCurrentRequest(queryParams);
+        //TODO Ajouter au localstorage en cas de refresh
         // console.log("MovieFilterContext - Query Params : ", queryParams);
         router.push('/ui/movies/search').then(() => {
             // setQuery('');

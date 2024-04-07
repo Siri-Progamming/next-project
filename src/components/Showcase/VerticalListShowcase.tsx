@@ -6,7 +6,7 @@ import {getMoviesSearch,getMoviesLiked} from "../../services/API/call.api.servic
 import Loader from "../utils/Loader";
 import {useAuth} from "../../contexts/AuthContext";
 import {useConstantes} from "../../contexts/ConstantesContext";
-
+import Paginations from "../utils/Paginations";
 interface VerticalListShowcase {
     api: string;
     title: string;
@@ -20,9 +20,14 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const {user} = useAuth();
     const {DISPLAY_LANGUAGE} = useConstantes();
-    const urlApi = api+searchQuery
+    let urlApi = api+searchQuery
 
-    const initMovies = async () => {
+    const initMovies = async (page?:number) => {
+        if(page){
+            console.log("initMovies - page : ",page);
+            urlApi = urlApi.replace(/(page=)\d+/, `$1${page}`);
+        }
+        console.log("urlAPI : ",urlApi);
         const results = await getMoviesSearch(urlApi);
         const items = results.results;
         if (items && items.length > 0) {
@@ -80,6 +85,17 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
         }
     }, [movies]);
 
+    useEffect(() => {
+        if(pagesNb){
+            console.log("Nbr de pages de résultats : ",pagesNb);
+        }
+        if(resultsNb){
+            console.log("Nbr de résultats : ",resultsNb);
+        }
+    }, [pagesNb, resultsNb]);
+    const handlePageChange = async (event: React.ChangeEvent<unknown>, pageNumber: number) => {
+        initMovies(pageNumber).then();
+    }
     return (
         <>
         {
@@ -88,14 +104,17 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
                     : isSearchEmpty ?
                         <div className="flex justify-center items-center h-screen mt-[10vh]">La recherche n'a retourné aucun résultat :-(</div>
                         :
-                        <div className="category_movies mt-[10vh]">
-                    <h1 className="category_title">{title}</h1>
-                    <ul id="vertical-list-showcase" className="">
-                        {movies.map(movie => (
-                            <MediaCard key={movie.id} movie={movie}/>
-                        ))}
-                    </ul>
-                </div>
+                        <div className="category_movies mt-[10vh] flex flex-col justify-center items-center">
+                            <h1 className="category_title self-start">{String(resultsNb)} {title}</h1>
+                            <ul id="vertical-list-showcase" className="">
+                                {movies.map(movie => (
+                                    <MediaCard key={movie.id} movie={movie}/>
+                                ))}
+                            </ul>
+                            <div className="sticky bottom-0 z-[999]">
+                                <Paginations pages={pagesNb} handlePageChange={handlePageChange}/>
+                            </div>
+                        </div>
         }
         </>
     );

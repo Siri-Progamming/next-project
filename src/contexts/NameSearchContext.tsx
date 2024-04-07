@@ -2,6 +2,7 @@
 import React, {createContext, FormEvent, useContext, useState} from "react";
 import {useRouter} from "next/router";
 import {useConstantes} from "./ConstantesContext";
+import {useApp} from "./AppContext";
 
 // Interface pour les valeurs du contexte de recherche par nom
 interface NameSearchContextProps {
@@ -33,6 +34,7 @@ export const NameSearchProvider: React.FC<NameSearchProviderProps> = ({ children
     const [query, setQuery] = useState<string>('');
     const {DISPLAY_LANGUAGE} = useConstantes();
     const [fullQuery, setFullQuery] = useState<string>('');
+    const {currentRequest, setCurrentRequest} = useApp();
 
     // Fonction pour gérer la soumission du formulaire de recherche
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -41,7 +43,9 @@ export const NameSearchProvider: React.FC<NameSearchProviderProps> = ({ children
         if(query !== '' && query.trim().length > 0){
             let finalQuery = "?query="+query+"&include_adult=false&language="+DISPLAY_LANGUAGE+"&page=1";
             setFullQuery(finalQuery);
-            router.push('/ui/movies/name-search'+finalQuery).then(() => {
+            setCurrentRequest(finalQuery);
+            router.push('/ui/movies/name-search').then(() => {
+                //TODO Ajouter au localstorage en cas de refresh
                 // setQuery('');
             });
         }

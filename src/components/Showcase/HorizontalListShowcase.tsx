@@ -12,7 +12,7 @@ interface HorizontalListShowcaseProps {
 
 const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, title}) => {
     const [movies, setMovies] = useState<Array<Movie>>([]);
-    const [isListEmpty, setIsListEmpty] = useState<boolean>(true);
+    const [isListEmpty, setIsListEmpty] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const isUserRecommandation = api.includes("recommanded");
     const {DISPLAY_LANGUAGE} = useConstantes();
@@ -30,6 +30,8 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, tit
                 tempMovies.push(createMovie(m));
             }
             setMovies(tempMovies);
+        }else{
+            setIsListEmpty(true);
         }
     }
     useEffect(() => {
@@ -37,19 +39,32 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, tit
     }, []);
 
     useEffect(() => {
-        if (movies || (movies && isListEmpty)) {
+        if (movies.length > 0 || movies.length === 0 && isListEmpty) {
             setIsLoading(false);
         } else {
             setIsLoading(true);
         }
-    }, [movies]);
+    }, [movies, isListEmpty]);
 
+    useEffect(() => {
+        if(isUserRecommandation){
+            console.log("HorizontalListShowcase - isListEmpty : ", isListEmpty);
+        }
+    }, [isListEmpty]);
+
+    useEffect(() => {
+        if(isUserRecommandation){
+            console.log("HorizontalListShowcase - isLoading : ", isLoading);
+        }
+    }, [isLoading]);
     return (
 
         <div className="category_movies">
             <h1 className="category_title">{title}</h1>
             {(isUserRecommandation && !isLoading && isListEmpty) &&
                 <p>Nous n'avons pas assez d'informations pour vous proposer des recommandations personnalisées.</p>}
+            {(isUserRecommandation && isLoading && !isListEmpty) &&
+                <p>Chargement de vos recommandations personnalisées...</p>}
             <ul id="movies-horizontal-showcase" className="flex space-x-4 pb-5">
                 {movies.map(movie => (
                     <MediaCard key={movie.id} movie={movie}/>

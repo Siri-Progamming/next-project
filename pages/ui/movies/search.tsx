@@ -21,7 +21,7 @@ const search: React.FC<searchProps> = () => {
 
     return(
         <main>
-            {isSearch ? <VerticalListShowcase api="/api/discover" title = "Résultats de la recherche : " searchQuery={query} /> : <h1>Effectuez une recherche.</h1>}
+            {isSearch ? <VerticalListShowcase api="/api/discover" title = "résultats : " searchQuery={query} /> : <h1>Effectuez une recherche.</h1>}
         </main>
     );
 }

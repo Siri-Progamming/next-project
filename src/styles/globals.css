@@ -377,6 +377,13 @@ input:-webkit-autofill{
 .auth-error-msg{
     @apply mt-[10vh]  lg:mt-[8.5vh] max-w-[356px];
 }
+
+/* PAGINATION */
+.MuiPaginationItem-root:not(.Mui-selected){
+    @apply text-white;
+    background: rgba(255, 255, 255, 0.1);
+    border:  rgba(255, 255, 255, 0.5);
+}
 /* SOME STYLES */
 .glassmorphism{
     height: fit-content;
