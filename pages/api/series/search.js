@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import {ConfigService, tmdbGetOption} from "../../src/services/IMDB.API/config.service"
-import {buildURL_movies_discover} from "../../src/services/IMDB.API/urlBuilder.service";
+import {ConfigService, tmdbGetOption} from "/src/services/IMDB.API/config.service"
+import {buildURL_movies_discover} from "/src/services/IMDB.API/urlBuilder.service";
 //Equivalent d'api/discover pour les films
 /**
  * @swagger
