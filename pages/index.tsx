@@ -13,7 +13,10 @@ const Index:React.FC<IndexProps> = ({searchQuery}) => {
 
     return (
         <main>
-            <HomeShowcases />
+            <div className="mt-[10vh]">
+                <HomeShowcases />
+            </div>
+
         </main>
     );
 }

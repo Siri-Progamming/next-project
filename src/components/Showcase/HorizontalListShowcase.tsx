@@ -58,14 +58,14 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({api, tit
         }
     }, [isLoading]);
     return (
+        <div className="flex flex-col">
+            <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start "><h1 className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
 
-        <div className="category_movies">
-            <h1 className="category_title">{title}</h1>
             {(isUserRecommandation && !isLoading && isListEmpty) &&
                 <p>Nous n'avons pas assez d'informations pour vous proposer des recommandations personnalisées.</p>}
             {(isUserRecommandation && isLoading && !isListEmpty) &&
                 <p>Chargement de vos recommandations personnalisées...</p>}
-            <ul id="movies-horizontal-showcase" className="flex space-x-4 pb-5">
+            <ul id="movies-horizontal-showcase" className="flex space-x-4 pb-5 pl-4 pr-4">
                 {movies.map(movie => (
                     <MediaCard key={movie.id} movie={movie}/>
                 ))}

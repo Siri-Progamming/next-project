@@ -9,26 +9,13 @@ interface HomeShowcasesProps {
 
 const HomeShowcases: React.FC<HomeShowcasesProps> = ({}) => {
     const {user} = useAuth();
-    const [isRecommandedEmpty, setIsRecommandedEmpty] = React.useState<boolean>(true);
-    const [isRecommandedLoading, setIsRecommandedLoading] = React.useState<boolean>(true);
 
-    const handleCheckListEmpty = (isListEmpty: boolean) => {
-        console.log("Handling isRecommandedEmpty", isListEmpty);
-        setIsRecommandedEmpty(isListEmpty);
-    }
-    const handleCheckRecommandedLoading = (isLoading: boolean) => {
-        setIsRecommandedLoading(isLoading);
-    }
-    useEffect(() => {
-        console.log("isRecommandedEmpty", isRecommandedEmpty);
-    }, [isRecommandedEmpty]);
     return (
-        <>
-            <HorizontalListShowcase api="/api/trending" title="Trending"/>
-            {user && <HorizontalListShowcase api={`/api/users/${user?.id}/movies/recommanded`} title="Mes recommandations"/>}
-            <HorizontalListShowcase api="/api/discover/toprated" title="Top Rated"/>
-            <HorizontalListShowcase api="/api/discover" title="Discover"/>
-        </>
+        <div className="flex flex-col gap-y-8">
+            {user && <HorizontalListShowcase api={`/api/users/${user?.id}/movies/recommanded`} title="Mes recommandations personnalisées"/>}
+            <HorizontalListShowcase api="/api/trending" title="Les tendances actuelles 🔥"/>
+            <HorizontalListShowcase api="/api/discover/toprated" title="Les mieux notés ⭐"/>
+        </div>
     )
 }
 
