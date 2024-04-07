@@ -41,9 +41,9 @@ const MediaCard: React.FC<MediaCardProps> = ({movie}) => {
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
                                 <PercentSticker note={movie.vote_average} />
                             </div>
-                            <div className="media-card-details">
-                                <h2 className="font-bold">{movie.title}</h2>
-                                <p className="text-gray-300 italic text-sm">{movie.release_date}</p>
+                            <div className="media-card-details leading-none">
+                                <h2 className="text-sm font-semibold">{movie.title}</h2>
+                                <p className="font-extralight text-xs text-white text-opacity-50">{movie.release_date}</p>
                             </div>
                         </li>
                     )
