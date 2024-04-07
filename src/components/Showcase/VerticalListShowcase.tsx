@@ -112,7 +112,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
                             <h1 className="category_title self-start" ref={anchor}>{String(resultsNb)} {title}</h1>
                             <ul id="vertical-list-showcase" className="">
                                 {movies.map(movie => (
-                                    <MediaCard key={movie.id} movie={movie}/>
+                                    <MediaCard key={movie.id} type={0} id={movie.id} title={movie.title} release_date={movie.release_date} vote_average={movie.vote_average} poster_path={movie.poster_path}/>
                                 ))}
                             </ul>
                             <div className="sticky bottom-0 z-[999] h-fit w-screen flex flex-row items-center justify-center">

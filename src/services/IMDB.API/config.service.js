@@ -18,6 +18,7 @@ export const ConfigService = {
             serie_genres:"https://api.themoviedb.org/3/genre/tv/list",
             serie_search_filter: "https://api.themoviedb.org/3/discover/tv",
             serie_trending: "https://api.themoviedb.org/3/trending/tv/{time_window}",
+            serie_toprated: "https://api.themoviedb.org/3/tv/top_rated",
 
         },
         //C'est mieux dans un .env les keys
