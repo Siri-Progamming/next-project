@@ -78,6 +78,7 @@ export const updateMovieLike = async (idUser: string, idMovie:number) => {
             }
         });
         const data = await response.json();
+        console.log("call api updateMovieLike - data : ",data);
         return data.data.liked;
     }catch (error) {
         console.error("Erreur lors de la récupération du like : ",error);

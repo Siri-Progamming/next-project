@@ -32,18 +32,19 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         getLike().then();
-    }, [idMovie]);
+        console.log("isLiked : "+isLiked);
+    }, [idMovie, isLiked]);
 
     const handleClick = () => {
         updateLike().then();
     }
 
     return (
-        <div>
+        <div className={`bg-white rounded-3xl`}>
             {user && (isLiked ?
-                <i className={`fa-solid fa-heart fa-xl text-tertiary-700 ${width ? width : 'text-[50px]'}`} onClick={handleClick} ></i>
+                <i className={`fa-solid fa-heart fa-beat fa-xl text-tertiary-700 ${width ? width : 'text-[50px]'}`} onClick={handleClick} ></i>
                 :
-                <i className={`fa-regular fa-heart fa-l text-tertiary-700 ${isHovered ? ' fa-bounce' : ''} ${width ? width : 'text-[50px]'}`}
+                <i className={`fa-regular fa-heart fa-xl text-tertiary-700 ${isHovered ? ' fa-beat' : ''} ${width ? width : 'text-[50px]'}`}
                    onMouseOver={() => setIsHovered(true)}
                    onMouseLeave={() => setIsHovered(false)}
                    onClick={handleClick}></i>)

@@ -26,19 +26,22 @@ const PeopleShowcase: React.FC<MoviesProps> = ({movie, nbToShow, title}) => {
 
     function showCast(casts: Cast[]) {
         return (
-            <ul className="flex overflow-x-auto min-h-fit space-x-4 pb-4">
-                {casts?.slice(0, nbToShow).map(cast => (
-                    <li key={cast.id}
-                        className="flex-column relative min-w-[110px] max-w-[110px]">
-                        {cast.profile_path ? showImage(cast) : showNoImage("min-w-[110px] max-w-[110px]", "h-[160px]", "text-[75px]", "rounded-xl")}
-                        <div className="pt-2 leading-none">
-                            <p className="text-sm font-semibold">{cast.name}</p>
-                            <p className="font-light text-xs text-white text-opacity-50"><span
-                                className="font-extralight">as</span> {cast.character}</p>
-                        </div>
-                    </li>
-                ))}
-            </ul>
+            <div className="relative">
+                <ul className="flex overflow-x-auto min-h-fit space-x-4 pb-4">
+                    {casts?.slice(0, nbToShow).map(cast => (
+                        <li key={cast.id}
+                            className="flex-column relative min-w-[110px] max-w-[110px]">
+                            {cast.profile_path ? showImage(cast) : showNoImage("min-w-[110px] max-w-[110px]", "h-[160px]", "text-[75px]", "rounded-xl")}
+                            <div className="pt-2 leading-none">
+                                <p className="text-sm font-semibold">{cast.name}</p>
+                                <p className="font-light text-xs text-white text-opacity-50"><span
+                                    className="font-extralight">as</span> {cast.character}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
         )
     }
 

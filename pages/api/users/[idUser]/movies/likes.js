@@ -1,5 +1,4 @@
 import clientPromise from "/lib/mongodb";
-import {getFavoritesMoviesWithIds} from "../../../../../src/services/MONGODB.BDD/queries.service";
 import {getFavoritesMoviesWithIdsInTMDB} from "../../../../../src/services/BDD_TMDB";
 import {DEFAULT_LANGUAGE} from "../../../../../src/constantes/tmdb_movie_constantes";
 /**
@@ -39,9 +38,7 @@ export default async function handler(req, res) {
                 {idUser: idUser, liked:true});
             const movies = await resMongo.toArray();
             if(resMongo && movies.length > 0){
-                //On récupère les détails des films dans la table movies
                 const idMovies = movies.map(movie => movie.idTMDB);
-                // const moviesFromBDD = await getFavoritesMoviesWithIds(idMovies);
                 const moviesFromBDD = await getFavoritesMoviesWithIdsInTMDB(language,idMovies);
                 if(moviesFromBDD && moviesFromBDD.length > 0){
                     data = {

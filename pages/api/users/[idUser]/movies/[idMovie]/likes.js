@@ -1,5 +1,4 @@
 import clientPromise from "/lib/mongodb";
-import {processFavoriteMovie} from "../../../../../../src/services/BDD_TMDB";
 
 /**
  * @swagger
@@ -56,10 +55,6 @@ export default async function handler(req, res) {
     switch (req.method) {
         case "PUT":
             if (like) {
-                //TOREWORKADAY Ajout du film en BDD s'il n'existe pas tant que TMDB ne propose pas un call avec ids multiples sur les films pour afficher les favoris.
-                if(!like.liked){
-                    await processFavoriteMovie(idMovie);
-                }
                 resMongo = await db.collection("likes").updateOne(
                     {idTMDB: idMovie, idUser: idUser},
                     { $set: { liked : !like.liked } }

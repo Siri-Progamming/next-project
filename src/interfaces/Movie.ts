@@ -1,21 +1,20 @@
 import {Cast, Crew} from "./Cast";
 
 export interface Movie {
+    adult: boolean | false;
+    backdrop_path: string | '';
     id: number;
-    imdb_id?: string | '';
-    original_title: string | '';
     title: string | '';
+    original_language: string | '';
+    original_title: string | '';
     overview: string | '';
+    poster_path: string | '';
+    genres: Array<Genre> | [];
     popularity: number | 0;
     release_date: string | '';
-    status?: string | '';
-    tagline?: string | '';
     vote_average: number | 0;
     vote_count: number | 0;
-    poster_path: string | '';
-    backdrop_path: string | '';
-    genres: Array<Genre> | [];
-    adult: boolean | false;
+    imdb_id?: string | '';
 }
 export interface FullMovie extends Movie {
     cast: Array<Cast>;
@@ -27,6 +26,8 @@ export interface FullMovie extends Movie {
     similar : Array<Movie>;
     videos: Array<Video>;
     runtime: number;
+    status: string | '';
+    tagline: string | '';
 }
 export interface Genre {
     id: number;
