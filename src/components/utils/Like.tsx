@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {getMovieLike, updateMovieLike} from "../../services/API/call.api.service";
 import {useAuth} from "../../contexts/AuthContext";
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 interface LikeProps{
     idMovie:number;
     width?:string;
+    style?:string;
 }
-const Like: React.FC<LikeProps> = ({idMovie,width}) => {
+const Like: React.FC<LikeProps> = ({idMovie,width, style}) => {
 const [isLiked, setIsLiked] = useState<boolean>(false);
 const [isHovered, setIsHovered] = useState(false);
 const {user} = useAuth();
@@ -40,15 +43,15 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     }
 
     return (
-        <div className={`bg-white rounded-3xl`}>
+        <div className={``}>
             {user && (isLiked ?
-                <i className={`fa-solid fa-heart fa-beat fa-xl text-tertiary-700 ${width ? width : 'text-[50px]'}`} onClick={handleClick} ></i>
+                <FavoriteOutlinedIcon className={`${width ? width : 'text-[60px]'} ${style ? style : ''}`} onClick={handleClick}/>
                 :
-                <i className={`fa-regular fa-heart fa-xl text-tertiary-700 ${isHovered ? ' fa-beat' : ''} ${width ? width : 'text-[50px]'}`}
-                   onMouseOver={() => setIsHovered(true)}
-                   onMouseLeave={() => setIsHovered(false)}
-                   onClick={handleClick}></i>)
-            }
+                <FavoriteBorderOutlinedIcon className={`${width ? width : 'text-[60px]'} ${style ? style : ''}`}
+                                            onMouseOver={() => setIsHovered(true)}
+                                            onMouseLeave={() => setIsHovered(false)}
+                                            onClick={handleClick} />
+            )}
         </div>
     )
 }

@@ -255,6 +255,13 @@ footer{
     filter: blur(50px) ;
     transform: scaleX(-1);
 }
+.like-button{
+    @apply text-tertiary-700 bg-white;
+    border-radius: 30px;
+    @apply p-3;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
+    animation: beat 1s infinite alternate;
+}
 .absolute0{
     position: absolute;
     top: 0;
@@ -479,5 +486,17 @@ input:-webkit-autofill{
     }
     50% {
         transform: scale(1.2) translate(-10%, -10%); /* Zoom à 120% avec un décalage négatif */
+    }
+}
+
+@keyframes beat {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
     }
 }

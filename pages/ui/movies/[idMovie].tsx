@@ -52,7 +52,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                     <div className="cinematic absolute top-[-4vh] left-0 w-full h-[4vh]"></div>
                     <div className="bg_image_container">
                         <div className="absolute right-[10vw] top-[10vh] z-[10]">
-                            <Like idMovie={movie?.id!} width="text-[60px]"/>
+                            <Like idMovie={movie?.id!} width="" style="like-button"/>
                         </div>
                         {/*h-[calc(100vh_-_var(--nav-height,0))*/}
                         {movie?.backdrop_path ? showBackground(movie) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto absolute0", "bg-black bg-opacity-25", "text-white opacity-20")}
