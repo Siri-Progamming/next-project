@@ -51,7 +51,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                 <div className="movie_page relative">
                     <div className="cinematic absolute top-[-4vh] left-0 w-full h-[4vh]"></div>
                     <div className="bg_image_container">
-                        <div className="absolute right-[10vw] top-[10vh] z-[10]">
+                        <div className="absolute right-[5vw] 2xl:right-[10vw] top-[10vh] z-[10]">
                             <Like idMovie={movie?.id!} width="" style="like-button"/>
                         </div>
                         {/*h-[calc(100vh_-_var(--nav-height,0))*/}
