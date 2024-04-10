@@ -5,11 +5,11 @@ const Swagger = () => {
     return (
         <div id="swagger" className="bg-white">
             <Head>
-                <title>Swagger next-project API</title>
+                <title>Swagger Fennext API</title>
                 <meta name="description" content="Swagger next-project API" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <SwaggerUI url="/api/doc" />
+            <SwaggerUI url="./pages/api/doc" />
         </div>
     );
 };
