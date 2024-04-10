@@ -1,9 +1,10 @@
-import {FullMovie, Movie} from "../../interfaces/Movie";
+import {FullMovie, Image, Movie, Review, Video} from "../../interfaces/Movie";
+import {Episode, FullSerie, Season, Serie, Watch} from "../../interfaces/Serie";
 import {Cast, Crew} from "../../interfaces/Cast";
-import {Serie} from "../../interfaces/Serie";
 
 export function createMovie(data: any): Movie {
     return {
+        mediaType: "movie",
         id: data.id,
         imdb_id: data.imdb_id,
         original_title: data.original_title,
@@ -23,6 +24,7 @@ export function createMovie(data: any): Movie {
 
 export function createSerie(data: any): Serie {
     return {
+        mediaType: "serie",
         adult: data.adult,
         backdrop_path: data.backdrop_path,
         id: data.id,
@@ -32,7 +34,7 @@ export function createSerie(data: any): Serie {
         overview: data.overview,
         poster_path: data.poster_path,
         media_type: data.media_type,
-        genres: data.genres_ids,
+        genres: data.genres,
         popularity: data.popularity,
         release_date: data.first_air_date,
         vote_average: data.vote_average,
@@ -57,4 +59,25 @@ export function createFullMovie(data: any): FullMovie {
         tagline: data.tagline
     }
 }
-
+export function createFullSerie(data:any): FullSerie{
+    const serie = createSerie(data);
+    return{
+        ...serie,
+        in_production: data.in_production,
+        last_air_date: data.last_air_date,
+        last_episode_to_air: data.last_episode_to_air,
+        next_episode_to_air: data.next_episode_to_air,
+        number_of_episodes: data.number_of_episodes,
+        number_of_seasons: data.number_of_seasons,
+        seasons: data.seasons,
+        status: data.status,
+        cast: data.credits.cast,
+        crew: data.credits.crew,
+        images: data.images.backdrops,
+        recommendations: data.recommendations.results,
+        reviews: data.reviews.results,
+        similar: data.similar.results,
+        videos: data.videos.results,
+        watch: data['watch/providers'].results
+    }
+}

@@ -4,12 +4,11 @@ import {FullMovie} from "../../interfaces/Movie";
 import {Cast} from "../../interfaces/Cast";
 import {showNoImage} from "../Skeleton/NoData/NoImage";
 interface MoviesProps {
-    movie: FullMovie | null;
+    casts:Array<Cast> | [];
     nbToShow: number;
     title: string;
 }
-const PeopleShowcase: React.FC<MoviesProps> = ({movie, nbToShow, title}) => {
-    const casts = movie?.cast;
+const PeopleShowcase: React.FC<MoviesProps> = ({casts, nbToShow, title}) => {
     return (
         <div className="">
             <h1 className="category_title">{title}</h1>

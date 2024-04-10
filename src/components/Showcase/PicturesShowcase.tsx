@@ -1,23 +1,22 @@
 import React from "react";
 import {ConfigService} from "../../services/IMDB.API/config.service";
-import {FullMovie} from "../../interfaces/Movie";
+import {Image} from "../../interfaces/Movie";
 import {showNoImage} from "../Skeleton/NoData/NoImage";
 
 interface PicturesShowProps {
-    movie: FullMovie | null;
+    pictures: Array<Image> | []
     nbToShow: number;
     startFrom: number;
 }
 
-const PicturesShowcase: React.FC<PicturesShowProps> = ({movie, nbToShow, startFrom}) => {
+const PicturesShowcase: React.FC<PicturesShowProps> = ({pictures, nbToShow, startFrom}) => {
 
     function showPictures() {
-        let pictures = movie?.images;
         if (pictures != null && pictures.length > 0) {
             if (pictures.length <= startFrom) {
-                pictures = movie?.images.slice(0, nbToShow);
+                pictures = pictures.slice(0, nbToShow);
             } else {
-                pictures = movie?.images.slice(startFrom, nbToShow + startFrom);
+                pictures = pictures.slice(startFrom, nbToShow + startFrom);
             }
             return (
                 <>

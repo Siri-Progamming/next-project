@@ -17,8 +17,12 @@ export function buildURL_movies_id_images(idMovie, include_image_language, langu
     return url;
 }
 
-export function buildURL_movies_full(idMovie, append_to_response, language) {
-    let url = ConfigService.themoviedb.urls.movie.replace("{movie_id}", idMovie.toString());
+export function buildURL_media_full(idMedia, append_to_response, language, type) {
+    let url;
+    switch(type){
+        case "movie" : url = ConfigService.themoviedb.urls.movie.replace("{movie_id}", idMedia.toString()); break;
+        case "serie" : url = ConfigService.themoviedb.urls.serie.replace("{serie_id}", idMedia.toString()); break;
+    }
     let severalParams = false;
     if (append_to_response || append_to_response != null) {
         url = url + '?append_to_response=' + append_to_response;

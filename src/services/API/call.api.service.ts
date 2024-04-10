@@ -33,16 +33,33 @@ export const getMoviesSearch = async (url:string) => {
 //     }
 // }
 
-export const getFullMovie = async (language:string,id: number) => {
-    const append_to_response:string = 'credits%2Cimages%2Ckeywords%2Crecommendations%2Creviews%2Csimilar%2Cvideos';
+export const getFullMedia = async (language:string,id: number, type:string) => {
+    let append_to_response:string;
+    let fetchURL:string;
+    switch(type){
+        //TODO mettre ça dans un fichier de conf !!
+        case "movie":
+            append_to_response = 'credits%2Cimages%2Ckeywords%2Crecommendations%2Creviews%2Csimilar%2Cvideos';
+            fetchURL = '/api/movies/' + id+'?language='+language+'&append_to_response='+append_to_response;
+            break;
+        case "serie":
+            append_to_response = 'credits%2Cimages%2Crecommendations%2Creviews%2Csimilar%2Cvideos%2Cwatch%2Fproviders';
+            fetchURL = "/api/series/"+id+"?language="+language+"&append_to_response="+append_to_response;
+            break;
+    }
     try {
-        const response = await fetch('/api/movies/' + id+'?language='+language+'&append_to_response='+append_to_response);
+        const response = await fetch(fetchURL!);
         const data = await response.json();
-        return data.data.movie;
+        switch(type){
+            case "movie": return data.data.movie;
+            case"serie": return data.data.serie;
+        }
     } catch (error) {
         console.error(error);
     }
 }
+
+
 
 export const getMovieLike = async (idUser: string, idMovie:number) => {
     try{

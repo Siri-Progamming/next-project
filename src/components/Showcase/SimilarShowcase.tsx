@@ -1,21 +1,38 @@
 import React from "react";
 import {ConfigService} from "../../services/IMDB.API/config.service";
 import {FullMovie, Movie} from "../../interfaces/Movie";
+import {FullSerie, Serie} from "../../interfaces/Serie";
 import {useRouter} from "next/router";
 import {showNoImage} from "../Skeleton/NoData/NoImage";
 
 interface SimilarShowcaseProps {
-    movie: FullMovie | null;
+    fullMedia: FullMovie | FullSerie
     nbToShow: number;
     title: string;
 }
+interface Media{
+    mediaType:string;
+    similar: Array<Movie> | Array<Serie>;
+    recommendations: Array<Movie> | Array<Serie>;
+}
+const SimilarShowcase: React.FC<SimilarShowcaseProps> = ({fullMedia, nbToShow, title}) => {
+    const media:Media = {
+        mediaType:fullMedia.mediaType,
+        similar:fullMedia.similar,
+        recommendations:fullMedia.recommendations
+    }
 
-const SimilarShowcase: React.FC<SimilarShowcaseProps> = ({movie, nbToShow, title}) => {
+
    let similars;
-    {title === "Similar" ?  similars = movie?.similar : similars = movie?.recommendations}
+    {title === "Similar" ?  similars = media?.similar : similars = media?.recommendations}
     const router = useRouter();
-    const handleClick = (idMovie:number) => {
-        router.push('/ui/movies/'+idMovie);
+    const handleClick = (id:number) => {
+        if(media.mediaType === "movie"){
+            router.push('/ui/movies/'+id);
+        }else{
+            router.push('/ui/series/'+id);
+        }
+
     };
 
     return (

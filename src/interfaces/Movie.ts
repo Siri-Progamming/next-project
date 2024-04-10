@@ -1,6 +1,7 @@
 import {Cast, Crew} from "./Cast";
 
 export interface Movie {
+    mediaType:string;
     adult: boolean | false;
     backdrop_path: string | '';
     id: number;
@@ -33,7 +34,7 @@ export interface Genre {
     id: number;
     name: string | '';
 }
-interface Image {
+export interface Image {
     aspect_ratio: number;
     height: number;
     iso_639_1: string;
@@ -46,13 +47,13 @@ interface Keyword {
     id: number;
     name: string;
 }
-interface Review {
+export interface Review {
     author: string;
     content: string;
     created_at: string;
     id: string;
 }
-interface Video {
+export interface Video {
     iso_639_1: string;
     iso_3166_1: string;
     name: string;

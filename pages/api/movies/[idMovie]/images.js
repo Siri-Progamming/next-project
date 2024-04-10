@@ -35,7 +35,7 @@ import {buildURL_movies_id_images} from "/src/services/IMDB.API/urlBuilder.servi
  *         description: Liste des images liées au film demandé
  */
 export default async function handler(req, res) {
-    const idMovie = parseInt(req.query.idMovie, 10);
+    const idMovie = parseInt(req.query.idMovie[0], 10);
     const url = buildURL_movies_id_images(idMovie, req.query.include_image_language, req.query.language);
     await switchGetData(req, res, url);
 }
