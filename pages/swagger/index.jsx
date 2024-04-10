@@ -9,7 +9,7 @@ const Swagger = () => {
                 <meta name="description" content="Swagger next-project API" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <SwaggerUI url="./pages/api/doc" />
+            <SwaggerUI url="../api/doc" />
         </div>
     );
 };
