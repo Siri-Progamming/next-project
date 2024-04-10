@@ -11,7 +11,6 @@ export const getMovies = async (language:string,api:string) => {
         console.error(error);
     }
 }
-
 export const getMoviesSearch = async (url:string) => {
     // console.log("getMoviesSearch - url : ",url);
     try {
@@ -22,17 +21,6 @@ export const getMoviesSearch = async (url:string) => {
         console.error(error);
     }
 }
-
-// export const getMovie = async (id: number) => {
-//     try {
-//         const response = await fetch('/api/movies/' + id);
-//         const data = await response.json();
-//         const m = data.data.movie;
-//         return m;
-//         console.error(error);
-//     }
-// }
-
 export const getFullMedia = async (language:string,id: number, type:string) => {
     let append_to_response:string;
     let fetchURL:string;
@@ -58,9 +46,6 @@ export const getFullMedia = async (language:string,id: number, type:string) => {
         console.error(error);
     }
 }
-
-
-
 export const getMovieLike = async (idUser: string, idMovie:number) => {
     try{
         const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/likes');
@@ -74,7 +59,6 @@ export const getMovieLike = async (idUser: string, idMovie:number) => {
         console.error("Erreur lors de la récupération du like : ",error);
     }
 }
-
 export const getMoviesLiked = async (language:string,idUser: string) => {
     try{
         const response = await fetch('/api/users/' + idUser+'/movies/likes?language='+language);
@@ -85,7 +69,6 @@ export const getMoviesLiked = async (language:string,idUser: string) => {
         console.error("Erreur lors de la récupération du like : ",error);
     }
 }
-
 export const updateMovieLike = async (idUser: string, idMovie:number) => {
     try{
         const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/likes', {
