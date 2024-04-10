@@ -43,7 +43,6 @@ const IdSerie: React.FC<IdSerieProps> = ({}) => {
         }
     }, [serie]);
 
-
     return (
         <main id="main_movie_page">
             {isLoading ?

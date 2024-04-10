@@ -28,3 +28,17 @@ export enum SortByEnum {
     voteCountAsc = "vote_count.asc",
     voteCountDesc = "vote_count.desc"
 }
+export enum SeriesSortByEnum {
+    firstAirDateAsc = "first_air_date.asc",
+    firstAirDateDesc = "first_air_date.desc",
+    nameAsc = "name.asc",
+    nameDesc = "name.desc",
+    originalNameAsc = "original_name.asc",
+    originalNameDesc = "original_name.desc",
+    popularityAsc = "popularity.asc",
+    popularityDesc = "popularity.desc",
+    voteAverageAsc = "vote_average.asc",
+    voteAverageDesc = "vote_average.desc",
+    voteCountAsc = "vote_count.asc",
+    voteCountDesc = "vote_count.desc"
+}

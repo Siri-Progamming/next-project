@@ -1,4 +1,4 @@
-import {LanguagesEnumInterface, LanguagesEnum} from '../interfaces/Enums';
+import {LanguagesEnumInterface, LanguagesEnum, SeriesSortByEnum} from '../interfaces/Enums';
 import {SortByEnumInterface, SortByEnum} from '../interfaces/Enums';
 export const DEFAULT_LANGUAGE: LanguagesEnum = LanguagesEnum.frFR;
 export const LANGUAGES: Array<LanguagesEnumInterface> = [
@@ -14,6 +14,17 @@ export const SORT_BY: Array<SortByEnumInterface> = [
     {name: SortByEnum.primaryReleaseDateAsc, display_name: "Date de sortie - / +"},
     {name: SortByEnum.titleAsc, display_name: "Titre (A-Z)"},
     {name: SortByEnum.titleDesc, display_name: "Titre (Z-A)"}
+];
+
+export const SERIES_SORT_BY: Array<SortByEnumInterface> = [
+    {name: SeriesSortByEnum.popularityDesc, display_name: "Popularité + / -"},
+    {name: SeriesSortByEnum.popularityAsc, display_name: "Popularité - / +"},
+    {name: SeriesSortByEnum.voteAverageDesc, display_name: "Note + / -"},
+    {name: SeriesSortByEnum.voteAverageAsc, display_name: "Note - / +"},
+    {name: SeriesSortByEnum.firstAirDateDesc, display_name: "Date de sortie + / -"},
+    {name: SeriesSortByEnum.firstAirDateAsc, display_name: "Date de sortie - / +"},
+    {name: SeriesSortByEnum.nameAsc, display_name: "Titre (A-Z)"},
+    {name: SeriesSortByEnum.nameDesc, display_name: "Titre (Z-A)"}
 ];
 
 export const NOTES = [

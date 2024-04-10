@@ -121,3 +121,37 @@ export function buildURL_movies_discover(req, url){
     // console.log("url:", url);
     return url;
 }
+
+export function buildURL_series_filter(req, url){
+    // (first_air_date.asc/desc, name.asc/desc, original_name.asc/desc, popularity.asc/desc, vote_average.asc/desc, vote_count.asc/desc)(Default popularity.desc)
+    // language, page, sort_by,
+    //TODO AJouter le runtime ?
+
+    url = url + '?include_adult=false';
+
+    if (req.query.language) {
+        url = url + '&language=' + req.query.language;
+    }
+    if (req.query.page) {
+        url = url + '&page=' + req.query.page;
+    }
+    if(req.query.sort_by){
+        url = url + '&sort_by=' + req.query.sort_by;
+    }
+    if(req.query['vote_average.gte'] >= 0){
+        url = url + '&vote_average.gte=' + req.query['vote_average.gte'];
+    }
+    if(req.query['vote_average.lte']  >= 0){
+        url = url + '&vote_average.lte=' + req.query['vote_average.lte'];
+    }
+    if(req.query['vote_count.gte']  >= 0){
+        url = url + '&vote_count.gte=' + req.query['vote_count.gte'];
+    }
+    if(req.query['vote_count.lte']  >= 0){
+        url = url + '&vote_count.lte=' + req.query['vote_count.lte'];
+    }
+    if(req.query.with_genres){
+        url = url + '&with_genres=' + req.query.with_genres;
+    }
+    return url;
+}

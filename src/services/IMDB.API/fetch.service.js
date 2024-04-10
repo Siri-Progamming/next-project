@@ -21,8 +21,12 @@ export async function switchGetData(req, res, url) {
     }
 }
 
-export async function fetchMoviesGenres(language) {
-    const url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.movie_genres);
+export async function fetchMediaGenres(language, type) {
+    let url;
+    switch(type){
+        case "movie": url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.movie_genres); break;
+        case "serie": url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.serie_genres); break;
+    }
     const apiResponse = await fetch(url, tmdbGetOption)
         .then(r => r.json())
         .catch(err => console.error('error:' + err));

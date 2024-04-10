@@ -2,7 +2,7 @@ import React, {createContext, SyntheticEvent, useContext, useEffect, useState} f
 import {useRouter} from "next/router";
 import {useConstantes} from "./ConstantesContext";
 import {useApp} from "./AppContext";
-interface MovieFilterContextProps {
+interface SerieFilterContextProps {
     query: string;
     setQuery: React.Dispatch<React.SetStateAction<string>>;
 
@@ -39,22 +39,21 @@ interface MovieFilterContextProps {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleReset: () => void;
 }
-const MovieFilterContext = createContext<MovieFilterContextProps | undefined>(undefined);
-export const useMovieFilter = () => {
-    const context = useContext(MovieFilterContext);
+const SerieFilterContext = createContext<SerieFilterContextProps | undefined>(undefined);
+export const useSerieFilter = () => {
+    const context = useContext(SerieFilterContext);
     if (!context) {
-        throw new Error("useMoviefilter must be used within a MovieFilterProvider");
+        throw new Error("useSeriefilter must be used within a MovieFilterProvider");
     }
     return context;
 };
-interface MovieFilterProviderProps{
+interface SerieFilterProviderProps{
     children: React.ReactNode;
 }
 // Fournisseur de contexte de recherche par nom
-export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ children }) => {
+export const SerieFilterProvider: React.FC<SerieFilterProviderProps> = ({ children }) => {
     const router = useRouter();
-    const {DISPLAY_LANGUAGE} = useConstantes();
-    const {MOVIE_GENRES} = useConstantes();
+    const {DISPLAY_LANGUAGE, SERIE_GENRES} = useConstantes();
     const [query, setQuery] = useState<string>('');
     const [genres, setGenres] = useState<number[]>([]);
     const [language, setLanguage] = useState<string>(DISPLAY_LANGUAGE);
@@ -67,18 +66,18 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     const {currentRequest, setCurrentRequest} = useApp();
 
     useEffect(() => {
-        // console.log("MovieFilterContext - Genres : ", genres);
+        // console.log("SerieFilterContext - Genres : ", genres);
     }, [genres]);
 
     // Fonction pour gérer la soumission du formulaire de recherche
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const queryParams = generateMovieFilterQueryParams(language, sortBy, noteMin, noteMax, nbVotesMin, genres, activePage, MOVIE_GENRES);
+        const queryParams = generateSerieFilterQueryParams(language, sortBy, noteMin, noteMax, nbVotesMin, genres, activePage, SERIE_GENRES);
         setQuery(queryParams);
         setCurrentRequest(queryParams);
         //TODO Ajouter au localstorage en cas de refresh
         // console.log("MovieFilterContext - Query Params : ", queryParams);
-        router.push('/ui/movies/search').then(() => {
+        router.push('/ui/series/search').then(() => {
             // setQuery('');
         });
     }
@@ -92,7 +91,7 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     //TODO uncheck les boxes, reset les inputs
 };
     const handleChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log("MovieFilterContext - Language Selected : ", e.target.value);
+        console.log("SerieFilterContext - Language Selected : ", e.target.value);
         setLanguage(e.target.value);
     }
     const handleChangeSortBy = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -113,7 +112,7 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
         if (!isActive) {
             e.currentTarget.classList.add('selected');
             setGenres([...genres, genreId]);
-            console.log("MovieFilterContext - Genre Selected : ", genreId);
+            console.log("SerieFilterContext - Genre Selected : ", genreId);
         } else {
             e.currentTarget.classList.remove('selected');
             setGenres(genres.filter((id) => id !== genreId));
@@ -152,16 +151,14 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
 
     // Fournir les valeurs du contexte aux composants enfants
     return (
-        <MovieFilterContext.Provider value={contextValue}>
+        <SerieFilterContext.Provider value={contextValue}>
             {children}
-        </MovieFilterContext.Provider>
+        </SerieFilterContext.Provider>
     );
 };
 
-function generateMovieFilterQueryParams(language: string, sortBy: string, noteMin: number, noteMax: number, nbVotesMin: number, genres: number[], activePage: number, MOVIE_GENRES: any[]){
-    // let queryParams = `?language=${language}&sort_by=${sortBy}&vote_average.gte=${noteMin}&vote_average.lte=${noteMax}&vote_count.gte=${nbVotesMin}&page=${activePage}`;
+function generateSerieFilterQueryParams(language: string, sortBy: string, noteMin: number, noteMax: number, nbVotesMin: number, genres: number[], activePage: number, SERIE_GENRES: any[]){
     let queryParams = '?include_adult=false';
-    //TODO pas oublier ?include_adult=false
     if (language !== 'en-US') {
         queryParams += `&language=${language}`;
     }else{
@@ -195,7 +192,8 @@ function generateMovieFilterQueryParams(language: string, sortBy: string, noteMi
     if(genres.length > 0) {
         queryParams += `&with_genres=${genres.join(',')}`;
     }else{
-        queryParams += `&with_genres=${MOVIE_GENRES.map((genre) => genre.id).join('|')}`;
+        queryParams += `&with_genres=${SERIE_GENRES.map((genre) => genre.id).join('|')}`;
     }
+    console.log("SERIE FILTER query params GENERATED BY FORM : "+queryParams);
     return queryParams;
 }

@@ -8,6 +8,7 @@ import CollapsibleVerticalPanel from "../src/components/Panels/CollapsibleVertic
 import {MovieFilterProvider} from "../src/contexts/MovieFilterContext";
 import {ConstantesProvider} from "../src/contexts/ConstantesContext";
 import {AppProvider} from "../src/contexts/AppContext";
+import {SerieFilterProvider} from "../src/contexts/SerieFilterContext";
 
 export default function MyApp(props) {
     const {Component, pageProps} = props;
@@ -18,12 +19,14 @@ export default function MyApp(props) {
                 <AuthProvider>
                     <NameSearchProvider>
                         <MovieFilterProvider>
+                            <SerieFilterProvider>
 
-                            <Header/>
-                            <CollapsibleVerticalPanel/>
-                            <Component {...pageProps} />
-                            {/*<Footer/>*/}
+                                <Header/>
+                                <CollapsibleVerticalPanel/>
+                                <Component {...pageProps} />
+                                {/*<Footer/>*/}
 
+                            </SerieFilterProvider>
                         </MovieFilterProvider>
                     </NameSearchProvider>
                 </AuthProvider>

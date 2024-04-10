@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import {ConfigService, tmdbGetOption} from "/src/services/IMDB.API/config.service"
-import {buildURL_movies_discover} from "/src/services/IMDB.API/urlBuilder.service";
+import {buildURL_series_filter} from "/src/services/IMDB.API/urlBuilder.service";
 //Equivalent d'api/discover pour les films
 /**
  * @swagger
@@ -25,39 +25,39 @@ import {buildURL_movies_discover} from "/src/services/IMDB.API/urlBuilder.servic
  *         name: sort_by
  *         type: string
  *         required: false
- *         description: trier les films (first_air_date.asc/desc, name.asc/desc, original_name.asc/desc, popularity.asc/desc, vote_average.asc/desc, vote_count.asc/desc)(Default popularity.desc)
+ *         description: trier les séries (first_air_date.asc/desc, name.asc/desc, original_name.asc/desc, popularity.asc/desc, vote_average.asc/desc, vote_count.asc/desc)(Default popularity.desc)
  *       - in: query
  *         name: vote_average_gte
  *         type: number
  *         required: false
- *         description: N'affiche que les films qui ont PLUS que cette note
+ *         description: N'affiche que les séries qui ont PLUS que cette note
  *       - in: query
  *         name: vote_average_lte
  *         type: number
  *         required: false
- *         description: N'affiche que les films qui ont MOINS que cette note
+ *         description: N'affiche que les séries qui ont MOINS que cette note
  *       - in: query
  *         name: vote_count_gte
  *         type: number
  *         required: false
- *         description: N'affiche que les films qui ont PLUS que ce nombre de votes
+ *         description: N'affiche que les séries qui ont PLUS que ce nombre de votes
  *       - in: query
  *         name: vote_count_lte
  *         type: number
  *         required: false
- *         description: N'affiche que les films qui ont MOINS que ce nombre de votes
+ *         description: N'affiche que les séries qui ont MOINS que ce nombre de votes
  *       - in: query
  *         name: with_genres
  *         type: string
  *         required: false
- *         description: filtrer les films par genre (format id1, id2 | id1, id2, id3, etc.)
+ *         description: filtrer les séries par genre (format id1, id2 | id1, id2, id3, etc.)
  *     responses:
  *       200:
  *         description: Liste des séries correspondantes aux filtres de recherche
  */
 export default async function handler(req, res) {
-    const url = buildURL_movies_discover(req, ConfigService.themoviedb.urls.serie_search_filter);
-    console.log('discover url:', url);
+    const url = buildURL_series_filter(req, ConfigService.themoviedb.urls.serie_search_filter);
+    console.log('serie search filter URL:', url);
     const apiResponse = await fetch(url, tmdbGetOption)
         .then(r => r.json())
         .catch(err => console.error('error:' + err));
