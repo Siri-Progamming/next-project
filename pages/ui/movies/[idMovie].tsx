@@ -74,7 +74,7 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
                             <span className="media-badge">{movie?.release_date.slice(0, 4)}</span>
                                 {movie?.genres.map((genre, index) => (
                                     <span key={genre.id} className={`genre`}>{genre.name}</span>))}
-                            <span className="media-badge"><AccessTimeOutlinedIcon />{timeConvert(movie?.runtime)}</span>
+                            <span className="media-badge"><AccessTimeOutlinedIcon />{movie?.runtime ? timeConvert(movie?.runtime) : "NaN"}</span>
                         </p>
                         {showNote(movie!)}
                     </div>

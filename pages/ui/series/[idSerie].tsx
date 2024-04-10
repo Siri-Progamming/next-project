@@ -76,7 +76,7 @@ const IdSerie: React.FC<IdSerieProps> = ({}) => {
                                 {serie?.genres.map((genre, index) => (
                                     <span key={genre.id} className={`genre`}>{genre.name}</span>))}
                                 {/*TODO Pas sûre de faire ça comme ça*/}
-                                <span className="media-badge"><AccessTimeOutlinedIcon />{timeConvert(serie?.last_episode_to_air.runtime)}</span>
+                                <span className="media-badge"><AccessTimeOutlinedIcon />{serie?.last_episode_to_air?.runtime ? timeConvert(serie?.last_episode_to_air.runtime) : "NaN"}</span>
                             </p>
                             {showNote(serie!)}
                         </div>

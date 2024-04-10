@@ -63,18 +63,31 @@ export const SerieFilterProvider: React.FC<SerieFilterProviderProps> = ({ childr
     const [nbVotesMin, setNbVotesMin] = useState<number>(100);
     const [nbPages, setNbPages] = useState<number>(1);
     const [activePage, setActivePage] = useState<number>(1);
-    const {currentRequest, setCurrentRequest} = useApp();
+
+    useEffect(() => {
+        const previousLocation = localStorage.getItem('previousLocation');
+        if (previousLocation && previousLocation === '/ui/series/search'){
+            const lastSerieFilterSearch = localStorage.getItem('lastSerieFilterSearch');
+            if (lastSerieFilterSearch && lastSerieFilterSearch !== '') {
+                setQuery(lastSerieFilterSearch);
+            }
+        }
+    }, []);
 
     useEffect(() => {
         // console.log("SerieFilterContext - Genres : ", genres);
     }, [genres]);
 
-    // Fonction pour gérer la soumission du formulaire de recherche
+    useEffect(() => {
+        if(query !== ''){
+            localStorage.setItem('lastSerieFilterSearch', query);
+        }
+    }, [query]);
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const queryParams = generateSerieFilterQueryParams(language, sortBy, noteMin, noteMax, nbVotesMin, genres, activePage, SERIE_GENRES);
         setQuery(queryParams);
-        setCurrentRequest(queryParams);
         //TODO Ajouter au localstorage en cas de refresh
         // console.log("MovieFilterContext - Query Params : ", queryParams);
         router.push('/ui/series/search').then(() => {

@@ -1,6 +1,7 @@
 import {FullMovie, Image, Movie, Review, Video} from "../../interfaces/Movie";
 import {Episode, FullSerie, Season, Serie, Watch} from "../../interfaces/Serie";
 import {Cast, Crew} from "../../interfaces/Cast";
+import {MediaCardProps} from "../../interfaces/UI";
 
 export function createMovie(data: any): Movie {
     return {
@@ -79,5 +80,16 @@ export function createFullSerie(data:any): FullSerie{
         similar: data.similar.results,
         videos: data.videos.results,
         watch: data['watch/providers'].results
+    }
+}
+export function createMediaCardPropsFromSerie(data: any): MediaCardProps {
+    console.log("Movie or Serie before MediaCardProps : ",data);
+    return {
+        id: data.id,
+        type: "serie",
+        title: data.name,
+        release_date: data.first_air_date,
+        vote_average: data.vote_average,
+        poster_path: data.poster_path
     }
 }

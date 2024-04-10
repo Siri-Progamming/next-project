@@ -14,166 +14,172 @@ interface HorizontalListShowcaseProps {
     title: string;
 }
 
-const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type,title}) => {
+const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, title}) => {
     const {user} = useAuth();
-    const [api, setApi] = useState<string>("");
     const [movies, setMovies] = useState<Array<Movie>>([]);
     const [series, setSeries] = useState<Array<Serie>>([]);
     const [elementToDisplay, setElementToDisplay] = useState<number>(0); // 0 for movies, 1 for series
-    const [isListEmpty, setIsListEmpty] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isMovieListEmpty, setIsMovieListEmpty] = useState<boolean>(false);
+    const [isSerieListEmpty, setIsSerieListEmpty] = useState<boolean>(false);
+    const [isMovieLoading, setIsMovieLoading] = useState<boolean>(true);
+    const [isSerieLoading, setIsSerieLoading] = useState<boolean>(true);
     const isUserRecommandation = (type === "recommended");
     const {DISPLAY_LANGUAGE} = useConstantes();
+    const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
 
-    const initMovies = async (api:string) => {
-        const moviesDiscover = await getMovies(DISPLAY_LANGUAGE, api);
+    const initMovies = async () => {
+        const api = selectApi(0);
+        const moviesDiscover = await getMovies(DISPLAY_LANGUAGE, api!);
         if (moviesDiscover && moviesDiscover.length > 0) {
-            setIsListEmpty(false);
+            setIsMovieListEmpty(false);
             let tempMovies: Array<Movie> = [];
             for (const m of moviesDiscover) {
                 tempMovies.push(createMovie(m));
             }
+            setIsFirstLoad(false);
             setMovies(tempMovies);
-        }else{
-            setIsListEmpty(true);
+        } else {
+            setIsMovieListEmpty(true);
         }
     }
-    const initSeries = async (api:string) => {
-        const series = await getMovies(DISPLAY_LANGUAGE, api);
+    const initSeries = async () => {
+        const api = selectApi(1);
+        const series = await getMovies(DISPLAY_LANGUAGE, api!);
         if (series && series.length > 0) {
-            setIsListEmpty(false);
+            setIsSerieListEmpty(false);
             let tempSeries: Array<Serie> = [];
             for (const s of series) {
                 tempSeries.push(createSerie(s));
             }
             setSeries(tempSeries);
-        }else{
-            setIsListEmpty(true);
+        } else {
+            setIsSerieListEmpty(true);
         }
     }
-
-    const selectApi = () => {
-        if(elementToDisplay === 0) {
+    const selectApi = (element?: number) => {
+        if (element === 0) {
             switch (type) {
                 case "trending":
-                    setApi(ApiConfigService.fennext.urls.movie_trending);
-                    break;
+                    return ApiConfigService.fennext.urls.movie_trending;
                 case "toprated":
-                    setApi(ApiConfigService.fennext.urls.movie_toprated);
-                    break;
+                    return ApiConfigService.fennext.urls.movie_toprated;
                 case "recommended":
-                    setApi(ApiConfigService.fennext.urls.movie_user_recommanded.replace("{user_id}", user?.id!));
-                    break;
+                    return ApiConfigService.fennext.urls.movie_user_recommanded.replace("{user_id}", user?.id!);
             }
-        }
-        else if(elementToDisplay === 1) {
+        } else if (element === 1) {
             switch (type) {
                 case "trending":
-                    setApi(ApiConfigService.fennext.urls.serie_trending);
-                    break;
+                    return ApiConfigService.fennext.urls.serie_trending;
                 case "toprated":
-                    setApi(ApiConfigService.fennext.urls.serie_toprated);
-                    break;
+                    return ApiConfigService.fennext.urls.serie_toprated;
                 case "recommended":
-                    setApi(ApiConfigService.fennext.urls.serie_user_recommanded.replace("{id_user}", user?.id!));
-                    break;
+                    return ApiConfigService.fennext.urls.serie_user_recommanded.replace("{id_user}", user?.id!);
             }
         }
     }
 
     useEffect(() => {
-        selectApi();
+        if(movies.length === 0){
+            initMovies().then();
+        }
+        if(series.length === 0){
+            initSeries().then();
+        }
     }, []);
 
+    useEffect(() => {
+        if(!isFirstLoad) {
+            if (elementToDisplay === 0) {
+                if (movies.length > 0) {
+                    console.log("Already Set Movies, refreshing... - " + type);
+                    setMovies(movies);
+                } else {
+                    console.log("Movies Empty, calling API... - " + type);
+                    initMovies().then();
+                }
+                if (series.length > 0) {
+                    console.log("Already Set Series, refreshing... - " + type);
+                    console.log("Series : ", series);
+                    setSeries(series);
+                } else {
+                    console.log("Series Empty, calling API... - " + type);
+                    initSeries().then();
+                }
+            }
+        }
+}, [elementToDisplay]);
+
 useEffect(() => {
-    if(api !== ""){
-        console.log("API ENDPOINT : ",api);
-        if(elementToDisplay === 0){
-            if(movies.length > 0){
-                console.log("Already Set Movies, refreshing...");
-                setMovies(movies);
-            }else{
-                console.log("Movies Empty, calling API...");
-                initMovies(api).then();
-            }
-        }else if(elementToDisplay === 1){
-            if(series.length > 0) {
-                console.log("Already Set Series, refreshing...");
-                setSeries(series);
-            }else{
-                console.log("Series Empty, calling API...");
-                initSeries(api).then();
-            }
-        }
+    if (movies.length > 0 || movies.length === 0 && isMovieListEmpty) {
+        setIsMovieLoading(false);
+    } else {
+        setIsMovieLoading(true);
     }
-}, [api]);
+}, [movies, isMovieListEmpty]);
 
-    useEffect(() => {
-        selectApi();
-    }, [elementToDisplay]);
-
-    useEffect(() => {
-        if (movies.length > 0 || movies.length === 0 && isListEmpty) {
-            setIsLoading(false);
-        } else {
-            setIsLoading(true);
-        }
-    }, [movies, isListEmpty]);
-
-    useEffect(() => {
-        if (series.length > 0 || series.length === 0 && isListEmpty) {
-            setIsLoading(false);
-        } else {
-            setIsLoading(true);
-        }
-    }, [series, isListEmpty]);
-
-    useEffect(() => {
-        if(isUserRecommandation){
-            console.log("HorizontalListShowcase - isListEmpty : ", isListEmpty);
-        }
-    }, [isListEmpty]);
-
-    useEffect(() => {
-        if(isUserRecommandation){
-            console.log("HorizontalListShowcase - isLoading : ", isLoading);
-        }
-    }, [isLoading]);
-
-    const handleSwitchElement = (element: string) => {
-        setElementToDisplay(element === "Films" ? 0 : 1);
+useEffect(() => {
+    if (series.length > 0 || series.length === 0 && isSerieListEmpty) {
+        setIsSerieLoading(false);
+    } else {
+        setIsSerieLoading(true);
     }
-    return (
-        <div className="flex flex-col">
-            <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start "><h1 className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
-            {(isUserRecommandation && !isLoading && isListEmpty) &&
-                <p>Nous n'avons pas assez d'informations pour vous proposer des recommandations personnalisées.</p>}
-            {(isUserRecommandation && isLoading && !isListEmpty) &&
-                <p>Chargement de vos recommandations personnalisées...</p>}
-            <Switch elements={["Films","Séries"]} onSelect={handleSwitchElement}/>
-            <div className="relative">
-                <ul id="movies-horizontal-showcase"
-                    className="flex space-x-4 pb-5 pl-4 pr-4 horizontal-fading">
-                    {((elementToDisplay === 0 && movies.length > 0)) && showMovies(movies)}
-                    {(elementToDisplay === 1 && series.length > 0) && showSeries(series)}
-                </ul>
-            </div>
+}, [series, isSerieListEmpty]);
+
+useEffect(() => {
+    if (isUserRecommandation) {
+        console.log("HorizontalListShowcase - isMovieListEmpty : "+ isMovieListEmpty+ " - isSerieListEmpty : "+ isSerieListEmpty);
+    }
+}, [isMovieListEmpty, isSerieListEmpty]);
+
+useEffect(() => {
+    if (isUserRecommandation) {
+        console.log("HorizontalListShowcase - isMovieLoading : "+isMovieLoading+ " - isSerieLoading : "+isSerieLoading);
+    }
+}, [isMovieLoading, isSerieLoading]);
+
+const handleSwitchElement = (element: string) => {
+    setElementToDisplay(element === "Films" ? 0 : 1);
+}
+return (
+    <div className="flex flex-col">
+        <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start "><h1
+            className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
+        <Switch elements={["Films", "Séries"]} onSelect={handleSwitchElement}/>
+        {(isUserRecommandation && elementToDisplay === 0) && isMovieListEmpty ?
+            <p>Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées.</p>
+            :
+            isMovieLoading && <p>Chargement de vos recommandations de films personnalisées...</p>}
+        {(isUserRecommandation && elementToDisplay === 1) && isSerieListEmpty ?
+            <p>Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées.</p>
+            :
+            (isUserRecommandation && elementToDisplay === 1) && isSerieLoading && <p>Chargement de vos recommandations de séries personnalisées...</p>}
+        <div className="relative">
+            <ul id="movies-horizontal-showcase"
+                className="flex space-x-4 pb-5 pl-4 pr-4 horizontal-fading">
+                {((elementToDisplay === 0 && movies.length > 0)) && showMovies(movies)}
+                {(elementToDisplay === 1 && series.length > 0) && showSeries(series)}
+            </ul>
         </div>
-    );
+    </div>
+);
 }
 
-function showMovies(movies:Array<Movie>){
+function showMovies(movies: Array<Movie>) {
     return (
         movies.map(movie => (
-                <MediaCard key={movie.id} type={0} id={movie.id} title={movie.title} release_date={movie.release_date} vote_average={movie.vote_average} poster_path={movie.poster_path}/>
-            ))
-    )
-}
-function showSeries(series:Array<Serie>){
-    return (
-        series.map(serie => (
-            <MediaCard key={serie.id} type={1} id={serie.id} title={serie.title} release_date={serie.release_date} vote_average={serie.vote_average} poster_path={serie.poster_path}/>
+            <MediaCard key={movie.id} type={0} id={movie.id} title={movie.title} release_date={movie.release_date}
+                       vote_average={movie.vote_average} poster_path={movie.poster_path}/>
         ))
     )
 }
+
+function showSeries(series: Array<Serie>) {
+    return (
+        series.map(serie => (
+            <MediaCard key={serie.id} type={1} id={serie.id} title={serie.title} release_date={serie.release_date}
+                       vote_average={serie.vote_average} poster_path={serie.poster_path}/>
+        ))
+    )
+}
+
 export default HorizontalListShowcase;

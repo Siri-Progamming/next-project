@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {Movie} from '../../interfaces/Movie';
 import MediaCard from "../Cards/MediaCard";
 import { createMovie } from "../../services/API/object.creator.service";
-import {getMoviesSearch,getMoviesLiked} from "../../services/API/call.api.service";
+import {getMediaSearch,getMoviesLiked} from "../../services/API/call.api.service";
 import Loader from "../utils/Loader";
 import {useAuth} from "../../contexts/AuthContext";
 import {useConstantes} from "../../contexts/ConstantesContext";
@@ -29,7 +29,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
             urlApi = urlApi.replace(/(page=)\d+/, `$1${page}`);
         }
         console.log("urlAPI : ",urlApi);
-        const results = await getMoviesSearch(urlApi);
+        const results = await getMediaSearch(urlApi);
         const items = results.results;
         if (items && items.length > 0) {
             setIsSearchEmpty(false);
@@ -50,6 +50,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
         const results = await getMoviesLiked(DISPLAY_LANGUAGE,user?.id!);
         // console.log("initFavoriteMovies - results : ",results);
         if(results && results.length > 0){
+            setResultsNb(results.length);
             let tempMovies: Array<Movie> = [];
             for(const result of results) {
                 tempMovies.push(createMovie(result))

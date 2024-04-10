@@ -5,7 +5,7 @@ import {getLikesCountForAMovie} from "/src/services/MONGODB.BDD/queries.service"
 
 /**
  * @swagger
- * ./pages/api/movies/{idMovie}:
+ * /api/movies/{idMovie}:
  *   get:
  *     tags:
  *       - Movie

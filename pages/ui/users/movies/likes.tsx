@@ -28,7 +28,7 @@ const likes: React.FC<likesProps> = () => {
             {isLoading ?
                 <div>Loading...</div>
                 :
-                <VerticalListShowcase api={`/api/users/${user?.id}/movies/likes`} title = "Vos films préférés : "/>
+                <VerticalListShowcase api={`/api/users/${user?.id}/movies/likes`} title = "films préférés : "/>
             }
         </main>
     );
