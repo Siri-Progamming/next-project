@@ -6,4 +6,4 @@ const swaggerHandler = withSwagger({
     version: '1.0.0',
     apiFolder: './pages/api'
 });
-export default swaggerHandler();
+export default swaggerHandler;
