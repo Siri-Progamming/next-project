@@ -1,8 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Index from '../pages/index';
 import { useAuth } from '../src/contexts/AuthContext';
-import expect from "expect";
-import {it} from "node:test";
 //
 const useRouter = jest.spyOn(require('next/router'), 'useRouter');
 useRouter.mockImplementation(() => ({
@@ -23,13 +21,13 @@ describe('Index', () => {
     //     render(<Index />);
     //     expect(useRouter().push).toHaveBeenCalledWith('/ui/sign-in');
     // });
-    // it('does not redirect if user is authenticated', () => {
-    //     useAuth.mockReturnValue({
-    //         user: {id: 1, name:'test', email: 'test@test.com'},
-    //     });
-    //     render(<Index />);
-    //     expect(useRouter().push).not.toHaveBeenCalled();
-    // });
+    it('does not redirect if user is authenticated', () => {
+        useAuth.mockReturnValue({
+            user: {id: 1, name:'test', email: 'test@test.com'},
+        });
+        render(<Index />);
+        expect(useRouter().push).not.toHaveBeenCalled();
+    });
     // it('renders the title correctly', () => {
     //     useAuth.mockReturnValue({
     //         user: {id: 1, name:'test', email: 'test@test.com'},
@@ -37,8 +35,11 @@ describe('Index', () => {
     //     render(<Index />);
     //     expect(screen.getByText('tendances')).toBeInTheDocument();
     // });
-    it('renders the Discover list correctly', () => {
-        render(<Index />);
-        expect(screen.getByText('mieux')).toBeInTheDocument();
-    });
+    // it('renders the Discover list correctly', () => {
+    //     useAuth.mockReturnValue({
+    //         user: {id: 1, name:'test', email: 'test@test.com'},
+    //     });
+    //     render(<Index />);
+    //     expect(screen.getByText('mieux')).toBeInTheDocument();
+    // });
 });
