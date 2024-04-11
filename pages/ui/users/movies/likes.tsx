@@ -5,7 +5,7 @@ import {useRouter} from 'next/router';
 
 interface likesProps {
 }
-const likes: React.FC<likesProps> = () => {
+const Likes: React.FC<likesProps> = () => {
     const {user, isTokenVerified} = useAuth();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -33,4 +33,4 @@ const likes: React.FC<likesProps> = () => {
         </main>
     );
 }
-export default likes;
+export default Likes;

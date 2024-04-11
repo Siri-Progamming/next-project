@@ -5,7 +5,7 @@ import {useNameSearch} from "../../../src/contexts/NameSearchContext";
 
 interface searchProps {
 }
-const nameSearch: React.FC<searchProps> = () => {
+const NameSearch: React.FC<searchProps> = () => {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
     const isSearch = searchQuery !== '' && searchQuery.trim().length > 0;
@@ -27,4 +27,4 @@ const nameSearch: React.FC<searchProps> = () => {
         </main>
     );
 }
-export default nameSearch;
+export default NameSearch;

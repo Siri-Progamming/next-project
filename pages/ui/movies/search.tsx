@@ -4,7 +4,7 @@ import {useMovieFilter} from "../../../src/contexts/MovieFilterContext";
 
 interface searchProps {
 }
-const search: React.FC<searchProps> = () => {
+const Search: React.FC<searchProps> = () => {
     const {query} = useMovieFilter();
     const [searchQuery, setSearchQuery] = useState('');
     const isSearch = searchQuery !== '' && searchQuery.trim().length > 0;
@@ -25,4 +25,4 @@ const search: React.FC<searchProps> = () => {
         </main>
     );
 }
-export default search;
+export default Search;

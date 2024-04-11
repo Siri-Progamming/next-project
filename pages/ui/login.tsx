@@ -3,7 +3,7 @@ import LoginForm from "../../src/components/Forms/LoginForm";
 import {useAuth} from "../../src/contexts/AuthContext";
 import {useRouter} from "next/router";
 
-const login: React.FC = () => {
+const Login: React.FC = () => {
     const {user, isTokenVerified} = useAuth();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -32,4 +32,4 @@ const login: React.FC = () => {
         </main>
     );
 }
-export default login;
+export default Login;

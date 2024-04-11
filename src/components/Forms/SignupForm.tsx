@@ -65,7 +65,7 @@ const SignupForm = () => {
                         <InputPassword/>
                     </div>
                     <Button variant="contained" type="submit" className="form-btn auth-form-btn">
-                        S'inscrire
+                        {"S'inscrire"}
                     </Button>
                     <div className="switch-form-text">
                         <a onClick={handleClickOnLogin}>Se connecter</a>

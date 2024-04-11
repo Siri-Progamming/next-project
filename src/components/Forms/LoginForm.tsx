@@ -69,7 +69,7 @@ const LoginForm = () => {
                         Se connecter
                     </Button>
                     <div className="switch-form-text">
-                        <a onClick={handleClickOnSignup}>S'inscrire</a>
+                        <a onClick={handleClickOnSignup}>{"S'inscrire"}</a>
                     </div>
                 </form>
             </div>

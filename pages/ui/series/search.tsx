@@ -5,7 +5,7 @@ import {getMediaSearch} from "../../../src/services/API/call.api.service";
 import {createMediaCardPropsFromSerie} from "../../../src/services/API/object.creator.service";
 import {MediaSearchState, MediaCardProps} from "../../../src/interfaces/UI";
 
-const search: React.FC = () => {
+const Search: React.FC = () => {
     const {query} = useSerieFilter();
     const [searchQuery, setSearchQuery] = useState('');
     const isSearch = searchQuery !== '' && searchQuery.trim().length > 0;
@@ -90,4 +90,4 @@ const search: React.FC = () => {
         </main>
     );
 }
-export default search;
+export default Search;

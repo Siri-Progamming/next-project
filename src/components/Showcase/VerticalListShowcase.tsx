@@ -107,7 +107,7 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
             isLoading ?
                 <div className="flex justify-center items-center h-screen"><Loader/></div>
                     : isSearchEmpty ?
-                        <div className="flex justify-center items-center h-screen mt-[10vh]">La recherche n'a retourné aucun résultat :-(</div>
+                        <div className="flex justify-center items-center h-screen mt-[10vh]">{"La recherche n'a retourné aucun résultat."}</div>
                         :
                         <div className="category_movies mt-[10vh] flex flex-col justify-center items-center">
                             <h1 className="category_title self-start" ref={anchor}>{String(resultsNb)} {title}</h1>

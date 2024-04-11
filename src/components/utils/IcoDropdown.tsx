@@ -64,7 +64,7 @@ const IcoDropdownOnList: React.FC = () => {
                         className="text-[16px]"></BuildIcon> Upcoming</span>}
                 </a>
             </li>
-            <li><a onClick={handleClickOnLikes}>J'aime 💕</a></li>
+            <li><a onClick={handleClickOnLikes}>{"J'aime 💕"}</a></li>
             <li><a onClick={logout}>Déconnexion</a></li>
         </>
     );

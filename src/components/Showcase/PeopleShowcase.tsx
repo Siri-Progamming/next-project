@@ -16,7 +16,7 @@ const PeopleShowcase: React.FC<MoviesProps> = ({casts, nbToShow, title}) => {
                 casts.length > 0 ?
                     showCast(casts)
                     :
-                    <p>Nous n'avons pas d'informations concernant cette rubrique.</p>
+                    <p>{"Nous n'avons pas d'informations concernant cette rubrique."}</p>
                 :
                 <p>Chargement...</p>
             }

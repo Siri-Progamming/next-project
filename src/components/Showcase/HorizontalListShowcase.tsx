@@ -146,11 +146,11 @@ return (
             className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
         <Switch elements={["Films", "Séries"]} onSelect={handleSwitchElement}/>
         {(isUserRecommandation && elementToDisplay === 0) && isMovieListEmpty ?
-            <p>Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées.</p>
+            <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées."}</p>
             :
             isMovieLoading && <p>Chargement de vos recommandations de films personnalisées...</p>}
         {(isUserRecommandation && elementToDisplay === 1) && isSerieListEmpty ?
-            <p>Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées.</p>
+            <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées."}</p>
             :
             (isUserRecommandation && elementToDisplay === 1) && isSerieLoading && <p>Chargement de vos recommandations de séries personnalisées...</p>}
         <div className="relative">

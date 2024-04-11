@@ -3,7 +3,7 @@ import SignupForm from "../../src/components/Forms/SignupForm";
 import {useAuth} from "../../src/contexts/AuthContext";
 import {useRouter} from "next/router";
 
-const signup: React.FC = () => {
+const Signup: React.FC = () => {
     const {user, isTokenVerified} = useAuth();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -29,4 +29,4 @@ const signup: React.FC = () => {
         </main>
     );
 }
-export default signup;
+export default Signup;

@@ -27,14 +27,14 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({medias,mediaSearc
                     :  mediaSearchState.isSearchEmpty ?
                     <div className="flex flex-col justify-center items-center h-[80vh] mt-[10vh]">
                         <img id="noresult_logo" src="/noresult.png" alt="logo d'un paquet de pop corn triste" className="max-w-[150px] mb-1"/>
-                        <p>La recherche n'a retourné aucun résultat.</p>
+                        <p>{"La recherche n'a retourné aucun résultat."}</p>
                     </div>
                     :
                     <div className="category_movies mt-[10vh] flex flex-col justify-center items-center">
                             <h1 className="category_title self-start" ref={anchor}>{String(mediaSearchState.nbResults)} {title}</h1>
                             <ul id="vertical-list-showcase" className="">
                                 {medias.map(media => (
-                                    <MediaCardNew media={media}/>
+                                    <MediaCardNew key={media.id} media={media}/>
                                 ))}
                             </ul>
                             <div className="sticky bottom-0 z-[999] h-fit w-screen flex flex-row items-center justify-center">
