@@ -1,26 +1,56 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:node:.,test:jest:
 version: 2.1
-orbs:
-  node: circleci/node@5
 jobs:
-  test-node:
-    # Install node dependencies and run tests
-    executor: node/default
-    environment:
-      JEST_JUNIT_OUTPUT_DIR: ./test-results/
+  build:
+    docker:
+      - image: cimg/node:20.12
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
       - run:
-          command: npm install jest-junit
+          name: Install Dependencies
+          command: npm install
       - run:
-          name: Run tests
-          command: npm run test:ci
-      - store_test_results:
-          path: ./test-results/
+          name: Linter
+          command: npm run lint
+      - run:
+          name: Build
+          command: npm run build
+      - run:
+          name: Unit Tests
+          command: npm run test
+
+
+  deploy:
+    docker:
+      - image: cimg/node:20.12
+    environment:
+      VERCEL_ORG_ID: $VERCEL_ORG_ID
+      VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
+    steps:
+      - checkout
+      - run:
+          name: Install Vercel CLI
+          command: sudo npm install --global vercel@latest
+      - run:
+          name: Pull Vercel Environment Information
+          command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+      - run:
+          name: Build Project Artifacts
+          command: |
+            node --version
+            sudo vercel build --prod --token=$VERCEL_TOKEN
+      - run:
+          name: Deploy Project Artifacts to Vercel
+          command: sudo vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+
 workflows:
-  build-and-test:
+  version: 2
+  build_and_deploy:
     jobs:
-      - test-node
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
