@@ -89,7 +89,7 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
         e.preventDefault();
         const queryParams = generateMovieFilterQueryParams(language, sortBy, noteMin, noteMax, nbVotesMin, genres, activePage, MOVIE_GENRES);
         setQuery(queryParams);
-        router.push('/ui/series/search').then(() => {
+        router.push('/ui/movies/search').then(() => {
             // setQuery('');
         });
     }
