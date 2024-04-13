@@ -6,11 +6,12 @@ interface PaginationsProps{
     pages: number;
     itemsPerPage?: number;
     handlePageChange: (event: React.ChangeEvent<unknown>, value: number) => void;
+    activePage?: number;
 }
-const Paginations: React.FC<PaginationsProps> = ({pages, handlePageChange}) => {
+const Paginations: React.FC<PaginationsProps> = ({pages, handlePageChange, activePage}) => {
     return (
         <Stack spacing={2}>
-            <Pagination count={pages}  shape="rounded" variant="outlined" color="primary" onChange={handlePageChange}/>
+            <Pagination count={pages} page={activePage} shape="rounded" variant="outlined" color="primary" onChange={handlePageChange}/>
         </Stack>
     )
 }

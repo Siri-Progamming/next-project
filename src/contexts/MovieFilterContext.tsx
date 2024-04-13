@@ -1,34 +1,11 @@
 import React, {createContext, SyntheticEvent, useContext, useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useConstantes} from "./ConstantesContext";
-import {useApp} from "./AppContext";
+import {SerieFilterFormInfos} from "../interfaces/Forms";
+
 interface MovieFilterContextProps {
-    query: string;
-    setQuery: React.Dispatch<React.SetStateAction<string>>;
-
-    genres: number[];
-    setGenres: React.Dispatch<React.SetStateAction<number[]>>;
-
-    language: string;
-    setLanguage: React.Dispatch<React.SetStateAction<string>>;
-
-    sortBy: string;
-    setSortBy: React.Dispatch<React.SetStateAction<string>>;
-
-    noteMin: number;
-    setNoteMin: React.Dispatch<React.SetStateAction<number>>;
-
-    noteMax: number;
-    setNoteMax: React.Dispatch<React.SetStateAction<number>>;
-
-    nbVotesMin: number;
-    setNbVotesMin: React.Dispatch<React.SetStateAction<number>>;
-
-    nbPages: number;
-    setNbPages: React.Dispatch<React.SetStateAction<number>>;
-
-    activePage: number;
-    setActivePage: React.Dispatch<React.SetStateAction<number>>;
+    queryData: SerieFilterFormInfos
+    setQueryData: React.Dispatch<React.SetStateAction<SerieFilterFormInfos>>;
 
     handleChangeLanguage: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     handleChangeSortBy: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -53,104 +30,109 @@ interface MovieFilterProviderProps{
 // Fournisseur de contexte de recherche par nom
 export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ children }) => {
     const router = useRouter();
-    const {DISPLAY_LANGUAGE} = useConstantes();
-    const {MOVIE_GENRES} = useConstantes();
-    const [query, setQuery] = useState<string>('');
-    const [genres, setGenres] = useState<number[]>([]);
-    const [language, setLanguage] = useState<string>(DISPLAY_LANGUAGE);
-    const [sortBy, setSortBy] = useState<string>('popularity.desc');
-    const [noteMin, setNoteMin] = useState<number>(8);
-    const [noteMax, setNoteMax] = useState<number>(10);
-    const [nbVotesMin, setNbVotesMin] = useState<number>(100);
-    const [nbPages, setNbPages] = useState<number>(1);
-    const [activePage, setActivePage] = useState<number>(1);
+    const {DISPLAY_LANGUAGE, MOVIE_GENRES} = useConstantes();
+    const [queryData, setQueryData] = useState<SerieFilterFormInfos>({
+        query: '',
+        language: DISPLAY_LANGUAGE,
+        sortBy: 'popularity.desc',
+        noteMin: 8,
+        noteMax: 10,
+        nbVotesMin: 100,
+        genres: [],
+        nbPages: 1,
+        nbResults: 0,
+        activePage: 1
+    });
 
     useEffect(() => {
         const previousLocation = localStorage.getItem('previousLocation');
         if (previousLocation && previousLocation === '/ui/movies/search'){
             const lastMovieFilterSearch = localStorage.getItem('lastMovieFilterSearch');
             if (lastMovieFilterSearch && lastMovieFilterSearch !== '') {
-                setQuery(lastMovieFilterSearch);
+                let lastSearch:SerieFilterFormInfos = JSON.parse(lastMovieFilterSearch);
+                if(lastSearch.query !== ''){
+                    setQueryData(JSON.parse(lastMovieFilterSearch));
+                }
             }
         }
     }, []);
 
     useEffect(() => {
         // console.log("MovieFilterContext - Genres : ", genres);
-    }, [genres]);
+    }, [queryData.genres]);
 
     useEffect(() => {
-        if(query !== ''){
-            localStorage.setItem('lastMovieFilterSearch', query);
+        if(queryData.query !== ''){
+            localStorage.setItem('lastMovieFilterSearch',  JSON.stringify(queryData));
         }
-    }, [query]);
-    // Fonction pour gérer la soumission du formulaire de recherche
+    }, [queryData]);
+
+    useEffect(() => {
+        if(queryData.query !== ''){
+            setQueryData({...queryData, query: generateMovieFilterQueryParams(queryData, MOVIE_GENRES)});
+        }
+    }, [queryData.activePage]);
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const queryParams = generateMovieFilterQueryParams(language, sortBy, noteMin, noteMax, nbVotesMin, genres, activePage, MOVIE_GENRES);
-        setQuery(queryParams);
+        let newSearchQueryData = {...queryData, nbPages: 1, nbResults: 0, activePage: 1};
+        const queryParams = generateMovieFilterQueryParams(newSearchQueryData, MOVIE_GENRES);
+        setQueryData({...newSearchQueryData, query: queryParams});
         router.push('/ui/movies/search').then(() => {
             // setQuery('');
         });
     }
     const handleReset = () => {
-    setGenres([]);
-    setLanguage(DISPLAY_LANGUAGE);
-    setSortBy('popularity.desc');
-    setNoteMin(8);
-    setNoteMax(10);
-    setNbVotesMin(100);
-    //TODO uncheck les boxes, reset les inputs
+        setQueryData({...queryData,
+            query: '',
+            language: DISPLAY_LANGUAGE,
+            sortBy: 'popularity.desc',
+            noteMin: 8,
+            noteMax: 10,
+            nbVotesMin: 100,
+            genres: [],
+            nbPages: 1,
+            nbResults: 0
+        });
 };
     const handleChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        e.preventDefault();
         console.log("MovieFilterContext - Language Selected : ", e.target.value);
-        setLanguage(e.target.value);
+        setQueryData({...queryData, language: e.target.value});
     }
     const handleChangeSortBy = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSortBy(e.target.value);
+        e.preventDefault();
+        setQueryData({...queryData, sortBy: e.target.value});
     }
-    const handleChangeNoteMin =(event: SyntheticEvent<Element, Event>, value: number | null) => {
-        setNoteMin(Number(value));
+    const handleChangeNoteMin =(e: SyntheticEvent<Element, Event>, value: number | null) => {
+        e.preventDefault();
+        setQueryData({...queryData, noteMin: Number(value)});
     }
     const handleChangeNoteMax = (e: Event, value: number | number[], activeThumb: number) => {
-        setNoteMax(Number(value));
+        e.preventDefault();
+        setQueryData({...queryData, noteMax: Number(value)});
     }
     const handleChangeNbVotesMin = (e: Event, value: number | number[], activeThumb: number) => {
-        setNbVotesMin(Number(value));
+        e.preventDefault();
+        setQueryData({...queryData, nbVotesMin: Number(value)});
     }
     const handleSelectGenre = (e: React.MouseEvent<HTMLButtonElement>, genreId:number) => {
         e.preventDefault();
         const isActive = e.currentTarget.classList.contains('selected');
         if (!isActive) {
             e.currentTarget.classList.add('selected');
-            setGenres([...genres, genreId]);
-            console.log("MovieFilterContext - Genre Selected : ", genreId);
+            setQueryData({...queryData, genres: [...queryData.genres, genreId]});
+            // console.log("MovieFilterContext - Genre Selected : ", genreId);
         } else {
             e.currentTarget.classList.remove('selected');
-            setGenres(genres.filter((id) => id !== genreId));
+            setQueryData({...queryData, genres: queryData.genres.filter((id) => id !== genreId)});
         }
     }
 
     // Valeurs fournies par le contexte
     const contextValue = {
-        query,
-        setQuery,
-        genres,
-        setGenres,
-        language,
-        setLanguage,
-        sortBy,
-        setSortBy,
-        noteMin,
-        setNoteMin,
-        noteMax,
-        setNoteMax,
-        nbVotesMin,
-        setNbVotesMin,
-        nbPages,
-        setNbPages,
-        activePage,
-        setActivePage,
+        queryData,
+        setQueryData,
         handleChangeLanguage,
         handleChangeSortBy,
         handleChangeNoteMin,
@@ -169,42 +151,43 @@ export const MovieFilterProvider: React.FC<MovieFilterProviderProps> = ({ childr
     );
 };
 
-function generateMovieFilterQueryParams(language: string, sortBy: string, noteMin: number, noteMax: number, nbVotesMin: number, genres: number[], activePage: number, MOVIE_GENRES: any[]){
+function generateMovieFilterQueryParams(queryData:SerieFilterFormInfos, MOVIE_GENRES: any[]){
     // let queryParams = `?language=${language}&sort_by=${sortBy}&vote_average.gte=${noteMin}&vote_average.lte=${noteMax}&vote_count.gte=${nbVotesMin}&page=${activePage}`;
     let queryParams = '?include_adult=false';
-    //TODO pas oublier ?include_adult=false
-    if (language !== 'en-US') {
-        queryParams += `&language=${language}`;
+    if (queryData.language !== 'en-US') {
+        queryParams += `&language=${queryData.language}`;
     }else{
         queryParams += `&language=en-US`;
     }
-    if(activePage > 1){
-        queryParams += `&page=${activePage}`;
+
+    if(queryData.activePage >= 1 && queryData.activePage <= queryData.nbPages){
+        queryParams += `&page=${queryData.activePage}`;
     }else{
         queryParams += `&page=1`;
     }
-    if (sortBy !== 'popularity.desc') {
-        queryParams += `&sort_by=${sortBy}`;
+
+    if (queryData.sortBy !== 'popularity.desc') {
+        queryParams += `&sort_by=${queryData.sortBy}`;
     }else {
         queryParams += `&sort_by=popularity.desc`;
     }
-    if(noteMax < 10 && noteMax >= noteMin && noteMax >= 0){
-        queryParams += `&vote_average.lte=${noteMax}`;
+    if(queryData.noteMax < 10 && queryData.noteMax >= queryData.noteMin && queryData.noteMax >= 0){
+        queryParams += `&vote_average.lte=${queryData.noteMax}`;
     }else{
         queryParams += `&vote_average.lte=10`;
     }
-    if(noteMin > 0 && noteMin <= noteMax && noteMin <= 10) {
-        queryParams += `&vote_average.gte=${noteMin}`;
+    if(queryData.noteMin > 0 && queryData.noteMin <= queryData.noteMax && queryData.noteMin <= 10) {
+        queryParams += `&vote_average.gte=${queryData.noteMin}`;
     }   else{
         queryParams += `&vote_average.gte=0`;
     }
-    if(nbVotesMin > 0) {
-        queryParams += `&vote_count.gte=${nbVotesMin}`;
+    if(queryData.nbVotesMin > 0) {
+        queryParams += `&vote_count.gte=${queryData.nbVotesMin}`;
     }else{
         queryParams += `&vote_count.gte=0`;
     }
-    if(genres.length > 0) {
-        queryParams += `&with_genres=${genres.join(',')}`;
+    if(queryData.genres.length > 0) {
+        queryParams += `&with_genres=${queryData.genres.join(',')}`;
     }else{
         queryParams += `&with_genres=${MOVIE_GENRES.map((genre) => genre.id).join('|')}`;
     }

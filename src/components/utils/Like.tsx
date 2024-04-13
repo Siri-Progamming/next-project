@@ -8,8 +8,9 @@ interface LikeProps{
     idMovie:number;
     width?:string;
     style?:string;
+    containerStyle?:string;
 }
-const Like: React.FC<LikeProps> = ({idMovie,width, style}) => {
+const Like: React.FC<LikeProps> = ({idMovie,width, style, containerStyle}) => {
 const [isLiked, setIsLiked] = useState<boolean>(false);
 const [isHovered, setIsHovered] = useState(false);
 const {user} = useAuth();
@@ -39,11 +40,13 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     }, [idMovie, isLiked]);
 
     const handleClick = () => {
-        updateLike().then();
+        if(user){
+            updateLike().then();
+        }
     }
 
     return (
-        <div className={``}>
+        <div className={` ${containerStyle ? containerStyle : ''}`}>
             {user && (isLiked ?
                 <FavoriteOutlinedIcon className={`${width ? width : 'text-[60px]'} ${style ? style : ''}`} onClick={handleClick}/>
                 :

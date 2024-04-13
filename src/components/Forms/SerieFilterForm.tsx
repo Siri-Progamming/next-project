@@ -7,10 +7,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { styled } from '@mui/material/styles';
 import {useConstantes} from "../../contexts/ConstantesContext";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 const SerieFilterForm: React.FC = ({}) => {
     const {SERIE_GENRES} = useConstantes();
-    const {genres, language, sortBy, noteMin, nbVotesMin,
-                handleChangeLanguage, handleChangeSortBy, handleChangeNoteMin, handleChangeNbVotesMin,
+    const {queryData, handleChangeLanguage, handleChangeSortBy, handleChangeNoteMin, handleChangeNbVotesMin,
                 handleSelectGenre, handleSubmit, handleReset} = useSerieFilter();
 
     //TODO constantes pour les genres, les langues, les notes, les votes
@@ -18,10 +18,11 @@ const SerieFilterForm: React.FC = ({}) => {
         <div>
             {/*language, page, sort_by, vote_average.gte, vote_average.lte, vote_count.gte, vote_count.lte, with_genres*/}
             <form id="movie-filters" onSubmit={handleSubmit}>
+                <div className="absolute top-0 right-0"><RestartAltIcon className="reset-button" onClick={handleReset}/></div>
                 <div className="form-group">
                     <label htmlFor="language">Langue</label>
                     <select id="language" name="language"
-                            value={language}
+                            value={queryData.language}
                             onChange={handleChangeLanguage}
                             className="select select-bordered w-full max-w-xs text-black bg-white">
                         {LANGUAGES.map((lang) => (
@@ -32,7 +33,7 @@ const SerieFilterForm: React.FC = ({}) => {
                 <div className="form-group">
                     <label htmlFor="sort_by">Trier</label>
                     <select id="sort_by" name="sort_by"
-                            value={sortBy}
+                            value={queryData.sortBy}
                             onChange={handleChangeSortBy}
                             className="select select-bordered w-full max-w-xs text-black bg-white">
                         {SERIES_SORT_BY.map((sort) => (
@@ -46,7 +47,8 @@ const SerieFilterForm: React.FC = ({}) => {
                         <p className="text-xs self-center pr-1">{NOTES.find(note => note.id === 'MIN')?.value}</p>
                         <StyledRating
                             name="note_min"
-                            defaultValue={noteMin}
+                            defaultValue={queryData.noteMin}
+                            value={queryData.noteMin}
                             precision={0.5}
                             icon={<FavoriteIcon fontSize="inherit"/>}
                             emptyIcon={<FavoriteBorderIcon fontSize="inherit" className="text-tertiary-600"/>}
@@ -60,7 +62,8 @@ const SerieFilterForm: React.FC = ({}) => {
                     <label htmlFor="vote_count_min">Nombre de votes minimum</label>
                     <Slider
                         aria-label="vote_count_min"
-                        defaultValue={nbVotesMin}
+                        defaultValue={queryData.nbVotesMin}
+                        value={queryData.nbVotesMin}
                         step={100}
                         valueLabelDisplay="auto"
                         marks={VOTES}
@@ -80,7 +83,7 @@ const SerieFilterForm: React.FC = ({}) => {
                     <div className="flex flex-wrap">
                         {SERIE_GENRES.map((genre) => (
                             <button key={genre.id} type="button" onClick={(event) => handleSelectGenre(event, genre.id)}
-                                    className="genre_filter"
+                                    className={`genre_filter ${queryData.genres.includes(genre.id) ? 'selected' : ''}`}
                                     >
                                 {genre.name}
                             </button>

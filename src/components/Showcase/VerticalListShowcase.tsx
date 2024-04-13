@@ -18,8 +18,6 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
     const [pagesNb, setPagesNb] = useState<number>(0);
     const [isSearchEmpty, setIsSearchEmpty] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const {user} = useAuth();
-    const {DISPLAY_LANGUAGE} = useConstantes();
     let urlApi = api+searchQuery
     const anchor = useRef<HTMLDivElement>(null);
 
@@ -45,35 +43,13 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
         }
     }
 
-    const initFavoriteMovies = async () => {
-        // console.log("calling getMoviesLiked with user id : ",user?.id!);
-        const results = await getMoviesLiked(DISPLAY_LANGUAGE,user?.id!);
-        // console.log("initFavoriteMovies - results : ",results);
-        if(results && results.length > 0){
-            setResultsNb(results.length);
-            let tempMovies: Array<Movie> = [];
-            for(const result of results) {
-                tempMovies.push(createMovie(result))
-            }
-            setMovies(tempMovies);
-        }
-    }
-
     useEffect(() => {
-        if(!api.includes("likes")){
-            initMovies().then();
-        }else {
-            // console.log("VerticalListShowcase - useEffect - initFavoriteMovies");
-            initFavoriteMovies().then();
-        }
-
+        initMovies().then();
     }, []);
 
     //Pour re-render le composant à chaque changement de la query
     useEffect(() => {
-        if(!api.includes("likes")) {
-            initMovies().then();
-        }
+        initMovies().then();
     }, [searchQuery]);
 
     useEffect(() => {
@@ -87,14 +63,6 @@ const VerticalListShowcase: React.FC<VerticalListShowcase> = ({api, title, searc
         }
     }, [movies]);
 
-    useEffect(() => {
-        if(pagesNb){
-            console.log("Nbr de pages de résultats : ",pagesNb);
-        }
-        if(resultsNb){
-            console.log("Nbr de résultats : ",resultsNb);
-        }
-    }, [pagesNb, resultsNb]);
     const handlePageChange = async (event: React.ChangeEvent<unknown>, pageNumber: number) => {
         initMovies(pageNumber).then();
         if (anchor.current) {

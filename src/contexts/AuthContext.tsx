@@ -78,6 +78,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         } catch (error) {
             console.error("error : ", error);
         }
+        // localStorage.removeItem('lastSerieFilterSearch');
+        // localStorage.removeItem('lastMovieFilterSearch');
         // router.push('/ui/login').then();
     };
 

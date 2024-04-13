@@ -262,6 +262,19 @@ footer{
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
     animation: beat 1s infinite alternate;
 }
+.like-button_media-card{
+    @apply text-tertiary-700;
+    /*box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);*/
+    @apply absolute;
+    @apply bg-black bg-opacity-95 p-1;
+    border-radius: 30px;
+}
+.like-button_media-card-rotation{
+    @apply translate-x-[195px] translate-y-[0px] rotate-[10deg]
+}
+.reset-button{
+    @apply text-[35px] text-white text-opacity-70 cursor-pointer;
+}
 .absolute0{
     position: absolute;
     top: 0;

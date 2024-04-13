@@ -83,12 +83,23 @@ export function createFullSerie(data:any): FullSerie{
     }
 }
 export function createMediaCardPropsFromSerie(data: any): MediaCardProps {
-    console.log("Movie or Serie before MediaCardProps : ",data);
+    // console.log("Movie or Serie before MediaCardProps : ",data);
     return {
         id: data.id,
         type: "serie",
         title: data.name,
         release_date: data.first_air_date,
+        vote_average: data.vote_average,
+        poster_path: data.poster_path
+    }
+}
+export function createMediaCardPropsFromMovie(data: any): MediaCardProps {
+    // console.log("Movie or Serie before MediaCardProps : ",data);
+    return {
+        id: data.id,
+        type: "movie",
+        title: data.title,
+        release_date: data.release_date,
         vote_average: data.vote_average,
         poster_path: data.poster_path
     }

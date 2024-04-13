@@ -10,7 +10,7 @@ interface SimilarShowcaseProps {
     nbToShow: number;
     title: string;
 }
-interface Media{
+interface Media {
     mediaType:string;
     similar: Array<Movie> | Array<Serie>;
     recommendations: Array<Movie> | Array<Serie>;
@@ -22,8 +22,7 @@ const SimilarShowcase: React.FC<SimilarShowcaseProps> = ({fullMedia, nbToShow, t
         recommendations:fullMedia.recommendations
     }
 
-
-   let similars;
+    let similars;
     {title === "Similar" ?  similars = media?.similar : similars = media?.recommendations}
     const router = useRouter();
     const handleClick = (id:number) => {

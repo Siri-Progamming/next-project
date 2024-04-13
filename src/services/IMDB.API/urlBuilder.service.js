@@ -126,7 +126,8 @@ export function buildURL_series_filter(req, url){
     // (first_air_date.asc/desc, name.asc/desc, original_name.asc/desc, popularity.asc/desc, vote_average.asc/desc, vote_count.asc/desc)(Default popularity.desc)
     // language, page, sort_by,
     //TODO AJouter le runtime ?
-
+    console.log("serie url before being builit:", url);
+    console.log("serie url query:", req.query);
     url = url + '?include_adult=false';
 
     if (req.query.language) {

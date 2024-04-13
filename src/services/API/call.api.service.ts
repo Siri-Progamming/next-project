@@ -12,11 +12,9 @@ export const getMovies = async (language:string,api:string) => {
     }
 }
 export const getMediaSearch = async (url:string) => {
-    console.log("getMoviesSearch - url : ",url);
     try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log("getMediaSearch - data : ",data.data);
         return data.data;
     } catch (error) {
         console.error(error);

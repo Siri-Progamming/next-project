@@ -28,11 +28,14 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
             setMovie(createFullMovie(movie));
         }
     }
+
     useEffect(() => {
         if (idMovie) {
+            setIsLoading(true);
             initMovie().then();
         }
     }, [idMovie]);
+
     useEffect(() => {
         if (movie?.id == idMovie) {
             setIsLoading(false);
@@ -41,6 +44,9 @@ const IdMovie: React.FC<IdMovieProps> = ({}) => {
         }
     }, [movie]);
 
+    useEffect(() => {
+        console.log("isLoading", isLoading);
+    }, [isLoading]);
 
     return (
         <main id="main_movie_page">

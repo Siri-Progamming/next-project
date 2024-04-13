@@ -5,6 +5,8 @@ import PercentSticker from "../utils/PercentSticker";
 import MediaCardSkeleton from "../Skeleton/MediaCardSkeleton";
 import {showNoImage} from "../Skeleton/NoData/NoImage";
 import {MediaCardProps} from "../../interfaces/UI";
+import {useAuth} from "../../contexts/AuthContext";
+import Like from "../utils/Like";
 
 interface MediaCardProperties {
     media:MediaCardProps;
@@ -13,6 +15,8 @@ interface MediaCardProperties {
 const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
+    const {user} = useAuth();
+
     const handleClick = () => {
         if(media.type === "movie"){
             router.push('/ui/movies/' + media.id).then();
@@ -41,6 +45,7 @@ const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
                     :
                     (
                         <li key={media.id} className="media-card">
+                            {user && <Like idMovie={media.id} width="text-[40px]" style="like-button_media-card" containerStyle="like-button_media-card-rotation"/>}
                             {media.poster_path ? showImage(media.poster_path) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
                                 <PercentSticker note={media.vote_average} />

@@ -4,28 +4,27 @@ import {useSerieFilter} from "../../../src/contexts/SerieFilterContext";
 import {getMediaSearch} from "../../../src/services/API/call.api.service";
 import {createMediaCardPropsFromSerie} from "../../../src/services/API/object.creator.service";
 import {MediaSearchState, MediaCardProps} from "../../../src/interfaces/UI";
-
+import Loader from "../../../src/components/utils/Loader";
+//UI / SERIES / SEARCH
 const Search: React.FC = () => {
-    const {query} = useSerieFilter();
+    const {queryData, setQueryData} = useSerieFilter();
     const [searchQuery, setSearchQuery] = useState('');
     const isSearch = searchQuery !== '' && searchQuery.trim().length > 0;
-
     const [mediaCards, setMediaCards] = useState<Array<MediaCardProps>>([])
-    const [urlApi, setUrlApi] = useState<string>("");
+    const [urlApi, setUrlApi] = useState<string>('');
     const [mediaSearchState, setMediaSearchState] = useState<MediaSearchState>({isSearchEmpty: false, isLoading: true, nbPages: 0, nbResults: 0});
-    const initMediaCards = async (page?:number) => {
+    const [starterLoader, setStarterLoader] = useState<boolean>(true);
+    const initMediaCards = async () => {
         let url = urlApi;
-        if(page){
-            console.log("series search initSeries - page : ",page);
-            url = urlApi.replace(/(page=)\d+/, `$1${page}`);
-        }
-        console.log("series search initMediaCards urlAPI : ",url);
+
+        // console.log("series search initMediaCards urlAPI : ",url);
         const results = await getMediaSearch(url);
-        console.log("results : ",results);
+        // console.log("results : ",results);
         const items = results.results;
-        console.log("items : ",items);
+        // console.log("items : ",items);
         if (items && items.length > 0) {
             setMediaSearchState({...mediaSearchState, isSearchEmpty: false, nbPages: results.total_pages, nbResults: results.total_results});
+            setQueryData({...queryData, nbPages: results.total_pages, nbResults: results.total_results});
             let tempSeries: Array<MediaCardProps> = [];
             for(const item of items) {
                 tempSeries.push(createMediaCardPropsFromSerie(item))
@@ -35,19 +34,29 @@ const Search: React.FC = () => {
             setMediaSearchState({...mediaSearchState, isSearchEmpty: true});
         }
     }
-    const handlePageChange = async (event: React.ChangeEvent<unknown>, pageNumber: number) => {
-        initMediaCards(pageNumber).then();
+    const handlePageChange = async (e: React.ChangeEvent<unknown>, pageNumber: number) => {
+        setQueryData({...queryData, activePage: pageNumber})
     }
 
     useEffect(() => {
-        if (query){
-            setSearchQuery(query);
+        setTimeout(() => {
+            setStarterLoader(false);
+        } , 500);
+    }, []);
+
+    useEffect(() => {
+        // console.log("series filter search - queryData : ", queryData);
+        if (queryData.query && queryData.query !== ''){
+            setSearchQuery(queryData.query);
         }
-    }, [query]);
+    }, [queryData]);
 
     //Pour re-render le composant à chaque changement de la query
     useEffect(() => {
-        setUrlApi("/api/series/search?query="+searchQuery);
+        // console.log("series filter search - searchQuery : ", searchQuery);
+        if(isSearch){
+            setUrlApi("/api/series/search?query="+searchQuery);
+        }
     }, [searchQuery]);
 
     useEffect(() => {
@@ -58,11 +67,11 @@ const Search: React.FC = () => {
     } , [urlApi]);
 
     useEffect(() => {
-        console.log("series filter search - mediaCards before if : ", mediaCards);
-        if(mediaCards.length > 0){
-            console.log("series filter search - mediaCards : ", mediaCards);
+        // console.log("series filter search - mediaCards before if : ", mediaCards);
+        if(isSearch && mediaCards.length > 0){
+            // console.log("series filter search - mediaCards : ", mediaCards);
             setMediaSearchState({...mediaSearchState,isLoading:false, isSearchEmpty: false});
-        }else if(mediaCards.length === 0 && mediaSearchState.isSearchEmpty){
+        }else if(isSearch && mediaCards.length === 0 && mediaSearchState.isSearchEmpty){
             setMediaSearchState({...mediaSearchState,isLoading:false});
         }else{
             setMediaSearchState({...mediaSearchState,isLoading:true});
@@ -70,22 +79,19 @@ const Search: React.FC = () => {
     } , [mediaCards]);
 
     useEffect(() => {
-        if(isSearch){
-
-        }
-    }, [isSearch]);
-
-    useEffect(() => {
-        console.log("series filter search isLoading : ", mediaSearchState.isLoading);
-        console.log("series filter search isSearchEmpty : ", mediaSearchState.isSearchEmpty);
+        console.log("series filter search isLoading : "+mediaSearchState.isLoading+" - isSearchEmpty : "+mediaSearchState.isSearchEmpty);
         }, [mediaSearchState]);
 
     return(
         <main>
-            {isSearch ?
-                <VerticalItemsShowcase medias={mediaCards} mediaSearchState={mediaSearchState} title = "résultats : " searchQuery={query} handlePageChange={handlePageChange} />
+            {starterLoader ?
+                <div className="flex justify-center items-center h-[80vh] mt-[10vh]"><Loader/></div>
                 :
-                 <h1>Effectuez une recherche.</h1>
+                isSearch ?
+                    <VerticalItemsShowcase medias={mediaCards} mediaSearchState={mediaSearchState} title="résultats : "
+                                                            activePage={queryData.activePage} handlePageChange={handlePageChange}/>
+                    :
+                    <h1>Effectuez une recherche.</h1>
             }
         </main>
     );
