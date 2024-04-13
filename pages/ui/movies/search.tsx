@@ -19,11 +19,12 @@ const Search: React.FC<searchProps> = () => {
     const [starterLoader, setStarterLoader] = useState<boolean>(true);
 
     const initMediaCards = async () => {
+        console.log("Initilaizing media cards for MOVIES/SEARCH");
         let url = urlApi;
 
-        // console.log("series search initMediaCards urlAPI : ",url);
+        console.log("series search initMediaCards urlAPI : ",url);
         const results = await getMediaSearch(url);
-        // console.log("results : ",results);
+        console.log("results : ",results);
         const items = results.results;
         // console.log("items : ",items);
         if (items && items.length > 0) {
@@ -35,7 +36,7 @@ const Search: React.FC<searchProps> = () => {
             }
             setMediaCards(tempSeries);
         }else{
-            setMediaSearchState({...mediaSearchState, isSearchEmpty: true});
+            setMediaSearchState({...mediaSearchState,isLoading:false, isSearchEmpty: true});
         }
     }
 

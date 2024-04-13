@@ -31,7 +31,7 @@ const Search: React.FC = () => {
             }
             setMediaCards(tempSeries);
         }else{
-            setMediaSearchState({...mediaSearchState, isSearchEmpty: true});
+            setMediaSearchState({...mediaSearchState, isLoading:false, isSearchEmpty: true});
         }
     }
     const handlePageChange = async (e: React.ChangeEvent<unknown>, pageNumber: number) => {

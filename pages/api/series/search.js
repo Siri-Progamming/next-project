@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import {ConfigService, tmdbGetOption} from "/src/services/IMDB.API/config.service"
 import {buildURL_series_filter} from "/src/services/IMDB.API/urlBuilder.service";
+import {LOGGER} from "/src/services/API/utils.api.service";
 //Equivalent d'api/discover pour les films
 /**
  * @swagger
@@ -57,7 +58,7 @@ import {buildURL_series_filter} from "/src/services/IMDB.API/urlBuilder.service"
  */
 export default async function handler(req, res) {
     const url = buildURL_series_filter(req, ConfigService.themoviedb.urls.serie_search_filter);
-    console.log('serie search filter URL:', url);
+    LOGGER('api/series/search URL : '+url);
     const apiResponse = await fetch(url, tmdbGetOption)
         .then(r => r.json())
         .catch(err => console.error('error:' + err));

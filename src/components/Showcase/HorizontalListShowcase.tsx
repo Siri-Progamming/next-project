@@ -109,7 +109,7 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
         }
 }, [elementToDisplay]);
 
-useEffect(() => {
+    useEffect(() => {
     if (movies.length > 0 || movies.length === 0 && isMovieListEmpty) {
         setIsMovieLoading(false);
     } else {
@@ -117,7 +117,7 @@ useEffect(() => {
     }
 }, [movies, isMovieListEmpty]);
 
-useEffect(() => {
+    useEffect(() => {
     if (series.length > 0 || series.length === 0 && isSerieListEmpty) {
         setIsSerieLoading(false);
     } else {
@@ -125,45 +125,52 @@ useEffect(() => {
     }
 }, [series, isSerieListEmpty]);
 
-useEffect(() => {
+    useEffect(() => {
     if (isUserRecommandation) {
         console.log("HorizontalListShowcase - isMovieListEmpty : "+ isMovieListEmpty+ " - isSerieListEmpty : "+ isSerieListEmpty);
     }
 }, [isMovieListEmpty, isSerieListEmpty]);
 
-useEffect(() => {
+    useEffect(() => {
     if (isUserRecommandation) {
         console.log("HorizontalListShowcase - isMovieLoading : "+isMovieLoading+ " - isSerieLoading : "+isSerieLoading);
     }
 }, [isMovieLoading, isSerieLoading]);
 
-const handleSwitchElement = (element: string) => {
-    setElementToDisplay(element === "Films" ? 0 : 1);
-}
-return (
-    <div className="flex flex-col">
-        <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start "><h1
-            className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
-        <Switch elements={["Films", "Séries"]} onSelect={handleSwitchElement}/>
-        {(isUserRecommandation && elementToDisplay === 0) && isMovieListEmpty ?
-            <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées."}</p>
-            :
-            isMovieLoading && <p>Chargement de vos recommandations de films personnalisées...</p>}
-        {(isUserRecommandation && elementToDisplay === 1) && isSerieListEmpty ?
-            <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées."}</p>
-            :
-            (isUserRecommandation && elementToDisplay === 1) && isSerieLoading && <p>Chargement de vos recommandations de séries personnalisées...</p>}
-        <div className="relative">
-            <ul id="movies-horizontal-showcase"
-                className="flex space-x-4 pb-5 pl-4 pr-4 horizontal-fading">
-                {((elementToDisplay === 0 && movies.length > 0)) && showMovies(movies)}
-                {(elementToDisplay === 1 && series.length > 0) && showSeries(series)}
-            </ul>
-        </div>
-    </div>
-);
-}
+    const handleSwitchElement = (element: string) => {
+        setElementToDisplay(element === "Films" ? 0 : 1);
+    }
 
+    return (
+        <div className="flex flex-col">
+            <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start "><h1
+                className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
+            <Switch elements={["Films", "Séries"]} onSelect={handleSwitchElement}/>
+            {isUserRecommandation && (
+                <div>
+                    {elementToDisplay === 0 ? (
+                        <div>
+                            {isMovieListEmpty && <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées."}</p>}
+                            {isMovieLoading && <p>Chargement de vos recommandations de films personnalisées...</p>}
+                        </div>
+                    ) : (
+                        <div>
+                            {isSerieListEmpty && <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées."}</p>}
+                            {isSerieLoading && <p>Chargement de vos recommandations de séries personnalisées...</p>}
+                        </div>
+                    )}
+                </div>
+            )}
+            <div className="relative">
+                <ul id="movies-horizontal-showcase"
+                    className="flex space-x-4 pb-5 pl-4 pr-4 horizontal-fading">
+                    {((elementToDisplay === 0 && movies.length > 0)) && showMovies(movies)}
+                    {(elementToDisplay === 1 && series.length > 0) && showSeries(series)}
+                </ul>
+            </div>
+        </div>
+    );
+}
 function showMovies(movies: Array<Movie>) {
     return (
         movies.map(movie => (
@@ -172,7 +179,6 @@ function showMovies(movies: Array<Movie>) {
         ))
     )
 }
-
 function showSeries(series: Array<Serie>) {
     return (
         series.map(serie => (
@@ -181,5 +187,4 @@ function showSeries(series: Array<Serie>) {
         ))
     )
 }
-
 export default HorizontalListShowcase;
