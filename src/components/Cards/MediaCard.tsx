@@ -1,35 +1,33 @@
 import React, {useEffect, useState} from "react";
-import {Movie} from '../../interfaces/Movie';
 import {ConfigService} from "../../services/IMDB.API/config.service";
 import {useRouter} from 'next/router';
 import PercentSticker from "../utils/PercentSticker";
 import MediaCardSkeleton from "../Skeleton/MediaCardSkeleton";
 import {showNoImage} from "../Skeleton/NoData/NoImage";
-import {Serie} from "../../interfaces/Serie";
+import {MediaCardProps} from "../../interfaces/UI";
+import {useAuth} from "../../contexts/AuthContext";
+import Like from "../utils/Like";
 
-interface MediaCardProps {
-    type: number;
-    id: number;
-    poster_path: string;
-    vote_average: number;
-    title: string;
-    release_date: string;
+interface MediaCardProperties {
+    media:MediaCardProps;
 }
 
-const MediaCard: React.FC<MediaCardProps> = ({type,id,poster_path,vote_average,title,release_date}) => {
+const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
+    const {user} = useAuth();
+
     const handleClick = () => {
-        if(type === 0){
-            router.push('/ui/movies/' + id).then();
+        if(media.type === "movie"){
+            router.push('/ui/movies/' + media.id).then();
         }else{
-            router.push('/ui/series/' + id).then();
+            router.push('/ui/series/' + media.id).then();
         }
 
     };
 
     useEffect(() => {
-        if (id && title) {
+        if (media.id && media.title) {
             setTimeout(() => {
                 setIsLoading(false);
             }, 500);
@@ -37,7 +35,7 @@ const MediaCard: React.FC<MediaCardProps> = ({type,id,poster_path,vote_average,t
         } else {
             setIsLoading(true);
         }
-    }, [id, title]);
+    }, [media.id, media.title]);
 
     return (
         <>
@@ -46,14 +44,15 @@ const MediaCard: React.FC<MediaCardProps> = ({type,id,poster_path,vote_average,t
                     <MediaCardSkeleton/>
                     :
                     (
-                        <li key={id} className="media-card">
-                            {poster_path ? showImage(poster_path) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
+                        <li key={media.id} className="media-card">
+                            {user && <Like idMovie={media.id} width="text-[40px]" style="like-button_media-card" containerStyle="like-button_media-card-rotation"/>}
+                            {media.poster_path ? showImage(media.poster_path) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
-                                <PercentSticker note={vote_average} />
+                                <PercentSticker note={media.vote_average} />
                             </div>
                             <div className="media-card-details leading-none">
-                                <h2 className="text-sm font-semibold">{title}</h2>
-                                <p className="font-extralight text-xs text-white text-opacity-50">{release_date}</p>
+                                <h2 className="text-sm font-semibold">{media.title}</h2>
+                                <p className="font-extralight text-xs text-white text-opacity-50">{media.release_date}</p>
                             </div>
                         </li>
                     )
@@ -61,7 +60,7 @@ const MediaCard: React.FC<MediaCardProps> = ({type,id,poster_path,vote_average,t
         </>
     )
 
-    function showImage(post_path: string){
+    function showImage(poster_path: string){
         return (
             <div className="media-card-bg"
                  style={{backgroundImage: `url(${ConfigService.themoviedb.urls.image_view + "/w220_and_h330_face" + poster_path})`}}

@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import MediaCardNew from "../Cards/MediaCardNew";
+import MediaCard from "../Cards/MediaCard";
 import Loader from "../utils/Loader";
 import Paginations from "../utils/Paginations";
 import {MediaCardProps, MediaSearchState} from "../../interfaces/UI";
@@ -34,7 +34,7 @@ const VerticalItemsShowcase: React.FC<VerticalItemsShowcase> = ({medias,mediaSea
                             <h1 className="category_title self-start" ref={anchor}>{String(mediaSearchState.nbResults)} {title}</h1>
                             <ul id="vertical-list-showcase" className="">
                                 {medias.map(media => (
-                                    <MediaCardNew key={media.id} media={media}/>
+                                    <MediaCard key={media.id} media={media}/>
                                 ))}
                             </ul>
                             <div className="sticky bottom-0 z-[999] h-fit w-screen flex flex-row items-center justify-center">

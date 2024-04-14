@@ -18,7 +18,7 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const getLike = async () => {
         const like = await getMovieLike(user?.id!, idMovie);
-        console.log("état de like : "+like);
+        // console.log("état de like : "+like);
         if (like) {
             setIsLiked(like);
         }else{
@@ -36,7 +36,7 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         getLike().then();
-        console.log("isLiked : "+isLiked);
+        // console.log("isLiked : "+isLiked);
     }, [idMovie, isLiked]);
 
     const handleClick = () => {

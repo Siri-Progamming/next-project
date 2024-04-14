@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {ApiConfigService} from "../../services/API/config.service";
-import {Movie} from '../../interfaces/Movie';
-import {Serie} from '../../interfaces/Serie';
 import MediaCard from "../Cards/MediaCard";
-import {createMovie, createSerie} from "../../services/API/object.creator.service";
-import {getMovies} from "../../services/API/call.api.service";
+import {createMediaCardPropsFromMovie, createMediaCardPropsFromSerie} from "../../services/API/object.creator.service";
+import {getMedias} from "../../services/API/call.api.service";
 import {useConstantes} from "../../contexts/ConstantesContext";
 import Switch from "../Forms/Filters/Switch";
 import {useAuth} from "../../contexts/AuthContext";
+import {MediaCardProps, MediaHorizontalDisplayState} from "../../interfaces/UI";
 
 interface HorizontalListShowcaseProps {
     type: string;
@@ -16,48 +15,49 @@ interface HorizontalListShowcaseProps {
 
 const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, title}) => {
     const {user} = useAuth();
-    const [movies, setMovies] = useState<Array<Movie>>([]);
-    const [series, setSeries] = useState<Array<Serie>>([]);
-    const [elementToDisplay, setElementToDisplay] = useState<number>(0); // 0 for movies, 1 for series
-    const [isMovieListEmpty, setIsMovieListEmpty] = useState<boolean>(false);
-    const [isSerieListEmpty, setIsSerieListEmpty] = useState<boolean>(false);
-    const [isMovieLoading, setIsMovieLoading] = useState<boolean>(true);
-    const [isSerieLoading, setIsSerieLoading] = useState<boolean>(true);
-    const isUserRecommandation = (type === "recommended");
     const {DISPLAY_LANGUAGE} = useConstantes();
-    const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
+    const [elementToDisplay, setElementToDisplay] = useState<number>(0); // 0 for movies, 1 for series
+    const isUserRecommandation = (type === "recommended");
 
-    const initMovies = async () => {
-        const api = selectApi(0);
-        const moviesDiscover = await getMovies(DISPLAY_LANGUAGE, api!);
-        if (moviesDiscover && moviesDiscover.length > 0) {
-            setIsMovieListEmpty(false);
-            let tempMovies: Array<Movie> = [];
-            for (const m of moviesDiscover) {
-                tempMovies.push(createMovie(m));
+    const [mediaMoviesCards, setMediaMoviesCards] = useState<Array<MediaCardProps>>([]);
+    const [mediaSeriesCards, setMediaSeriesCards] = useState<Array<MediaCardProps>>([]);
+    const [moviesState, setMoviesState] = useState<MediaHorizontalDisplayState>({isEmpty: false,isLoading: true});
+    const [seriesState, setSeriesState] = useState<MediaHorizontalDisplayState>({isEmpty: false,isLoading: true});
+    const initMovies = async (mediaType:string) => {
+        // console.log("initMovies - "+type+" chargement des films...");
+        const api = selectApi(mediaType);
+        const medias = await getMedias(DISPLAY_LANGUAGE, api!);
+        if (medias && medias.length > 0) {
+            setMoviesState({...moviesState, isEmpty: false, isLoading: false});
+            let tempMedias: Array<MediaCardProps> = [];
+            for (const m of medias) {
+                tempMedias.push(createMediaCardPropsFromMovie(m));
             }
-            setIsFirstLoad(false);
-            setMovies(tempMovies);
+            setMediaMoviesCards(tempMedias);
         } else {
-            setIsMovieListEmpty(true);
+            setMoviesState({...moviesState, isEmpty: true, isLoading: false});
         }
     }
-    const initSeries = async () => {
-        const api = selectApi(1);
-        const series = await getMovies(DISPLAY_LANGUAGE, api!);
-        if (series && series.length > 0) {
-            setIsSerieListEmpty(false);
-            let tempSeries: Array<Serie> = [];
-            for (const s of series) {
-                tempSeries.push(createSerie(s));
+    const initSeries = async (mediaType:string) => {
+        // console.log("initSeries - "+type+" chargement des séries...");
+        const api = selectApi(mediaType);
+        const medias = await getMedias(DISPLAY_LANGUAGE, api!);
+        if (medias && medias.length > 0) {
+            console.log("initSeries - "+type+" j'ai des médias ! ");
+            console.log("initSeries - "+type+" - medias : ", medias);
+            setSeriesState({...seriesState, isEmpty: false, isLoading: false});
+            let tempMedias: Array<MediaCardProps> = [];
+            for (const m of medias) {
+                tempMedias.push(createMediaCardPropsFromSerie(m));
             }
-            setSeries(tempSeries);
+            setMediaSeriesCards(tempMedias);
         } else {
-            setIsSerieListEmpty(true);
+            console.log("initSeries - "+type+" j'ai pas de médias ! ");
+            setSeriesState({...seriesState, isEmpty: true, isLoading: false});
         }
     }
-    const selectApi = (element?: number) => {
-        if (element === 0) {
+    const selectApi = (mediaType:string) => {
+        if (mediaType === "movie") {
             switch (type) {
                 case "trending":
                     return ApiConfigService.fennext.urls.movie_trending;
@@ -66,7 +66,7 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
                 case "recommended":
                     return ApiConfigService.fennext.urls.movie_user_recommanded.replace("{user_id}", user?.id!);
             }
-        } else if (element === 1) {
+        } else if (mediaType === "serie") {
             switch (type) {
                 case "trending":
                     return ApiConfigService.fennext.urls.serie_trending;
@@ -79,63 +79,30 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
     }
 
     useEffect(() => {
-        if(movies.length === 0){
-            initMovies().then();
-        }
-        if(series.length === 0){
-            initSeries().then();
-        }
-    }, []);
-
-    useEffect(() => {
-        if(!isFirstLoad) {
-            if (elementToDisplay === 0) {
-                if (movies.length > 0) {
-                    console.log("Already Set Movies, refreshing... - " + type);
-                    setMovies(movies);
-                } else {
-                    console.log("Movies Empty, calling API... - " + type);
-                    initMovies().then();
-                }
-                if (series.length > 0) {
-                    console.log("Already Set Series, refreshing... - " + type);
-                    console.log("Series : ", series);
-                    setSeries(series);
-                } else {
-                    console.log("Series Empty, calling API... - " + type);
-                    initSeries().then();
-                }
+        if (elementToDisplay === 0) {
+            if (mediaMoviesCards.length > 0) {
+                console.log("Already Set Movies, refreshing... - " + type);
+                setMediaMoviesCards(mediaMoviesCards);
+            } else {
+                console.log("Movies Empty, calling API... - " + type);
+                initMovies("movie").then();
+            }
+            if (mediaSeriesCards.length > 0) {
+                console.log("Already Set Series, refreshing... - " + type);
+                setMediaSeriesCards(mediaSeriesCards);
+            } else {
+                console.log("Series Empty, calling API... - " + type);
+                initSeries("serie").then();
             }
         }
-}, [elementToDisplay]);
-
-    useEffect(() => {
-    if (movies.length > 0 || movies.length === 0 && isMovieListEmpty) {
-        setIsMovieLoading(false);
-    } else {
-        setIsMovieLoading(true);
-    }
-}, [movies, isMovieListEmpty]);
-
-    useEffect(() => {
-    if (series.length > 0 || series.length === 0 && isSerieListEmpty) {
-        setIsSerieLoading(false);
-    } else {
-        setIsSerieLoading(true);
-    }
-}, [series, isSerieListEmpty]);
+    }, [elementToDisplay]);
 
     useEffect(() => {
     if (isUserRecommandation) {
-        console.log("HorizontalListShowcase - isMovieListEmpty : "+ isMovieListEmpty+ " - isSerieListEmpty : "+ isSerieListEmpty);
+        console.log("HorizontalListShowcase - "+type+" - moviesState : "+ JSON.stringify(moviesState));
+        console.log("HorizontalListShowcase - "+type+" - seriesState : "+ JSON.stringify(seriesState));
     }
-}, [isMovieListEmpty, isSerieListEmpty]);
-
-    useEffect(() => {
-    if (isUserRecommandation) {
-        console.log("HorizontalListShowcase - isMovieLoading : "+isMovieLoading+ " - isSerieLoading : "+isSerieLoading);
-    }
-}, [isMovieLoading, isSerieLoading]);
+}, [moviesState, seriesState]);
 
     const handleSwitchElement = (element: string) => {
         setElementToDisplay(element === "Films" ? 0 : 1);
@@ -143,47 +110,44 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
 
     return (
         <div className="flex flex-col">
-            <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start "><h1
-                className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
+            <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start "><h1 className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
             <Switch elements={["Films", "Séries"]} onSelect={handleSwitchElement}/>
             {isUserRecommandation && (
                 <div>
                     {elementToDisplay === 0 ? (
                         <div>
-                            {isMovieListEmpty && <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées."}</p>}
-                            {isMovieLoading && <p>Chargement de vos recommandations de films personnalisées...</p>}
+                            {moviesState.isEmpty && <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées."}</p>}
+                            {moviesState.isLoading && <p>Chargement de vos recommandations de films personnalisées...</p>}
                         </div>
                     ) : (
                         <div>
-                            {isSerieListEmpty && <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées."}</p>}
-                            {isSerieLoading && <p>Chargement de vos recommandations de séries personnalisées...</p>}
+                            {seriesState.isEmpty && <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées."}</p>}
+                            {seriesState.isLoading && <p>Chargement de vos recommandations de séries personnalisées...</p>}
                         </div>
                     )}
                 </div>
             )}
             <div className="relative">
                 <ul id="movies-horizontal-showcase"
-                    className="flex space-x-4 pb-5 pl-4 pr-4 horizontal-fading">
-                    {((elementToDisplay === 0 && movies.length > 0)) && showMovies(movies)}
-                    {(elementToDisplay === 1 && series.length > 0) && showSeries(series)}
+                    className="flex space-x-4 pb-5 pt-4 pl-4 pr-4 horizontal-fading">
+                    {((elementToDisplay === 0 && mediaMoviesCards.length > 0)) && showMedias(mediaMoviesCards)}
+                    {(elementToDisplay === 1 && mediaSeriesCards.length > 0) && showSeries(mediaSeriesCards)}
                 </ul>
             </div>
         </div>
     );
 }
-function showMovies(movies: Array<Movie>) {
+function showMedias(movies: Array<MediaCardProps>) {
     return (
-        movies.map(movie => (
-            <MediaCard key={movie.id} type={0} id={movie.id} title={movie.title} release_date={movie.release_date}
-                       vote_average={movie.vote_average} poster_path={movie.poster_path}/>
+        movies.map((movie,index) => (
+            <MediaCard key={movie.id+'-'+index} media={movie}/>
         ))
     )
 }
-function showSeries(series: Array<Serie>) {
+function showSeries(series: Array<MediaCardProps>) {
     return (
-        series.map(serie => (
-            <MediaCard key={serie.id} type={1} id={serie.id} title={serie.title} release_date={serie.release_date}
-                       vote_average={serie.vote_average} poster_path={serie.poster_path}/>
+        series.map((serie,index) => (
+            <MediaCard key={serie.id+'-'+index} media={serie}/>
         ))
     )
 }

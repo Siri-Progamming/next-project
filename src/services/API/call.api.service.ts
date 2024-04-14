@@ -1,4 +1,4 @@
-export const getMovies = async (language:string,api:string) => {
+export const getMedias = async (language:string,api:string) => {
     try {
         api = api + '?language=' + language;
         const response = await fetch(api);

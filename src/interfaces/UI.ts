@@ -12,3 +12,8 @@ export interface MediaSearchState{
     nbResults: number;
     nbPages: number;
 }
+
+export interface MediaHorizontalDisplayState{
+    isEmpty: boolean;
+    isLoading: boolean;
+}

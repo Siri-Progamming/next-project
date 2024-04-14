@@ -19,12 +19,12 @@ const Search: React.FC<searchProps> = () => {
     const [starterLoader, setStarterLoader] = useState<boolean>(true);
 
     const initMediaCards = async () => {
-        console.log("Initilaizing media cards for MOVIES/SEARCH");
+        // console.log("Initilaizing media cards for MOVIES/SEARCH");
         let url = urlApi;
 
-        console.log("movies search initMediaCards urlAPI : ",url);
+        // console.log("movies search initMediaCards urlAPI : ",url);
         const results = await getMediaSearch(url);
-        console.log("results : ",results);
+        // console.log("results : ",results);
         const items = results.results;
         // console.log("items : ",items);
         if (items && items.length > 0) {
@@ -66,7 +66,7 @@ const Search: React.FC<searchProps> = () => {
 
     useEffect(() => {
         if(urlApi !== ""){
-            console.log("movies filter search - urlApi : ", urlApi);
+            // console.log("movies filter search - urlApi : ", urlApi);
             initMediaCards().then();
         }
     } , [urlApi]);

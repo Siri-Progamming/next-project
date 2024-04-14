@@ -37,7 +37,7 @@ export const NameSearchProvider: React.FC<NameSearchProviderProps> = ({ children
     // Fonction pour gérer la soumission du formulaire de recherche
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("SearchBar - handleSubmit : ", search);
+        // console.log("SearchBar - handleSubmit : ", search);
         if(search !== '' && search.trim().length > 0){
             let finalQuery = search+"&include_adult=false&language="+DISPLAY_LANGUAGE+"&page=1";
             setQuery(finalQuery);

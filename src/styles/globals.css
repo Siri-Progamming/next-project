@@ -150,8 +150,9 @@ footer{
 /* MOVIES GRID */
 #movies-horizontal-showcase{
     max-width: 100vw;
-    overflow-y: auto;
+    overflow-x: auto;
 }
+
 #vertical-list-showcase{
     display: flex;
     flex-wrap: wrap;
@@ -189,6 +190,7 @@ footer{
     border-radius: 15px;
     /*border: 2px solid white;*/
 }
+
 .media-card-bg{
     background-size: cover;
     background-position: center;
@@ -270,11 +272,12 @@ footer{
     border-radius: 30px;
 }
 .like-button_media-card-rotation{
-    @apply translate-x-[195px] translate-y-[0px] rotate-[10deg]
+    @apply absolute translate-x-[197px] translate-y-[-19px] rotate-[10deg];
 }
 .reset-button{
     @apply text-[35px] text-white text-opacity-70 cursor-pointer;
 }
+
 .absolute0{
     position: absolute;
     top: 0;
