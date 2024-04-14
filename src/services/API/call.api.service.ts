@@ -83,3 +83,32 @@ export const updateMovieLike = async (idUser: string, idMovie:number) => {
         console.error("Erreur lors de la récupération du like : ",error);
     }
 }
+
+export const getSerieLike = async (idUser: string, id:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/series/'+id+'/likes');
+        const data = await response.json();
+        if(data.liked){
+            return true;
+        }else{
+            return false;
+        }
+    }catch (error) {
+        console.error("Erreur lors de la récupération du like : ",error);
+    }
+}
+export const updateSerieLike = async (idUser: string, id:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/series/'+id+'/likes', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log("call api updateSerieLike - data : ",data);
+        return data.data.liked;
+    }catch (error) {
+        console.error("Erreur lors de la récupération du like : ",error);
+    }
+}

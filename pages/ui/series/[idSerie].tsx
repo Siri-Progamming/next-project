@@ -52,7 +52,7 @@ const IdSerie: React.FC<IdSerieProps> = ({}) => {
                     <div className="cinematic absolute top-[-4vh] left-0 w-full h-[4vh]"></div>
                     <div className="bg_image_container">
                         <div className="absolute right-[5vw] 2xl:right-[10vw] top-[10vh] z-[10]">
-                            <Like idMovie={serie?.id!} width="" style="like-button"/>
+                            <Like id={serie?.id!} mediaType="serie" width="" style="like-button"/>
                         </div>
                         {/*h-[calc(100vh_-_var(--nav-height,0))*/}
                         {serie?.backdrop_path ? showBackground(serie) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto absolute0", "bg-black bg-opacity-25", "text-white opacity-20")}

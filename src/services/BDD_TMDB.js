@@ -1,5 +1,5 @@
 // import {getAMovieById,  insertMovie} from './MONGODB.BDD/queries.service';
-import {fetchMovie} from './IMDB.API/fetch.service';
+import {fetchMovie, fetchSerie} from './IMDB.API/fetch.service';
 // export async function processFavoriteMovie(idMovie){
 //     console.log("Processing movie ", idMovie);
 //     const movieFromDB = await getAMovieById(idMovie);
@@ -32,4 +32,15 @@ export async function getFavoritesMoviesWithIdsInTMDB(language,idMovies){
         }
     }
     return favoritesMovies;
+}
+
+export async function getFavoritesSeriesWithIdsInTMDB(language,idSeries){
+    let favoritesSeries = [];
+    for (const idSerie of idSeries) {
+        const tmdbSerie = await fetchSerie(language,idSerie);
+        if(tmdbSerie){
+            favoritesSeries.push(tmdbSerie);
+        }
+    }
+    return favoritesSeries;
 }

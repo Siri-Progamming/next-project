@@ -40,3 +40,11 @@ export async function fetchMovie(language, idMovie) {
         .catch(err => console.error('error:' + err));
     return apiResponse;
 }
+
+export async function fetchSerie(language, idSerie) {
+    const url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.serie.replace("{serie_id}", idSerie.toString()));
+    const apiResponse = await fetch(url, tmdbGetOption)
+        .then(r => r.json())
+        .catch(err => console.error('error:' + err));
+    return apiResponse;
+}

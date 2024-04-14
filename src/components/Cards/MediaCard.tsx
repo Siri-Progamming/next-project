@@ -45,7 +45,7 @@ const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
                     :
                     (
                         <li key={media.id} className="media-card">
-                            {user && <Like idMovie={media.id} width="text-[40px]" style="like-button_media-card" containerStyle="like-button_media-card-rotation"/>}
+                            {user && <Like id={media.id} mediaType={media.type} width="text-[40px]" style="like-button_media-card" containerStyle="like-button_media-card-rotation"/>}
                             {media.poster_path ? showImage(media.poster_path) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
                                 <PercentSticker note={media.vote_average} />
