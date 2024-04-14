@@ -1,13 +1,12 @@
 // NameSearchContext.tsx
-import React, {createContext, FormEvent, useContext, useState} from "react";
+import React, {createContext, FormEvent, useContext, useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useConstantes} from "./ConstantesContext";
-import {useApp} from "./AppContext";
 
 // Interface pour les valeurs du contexte de recherche par nom
 interface NameSearchContextProps {
+    search: string;
     query: string;
-    fullQuery: string;
     setQuery: React.Dispatch<React.SetStateAction<string>>;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,35 +31,49 @@ interface NameSearchProviderProps{
 export const NameSearchProvider: React.FC<NameSearchProviderProps> = ({ children }) => {
     const router = useRouter();
     const [query, setQuery] = useState<string>('');
+    const [search, setSearch] = useState<string>('');
     const {DISPLAY_LANGUAGE} = useConstantes();
-    const [fullQuery, setFullQuery] = useState<string>('');
-    const {currentRequest, setCurrentRequest} = useApp();
 
     // Fonction pour gérer la soumission du formulaire de recherche
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // console.log("SearchBar - handleSubmit : ", query);
-        if(query !== '' && query.trim().length > 0){
-            let finalQuery = "?query="+query+"&include_adult=false&language="+DISPLAY_LANGUAGE+"&page=1";
-            setFullQuery(finalQuery);
-            setCurrentRequest(finalQuery);
+        console.log("SearchBar - handleSubmit : ", search);
+        if(search !== '' && search.trim().length > 0){
+            let finalQuery = search+"&include_adult=false&language="+DISPLAY_LANGUAGE+"&page=1";
+            setQuery(finalQuery);
             router.push('/ui/movies/name-search').then(() => {
-                //TODO Ajouter au localstorage en cas de refresh
-                // setQuery('');
             });
         }
         // console.log("SearchBar - handleSubmit reset query  : ", query);
     };
 
+    useEffect(() => {
+        const previousLocation = localStorage.getItem('previousLocation');
+        if (previousLocation && previousLocation === '/ui/movies/name-search'){
+            const lastNameSearch = localStorage.getItem('lastNameSearch');
+            if (lastNameSearch && lastNameSearch !== '') {
+                if(lastNameSearch !== ''){
+                    setQuery(lastNameSearch);
+                }
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if(query && query !== ''){
+            localStorage.setItem('lastNameSearch',  query);
+        }
+    }, [query]);
+
     // Fonction pour gérer le changement de valeur de l'input de recherche
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setQuery(e.target.value);
+        setSearch(e.target.value);
     };
 
     // Valeurs fournies par le contexte
     const contextValue = {
+        search,
         query,
-        fullQuery,
         setQuery,
         handleSubmit,
         handleChange

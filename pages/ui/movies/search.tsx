@@ -22,7 +22,7 @@ const Search: React.FC<searchProps> = () => {
         console.log("Initilaizing media cards for MOVIES/SEARCH");
         let url = urlApi;
 
-        console.log("series search initMediaCards urlAPI : ",url);
+        console.log("movies search initMediaCards urlAPI : ",url);
         const results = await getMediaSearch(url);
         console.log("results : ",results);
         const items = results.results;

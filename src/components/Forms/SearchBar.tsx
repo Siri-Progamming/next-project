@@ -2,14 +2,14 @@ import React from "react";
 import {useNameSearch} from "../../contexts/NameSearchContext";
 
 const SearchBar: React.FC = () => {
-    const {query, handleSubmit, handleChange} = useNameSearch();
+    const {search, handleSubmit, handleChange} = useNameSearch();
 
     return (
         <form id="movie-search-bar" onSubmit={handleSubmit} className="">
             <label className="input flex items-center gap-2 bg-white">
                 <input
                     type="text"
-                    value={query}
+                    value={search}
                     className="grow text-midnight-200"
                     onChange={handleChange}
                     placeholder="Rechercher des films..."
