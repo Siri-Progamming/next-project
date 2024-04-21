@@ -1,7 +1,6 @@
 import * as React from 'react';
 import HorizontalListShowcase from "./Showcase/HorizontalListShowcase";
 import {useAuth} from "../contexts/AuthContext";
-import {useEffect} from "react";
 
 interface HomeShowcasesProps {
 

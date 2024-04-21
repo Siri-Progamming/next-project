@@ -264,12 +264,27 @@ footer{
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);
     animation: beat 1s infinite alternate;
 }
-.like-button_media-card{
-    @apply text-tertiary-700;
-    /*box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);*/
+.button_media-card{
     @apply absolute;
-    @apply bg-black bg-opacity-95 p-1;
+    @apply bg-black bg-opacity-95 p-1.5;
+    /*@apply bg-white bg-opacity-50 p-1.5;*/
     border-radius: 30px;
+    /*box-shadow: 0 10px 15px rgba(0, 0, 0, 0.7);*/
+}
+.like-button_media-card{
+    @apply text-tertiary-700 hover:text-tertiary-500;
+}
+.seen-button_media-card{
+    @apply text-success;
+}
+.towatch-button_media-card{
+    @apply text-warning;
+}
+.more-button_media-card{
+    @apply bg-opacity-75 hover:bg-opacity-95;
+}
+.seen-button_media-card.addlist_not, .towatch-button_media-card.addlist_not{
+    @apply text-white text-opacity-50 hover:text-opacity-70;
 }
 .like-button_media-card-rotation{
     @apply absolute translate-x-[197px] translate-y-[-19px] rotate-[10deg];
@@ -277,7 +292,6 @@ footer{
 .reset-button{
     @apply text-[35px] text-white text-opacity-70 cursor-pointer;
 }
-
 .absolute0{
     position: absolute;
     top: 0;

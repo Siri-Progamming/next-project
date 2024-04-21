@@ -2,6 +2,7 @@ import {FullMovie, Image, Movie, Review, Video} from "../../interfaces/Movie";
 import {Episode, FullSerie, Season, Serie, Watch} from "../../interfaces/Serie";
 import {Cast, Crew} from "../../interfaces/Cast";
 import {MediaCardProps} from "../../interfaces/UI";
+import {Actor, FullActor, CombinedCredits} from "../../interfaces/People";
 
 export function createMovie(data: any): Movie {
     return {
@@ -102,5 +103,31 @@ export function createMediaCardPropsFromMovie(data: any): MediaCardProps {
         release_date: data.release_date,
         vote_average: data.vote_average,
         poster_path: data.poster_path
+    }
+}
+
+export function createActor(data:any):Actor{
+    return{
+        adult: data.adult,
+        also_known_as: data.also_known_as,
+        biography: data.biography,
+        birthday: data.birthday,
+        deathday: data.deathday,
+        gender: data.gender,
+        homepage: data.homepage,
+        id: data.id,
+        known_for_department: data.known_for_department,
+        name: data.name,
+        place_of_birth: data.place_of_birth,
+        popularity: data.popularity,
+        profile_path: data.profile_path
+    }
+}
+export function createFullActor(data:any):FullActor{
+    const actor = createActor(data);
+    return{
+        ...actor,
+        combined_credits: data.combined_credits.cast,
+        images: data.images.profiles
     }
 }

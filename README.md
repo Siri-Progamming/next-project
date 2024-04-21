@@ -62,6 +62,9 @@ yarn dev
 
 ## <p style="background: #F3ECE5; color:black">Evolutions 🔄</p>
 
+ ‼️ **Cette section n'est pas maintenue à jour car j'utilise un Trello.
+Vous pouvez le consulter ici : [Trello](https://trello.com/b/eFT5Tyjm/ynov-fennext)**
+
 - ### Utilisateur connecté
 
   - Affichage des recommandations personnalisées d'un user (code API prêt)

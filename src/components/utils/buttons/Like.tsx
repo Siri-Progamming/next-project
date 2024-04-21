@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {getMovieLike, getSerieLike, updateMovieLike, updateSerieLike} from "../../services/API/call.api.service";
-import {useAuth} from "../../contexts/AuthContext";
+import {getMovieLike, getSerieLike, updateMovieLike, updateSerieLike} from "../../../services/API/call.api.service";
+import {useAuth} from "../../../contexts/AuthContext";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 

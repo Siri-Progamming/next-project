@@ -22,6 +22,9 @@ export const ConfigService = {
             serie: "https://api.themoviedb.org/3/tv/{serie_id}",
             serie_images: "https://api.themoviedb.org/3/tv/{serie_id}/images",
             serie_recommanded: "https://api.themoviedb.org/3/tv/{serie_id}/recommendations",
+            people:{
+                details:"https://api.themoviedb.org/3/person/{person_id}"
+            }
         },
         //C'est mieux dans un .env les keys
         keys:{

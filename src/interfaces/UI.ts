@@ -5,6 +5,9 @@ export interface MediaCardProps{
     release_date: string;
     vote_average: number;
     poster_path: string;
+    character?: string;
+    nbEpisodes?: number;
+    roleOrder?: number;
 }
 export interface MediaSearchState{
     isSearchEmpty: boolean;

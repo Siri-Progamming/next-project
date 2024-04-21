@@ -60,19 +60,23 @@ export default async function handler(req, res) {
                             }
                         }
                     }
-                    const movieRecommendations = movie.recommendations.results;
-                    if(movieRecommendations){
-                        console.log("Recommandations pour le film "+idMovie+" dans la langue "+req.query.language+" : "+movieRecommendations.length);
-                        if(!movieRecommendations.length || movieRecommendations.length < 4){
-                            const recommandationsTMDBURL = ConfigService.themoviedb.urls.movie_recommanded.replace("{movie_id}", idMovie);
-                            const recommandations = await fetch(recommandationsTMDBURL,tmdbGetOption)
-                                .then(r => r.json())
-                                .catch(err => console.error('error:' + err));
-                            if(!recommandations.results.length){
-                                console.log("Nombre de recommandations disponibles sans filtre de langue : ",recommandations.results.length);
-                                movie.recommendations = recommandations;
+                    if(movie.recommendations){
+                        const movieRecommendations = movie.recommendations.results;
+                        if(movieRecommendations){
+                            console.log("Recommandations pour le film "+idMovie+" dans la langue "+req.query.language+" : "+movieRecommendations.length);
+                            if(!movieRecommendations.length || movieRecommendations.length < 4){
+                                const recommandationsTMDBURL = ConfigService.themoviedb.urls.movie_recommanded.replace("{movie_id}", idMovie);
+                                const recommandations = await fetch(recommandationsTMDBURL,tmdbGetOption)
+                                    .then(r => r.json())
+                                    .catch(err => console.error('error:' + err));
+                                if(!recommandations.results.length){
+                                    console.log("Nombre de recommandations disponibles sans filtre de langue : ",recommandations.results.length);
+                                    movie.recommendations = recommandations;
+                                }
                             }
                         }
+                    }else{
+                        movie.recommendations ={results:[]};
                     }
                 }
                 //Récupérer les likes MONGODB et les ajouter à notre objet

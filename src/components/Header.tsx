@@ -3,7 +3,7 @@ import SearchBar from "./Forms/SearchBar";
 import React, {useEffect, useState} from "react";
 import IcoDropdown from "./utils/IcoDropdown";
 import {useAuth} from "../contexts/AuthContext";
-import Pin from "./utils/Pin";
+import Pin from "./utils/buttons/Pin";
 
 
 const Header: React.FC = () => {

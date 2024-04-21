@@ -6,7 +6,8 @@ import MediaCardSkeleton from "../Skeleton/MediaCardSkeleton";
 import {showNoImage} from "../Skeleton/NoData/NoImage";
 import {MediaCardProps} from "../../interfaces/UI";
 import {useAuth} from "../../contexts/AuthContext";
-import Like from "../utils/Like";
+import Like from "../utils/buttons/Like";
+import More from "../utils/buttons/More";
 
 interface MediaCardProperties {
     media:MediaCardProps;
@@ -45,13 +46,19 @@ const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
                     :
                     (
                         <li key={media.id} className="media-card">
-                            {user && <Like id={media.id} mediaType={media.type} width="text-[40px]" style="like-button_media-card" containerStyle="like-button_media-card-rotation"/>}
+                            {user && <div className="absolute top-[-1px] right-[-1px] z-[10]"><More id={media.id} mediaType={media.type}/></div>}
                             {media.poster_path ? showImage(media.poster_path) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
                                 <PercentSticker note={media.vote_average} />
                             </div>
                             <div className="media-card-details leading-none">
                                 <h2 className="text-sm font-semibold">{media.title}</h2>
+                                {media.character && (
+                                    <p className="font-light text-xs text-white text-opacity-50">
+                                        <span className="font-extralight">as</span> {media.character}
+                                        {media.nbEpisodes && ` - ${media.nbEpisodes} ${media.nbEpisodes > 1 ? 'épisodes' : 'épisode'}`}
+                                    </p>
+                                )}
                                 <p className="font-extralight text-xs text-white text-opacity-50">{media.release_date}</p>
                             </div>
                         </li>

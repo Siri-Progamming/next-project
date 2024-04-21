@@ -1,6 +1,6 @@
 export interface Cast {
     id: number;
-    gender: number;
+    gender: number; // 0 Not Specified - 1 Female - 2 Male - 3 Non-binary
     known_for_department: string;
     name: string;
     popularity: number;

@@ -38,6 +38,23 @@ export function buildURL_media_full(idMedia, append_to_response, language, type)
     return url;
 }
 
+export function buildURL_people_full(idPeople, append_to_response, language) {
+    let url = ConfigService.themoviedb.urls.people.details.replace("{person_id}", idPeople.toString());
+    let severalParams = false;
+    if (append_to_response || append_to_response != null) {
+        url = url + '?append_to_response=' + append_to_response;
+        severalParams = true;
+    }
+    if (language) {
+        if (!severalParams) {
+            url = url + '?language=' + language;
+        } else {
+            url = url + '&language=' + language;
+        }
+    }
+    return url;
+}
+
 export function buildURL_movies_onlyLanguage(language, url) {
     if (language) {
         url = url + '?language=' + language;

@@ -112,3 +112,144 @@ export const updateSerieLike = async (idUser: string, id:number) => {
         console.error("Erreur lors de la récupération du like : ",error);
     }
 }
+
+
+export const getMoviesSeen = async (language:string,idUser: string) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/movies/seen?language='+language);
+        const data = await response.json();
+        console.log("API getMoviesSeen - data : ",data.data.movies);
+        return data.data.movies;
+    }catch (error) {
+        console.error("Erreur lors de la récupération des seen : ",error);
+    }
+}
+export const getMovieSeen = async (idUser: string, idMovie:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/seen');
+        const data = await response.json();
+        console.log("call api getMovieSeen - data : ",data)
+        if(data.seen){
+            return true;
+        }else{
+            return false;
+        }
+    }catch (error) {
+        console.error("Erreur lors de la récupération du seen : ",error);
+    }
+}
+export const updateMovieSeen = async (idUser: string, idMovie:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/seen', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log("call api updateMovieSeen - data : ",data);
+        return data.data.seen;
+    }catch (error) {
+        console.error("Erreur lors de la récupération du seen : ",error);
+    }
+}
+
+export const getSerieSeen = async (idUser: string, id:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/series/'+id+'/seen');
+        const data = await response.json();
+        if(data.seen){
+            return true;
+        }else{
+            return false;
+        }
+    }catch (error) {
+        console.error("Erreur lors de la récupération du seen : ",error);
+    }
+}
+export const updateSerieSeen = async (idUser: string, id:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/series/'+id+'/seen', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log("call api updateSerieSeen - data : ",data);
+        return data.data.seen;
+    }catch (error) {
+        console.error("Erreur lors de la récupération du like : ",error);
+    }
+}
+
+
+export const getMovieToWatch = async (idUser: string, idMovie:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/towatch');
+        const data = await response.json();
+        if(data.toWatch){
+            return true;
+        }else{
+            return false;
+        }
+    }catch (error) {
+        console.error("Erreur lors de la récupération du toWatch : ",error);
+    }
+}
+export const updateMovieToWatch = async (idUser: string, idMovie:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/movies/'+idMovie+'/towatch', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log("call api updateMovieToWatch - data : ",data);
+        return data.data.toWatch;
+    }catch (error) {
+        console.error("Erreur lors de la récupération du toWatch : ",error);
+    }
+}
+
+export const getSerieToWatch = async (idUser: string, id:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/series/'+id+'/towatch');
+        const data = await response.json();
+        if(data.toWatch){
+            return true;
+        }else{
+            return false;
+        }
+    }catch (error) {
+        console.error("Erreur lors de la récupération du toWatch : ",error);
+    }
+}
+export const updateSerieToWatch = async (idUser: string, id:number) => {
+    try{
+        const response = await fetch('/api/users/' + idUser+'/series/'+id+'/towatch', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log("call api updateSerieToWatch - data : ",data);
+        return data.data.toWatch;
+    }catch (error) {
+        console.error("Erreur lors de la récupération du toWatch : ",error);
+    }
+}
+
+export const getFullActor = async (language:string,id: number) => {
+    let append_to_response = 'combined_credits%2Cimages';
+    let fetchURL = '/api/people/' + id+'?language='+language+'&append_to_response='+append_to_response;
+    try {
+        const response = await fetch(fetchURL);
+        const data = await response.json();
+       return data.data.people;
+    } catch (error) {
+        console.error(error);
+    }
+}

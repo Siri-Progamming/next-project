@@ -2,45 +2,45 @@ import clientPromise from "/lib/mongodb";
 
 /**
  * @swagger
- * /api/users/{idUser}/movies/{idMovie}/likes:
+ * /api/users/{idUser}/movies/{idMovie}/towatch:
  *  get:
  *      tags:
  *       - Utilisateur
- *      summary: Get le compteur de likes pour un utilisateur et un film by ID
- *      description: Get le compteur de likes pour un utilisateur et un film by ID
+ *      summary: Savoir si un user a mis se film dans la liste des films à voir
+ *      description: Savoir si un user a mis se film dans la liste des films à voir
  *      parameters:
  *       - in: path
  *         name: idUser
  *         type: string
  *         required: true
- *         description: ID de l'utilisateur dont on visualise le compteur de likes
+ *         description: ID de l'utilisateur
  *       - in: path
  *         name: idMovie
  *         type: number
  *         required: true
- *         description: ID du film dont on veut visualiser le compteur de likes
+ *         description: ID du film
  *      responses:
  *          200:
- *              description: true/false (liké/pas liké)
+ *              description: true/false (à voir/pas à voir)
  *  put:
  *      tags:
  *       - Utilisateur
- *      summary: Incrémente/décrémente le compteur de likes pour un utilisateur et un film by ID
- *      description: Incrémente/décrémente le compteur de likes pour un utilisateur et un film by ID
+ *      summary: switch à voir/pas à voir pour un user et un film
+ *      description: switch à voir/pas à voir pour un user et un film
  *      parameters:
  *       - in: path
  *         name: idUser
  *         type: string
  *         required: true
- *         description: ID de l'utilisateur qui veut liker/dislike le film
+ *         description: ID de l'utilisateur
  *       - in: path
  *         name: idMovie
  *         type: number
  *         required: true
- *         description: ID du film à liker/disliker
+ *         description: ID du film
  *      responses:
  *          200:
- *              description: IdMovie liked/disliked
+ *              description: IdMovie à voir/pas à voir
  */
 export default async function handler(req, res) {
     //TODO parser le JWT
@@ -57,31 +57,33 @@ export default async function handler(req, res) {
             if (usr_movie) {
                 resMongo = await db.collection("likes").updateOne(
                     {idTMDB: idMovie, idUser: idUser},
-                    { $set: { liked : !usr_movie.liked } }
+                    { $set: { toWatch : !usr_movie.toWatch } }
                 )
                 data = {
-                    action: 'IdMovie liked : ' + !usr_movie.liked,
+                    action: 'IdMovie toWatch : ' + !usr_movie.toWatch,
                     idMovie: idMovie,
                     idUser: idUser,
-                    liked: !usr_movie.liked
+                    toWatch: !usr_movie.toWatch
                 }
                 res.status(201).json({ status: 201, data: data });
             } else {
                 resMongo = await db.collection("likes").insertOne(
-                    {idTMDB: idMovie, idUser: idUser, liked: true}
+                    {idTMDB: idMovie, idUser: idUser, liked: false, seen: false, toWatch: true}
                 )
                 data = {
                     action: 'Relation IdMovie/User created',
                     idMovie: idMovie,
                     idUser: idUser,
-                    liked: true
+                    liked: false,
+                    seen: false,
+                    toWatch: true
                 }
                 res.status(201).json({ status: 201, data: data });
             }
             break;
         case "GET":
             if(usr_movie){
-                res.json({ status: 200, liked: usr_movie.liked});
+                res.json({ status: 200, toWatch: usr_movie.toWatch});
             }else{
                 res.status(404).json({ status: 404, error: "Not Found" });
             }

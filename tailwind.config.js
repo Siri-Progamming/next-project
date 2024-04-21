@@ -73,6 +73,9 @@ module.exports = {
                 },
                 white: '#F3ECE5',
                 black: '#04040e',
+                error: '#C45B5C',
+                success: '#00C178',
+                warning: '#E0AE41',
             },
             backgroundImage: {
                 'gradient-primary': 'linear-gradient(to right, #63b3ed, #4299e1)',

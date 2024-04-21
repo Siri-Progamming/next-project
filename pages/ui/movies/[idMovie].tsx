@@ -9,7 +9,7 @@ import PicturesShowcase from "../../../src/components/Showcase/PicturesShowcase"
 import SimilarShowcase from "../../../src/components/Showcase/SimilarShowcase";
 import Loader from "../../../src/components/utils/Loader";
 import {showNoImage} from "../../../src/components/Skeleton/NoData/NoImage";
-import Like from "../../../src/components/utils/Like";
+import Like from "../../../src/components/utils/buttons/Like";
 import {useConstantes} from "../../../src/contexts/ConstantesContext";
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
