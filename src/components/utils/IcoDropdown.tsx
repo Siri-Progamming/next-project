@@ -1,8 +1,8 @@
 import React from "react";
-import {useRouter} from "next/router";
 import {useAuth} from "../../contexts/AuthContext";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import BuildIcon from '@mui/icons-material/Build';
+import Link from "next/link";
 const IcoDropdown: React.FC = () => {
     const {user, logout} = useAuth();
 
@@ -24,7 +24,7 @@ const IcoDropdown: React.FC = () => {
                     </div>
                 </div>}
             <ul tabIndex={1}
-                className={`collapsible-element menu menu-sm dropdown-content mt-3 z-[2500] p-2 shadow bg-base-100 rounded-box w-52 rounded-t-none mr-[-8px]`}>
+                className={`collapsible-element menu menu-sm dropdown-content z-[2500] p-2 shadow bg-base-100 rounded-box w-52 rounded-t-none mr-[-8px]`}>
                 {!user ? <IcoDropdownOffList /> : <IcoDropdownOnList/>}
             </ul>
         </div>
@@ -33,38 +33,25 @@ const IcoDropdown: React.FC = () => {
 export default IcoDropdown;
 
 const IcoDropdownOffList: React.FC = () => {
-    const router = useRouter();
-    const handleClickOnLogin = () => {
-        router.push('/ui/login').then();
-    }
-    const handleClickOnRegister = () => {
-        router.push('/ui/signup').then();
-    }
     return (
         <>
-            <li><a onClick={handleClickOnLogin}>Connexion</a></li>
-            <li><a onClick={handleClickOnRegister}>Inscription</a></li>
+            <li><Link href="/ui/login" className="link">Connexion</Link></li>
+            <li><Link href="/ui/signup" className="link">Inscription</Link></li>
         </>
     );
 }
 const IcoDropdownOnList: React.FC = () => {
-    const {user, logout} = useAuth();
-    const router = useRouter();
-
-    const handleClickOnLikes = () => {
-        router.push(`/ui/users/movies/likes`).then();
-    }
-
+    const {logout} = useAuth();
     return (
         <>
             <li>
-                <a className="justify-between pointer-events-none">
+                <a className="justify-between pointer-events-none text-neutral-500">
                     Profile
                     {<span className="badge badge-warning"><BuildIcon
                         className="text-[16px]"></BuildIcon> Upcoming</span>}
                 </a>
             </li>
-            <li><a onClick={handleClickOnLikes}>{"J'aime 💕"}</a></li>
+            <li><Link href="/ui/users/movies/likes" className="link">{"J'aime 💕"}</Link></li>
             <li><a onClick={logout}>Déconnexion</a></li>
         </>
     );

@@ -11,6 +11,7 @@
     font-style: normal;
     position: relative;
 }
+
 main, .ui_page, #swagger{
     min-height: calc(100vh - var(--nav-height));
     max-width: 79.5vw;
@@ -18,6 +19,13 @@ main, .ui_page, #swagger{
     margin-right: auto;
     padding-top: 4vh;
     padding-bottom: 4vh;
+}
+
+.link{
+    text-decoration: none;
+}
+.link:visited{
+    color:inherit;
 }
 
 /* HEADER */
