@@ -5,7 +5,6 @@ interface PercentStickerProps{
     note: number | typeof NA_VALUE;
 }
 const PercentSticker: React.FC<PercentStickerProps> = ({note}) => {
-    console.log("PercentSticker - note received: ", note);
     return (
         <p className="radial-progress text-xs bg-black bg-opacity-100"
            style={{

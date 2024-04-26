@@ -64,10 +64,10 @@ const IdSerie: React.FC = () => {
                                 </h2>
                             )}
                         </div>
-                        <div className="max-w-[100vw] md:w-[60vw] lg:w-[35vw] xl:w-[30vw]  ml-[3vw] mr-[3vw]">
+                        {(serie?.overview && serie?.overview.length > 0) && (<div className="max-w-[100vw] md:w-[60vw] lg:w-[35vw] xl:w-[30vw]  ml-[3vw] mr-[3vw]">
                             <p className="movie-review font-medium bg-black-window"
                                style={{textAlign: 'justify'}}>{serie?.overview}</p>
-                        </div>
+                        </div>)}
                         <div className="max-w-[100vw]  lg:w-[60vw] xl:w-[60vw] 2xl:w-[40vw] ml-[3vw] mr-[3vw]">
                             <p className="mt-5 flex flex-row flex-wrap items-center gap-4 justify-start">
                                 <span className="media-badge">{serie?.release_date.slice(0, 4)}</span>
