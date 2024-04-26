@@ -53,8 +53,6 @@ export default async function handler(req,res){
                                 .catch(err => console.error('error:' + err));
                             if(images){
                                 console.log("Nombre d'images disponibles sans filtre de langue : ",images.backdrops.length);
-                                //TODO Si sans filtre il y a moins de 8 images, réajuster la sélectionner des images !
-                                //TODO ajouter ces chiffres dans un fichier de conf
                                 serie.images.backdrops = images.backdrops;
                             }
                         }
@@ -74,8 +72,22 @@ export default async function handler(req,res){
                         }
                     }
                 }
+                // AJOUT DES EPISODES AUX SAISONS
+                if(serie.seasons.length > 0){
+                    for(const [index,season] of serie.seasons.entries()){
+                        const seasonURL = `https://api.themoviedb.org/3/tv/${serie.id}/season/${season.season_number}?language=${req.query.language}`
+                        const seasonFetched = await fetch(seasonURL, tmdbGetOption)
+                            .then(r => r.json())
+                            .catch(err => console.error('error:' + err));
+                        if (seasonFetched) {
+                            const saisonToCompleteWithEpisodes = serie.seasons[index];
+                            if(saisonToCompleteWithEpisodes){
+                                serie.seasons[index].episodes = seasonFetched.episodes;
+                            }
+                        }
+                    }
+                }
                 //Récupérer les likes MONGODB et les ajouter à notre objet
-                //TODO Rajouter ça à l'interface serie
                 // movie.likes = await getLikesCountForAMovie(idMovie);
                 res.json({status: 200, data: {serie: serie}});
             }else {

@@ -41,6 +41,7 @@ export interface FullSerie extends Serie{
 export interface Season{
     air_date:string | null;
     episode_count:number;
+    episodes:Array<Episode> | [];
     id:number;
     name:string | "";
     overview:string | "";
@@ -56,11 +57,14 @@ export interface Episode{
     vote_count:number;
     air_date:string;
     episode_number:number;
-    episode_type:string;
     runtime:number;
-    season_number:number;
-    show_id:number;
+    season_number:number; //id de la saison
+    show_id:number; //id de la série
     still_path:string;
+}
+export interface FullEpisode extends Episode{
+    episode_type:string;
+    guest_stars:Array<Cast> | [];
 }
 
 export interface Watch{

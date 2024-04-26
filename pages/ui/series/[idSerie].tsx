@@ -12,6 +12,7 @@ import Like from "../../../src/components/utils/buttons/Like";
 import {useConstantes} from "../../../src/contexts/ConstantesContext";
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import {showNote, timeConvert, movieTitleSize, showBackground} from "../movies/[idMovie]";
+import HorizontalEpisodeShowcase from "../../../src/components/Showcase/HorizontalEpisodesShowcase";
 
 const IdSerie: React.FC = () => {
     const router = useRouter();
@@ -55,8 +56,7 @@ const IdSerie: React.FC = () => {
                         {/*h-[calc(100vh_-_var(--nav-height,0))*/}
                         {serie?.backdrop_path ? showBackground(serie?.backdrop_path) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto absolute0", "bg-black bg-opacity-25", "text-white opacity-20")}
                     </div>
-                    <div
-                        className="movie_details cinematic sm:mt-[0] h-[84vh] sm:h-[75vh] md:h-[80vh] xl:justify-center overflow-y-scroll overflow-x-hidden">
+                    <div className="movie_details cinematic sm:mt-[0] h-[84vh] sm:h-[75vh] md:h-[80vh] xl:justify-center overflow-y-scroll overflow-x-hidden">
                         <div className="max-w-[100vw] xl:text-left xl:w-[60vw] 2xl:w-[30vw] ml-[3vw] mr-[3vw] mb-5">
                             {serie?.title && (
                                 <h2 className={`main_title leading-none ${movieTitleSize(serie.title)}`}>
@@ -74,7 +74,7 @@ const IdSerie: React.FC = () => {
                                 {serie?.genres.map((genre, index) => (
                                     <span key={genre.id} className={`genre`}>{genre.name}</span>))}
                                 {/*TODO Pas sûre de faire ça comme ça*/}
-                                <span className="media-badge"><AccessTimeOutlinedIcon />{timeConvert(serie?.last_episode_to_air.runtime)}</span>
+                                <span className="media-badge"><AccessTimeOutlinedIcon />{timeConvert(serie?.last_episode_to_air?.runtime)}</span>
                             </p>
                             {showNote(serie?.vote_average!)}
                         </div>
@@ -96,6 +96,11 @@ const IdSerie: React.FC = () => {
                                 <SimilarShowcase fullMedia={serie} nbToShow={4} title={"Similar"}/>}
                         </div>
                     </div>
+                    {(serie && serie.seasons && serie.seasons.length > 0 ) &&
+                        <div className="">
+                            <HorizontalEpisodeShowcase seasons={serie.seasons}/>
+                        </div>
+                    }
                 </div>
             }
         </main>
