@@ -65,7 +65,7 @@ const MovieFilterForm: React.FC = ({}) => {
                         aria-label="vote_count_min"
                         defaultValue={queryData.nbVotesMin}
                         value={queryData.nbVotesMin}
-                        step={100}
+                        step={50}
                         valueLabelDisplay="auto"
                         marks={VOTES}
                         max={VOTES.find(vote => vote.id === '5')?.value}

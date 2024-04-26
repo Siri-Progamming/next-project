@@ -15,7 +15,6 @@ export const SORT_BY: Array<SortByEnumInterface> = [
     {name: SortByEnum.titleAsc, display_name: "Titre (A-Z)"},
     {name: SortByEnum.titleDesc, display_name: "Titre (Z-A)"}
 ];
-
 export const SERIES_SORT_BY: Array<SortByEnumInterface> = [
     {name: SeriesSortByEnum.popularityDesc, display_name: "Popularité + / -"},
     {name: SeriesSortByEnum.popularityAsc, display_name: "Popularité - / +"},
@@ -26,7 +25,6 @@ export const SERIES_SORT_BY: Array<SortByEnumInterface> = [
     {name: SeriesSortByEnum.nameAsc, display_name: "Titre (A-Z)"},
     {name: SeriesSortByEnum.nameDesc, display_name: "Titre (Z-A)"}
 ];
-
 export const NOTES = [
     {
         id: 'MIN',
@@ -44,7 +42,6 @@ export const NOTES = [
         label: '10',
     }
 ];
-
 export const VOTES = [
     {
         id: '0',

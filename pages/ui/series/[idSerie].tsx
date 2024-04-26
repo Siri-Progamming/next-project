@@ -3,7 +3,6 @@ import {useRouter} from 'next/router';
 import {FullSerie} from "../../../src/interfaces/Serie";
 import {getFullMedia} from "../../../src/services/API/call.api.service";
 import {createFullSerie} from "../../../src/services/API/object.creator.service";
-import {ConfigService} from "../../../src/services/IMDB.API/config.service";
 import PeopleShowcase from "../../../src/components/Showcase/PeopleShowcase";
 import PicturesShowcase from "../../../src/components/Showcase/PicturesShowcase";
 import SimilarShowcase from "../../../src/components/Showcase/SimilarShowcase";
@@ -12,10 +11,9 @@ import {showNoImage} from "../../../src/components/Skeleton/NoData/NoImage";
 import Like from "../../../src/components/utils/buttons/Like";
 import {useConstantes} from "../../../src/contexts/ConstantesContext";
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import {showNote, timeConvert, movieTitleSize, showBackground} from "../movies/[idMovie]";
 
-interface IdSerieProps {
-}
-const IdSerie: React.FC<IdSerieProps> = ({}) => {
+const IdSerie: React.FC = () => {
     const router = useRouter();
     const {idSerie} = router.query;
     const [serie, setSerie] = useState<FullSerie | null>(null);
@@ -55,7 +53,7 @@ const IdSerie: React.FC<IdSerieProps> = ({}) => {
                             <Like id={serie?.id!} mediaType="serie" width="" style="like-button"/>
                         </div>
                         {/*h-[calc(100vh_-_var(--nav-height,0))*/}
-                        {serie?.backdrop_path ? showBackground(serie) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto absolute0", "bg-black bg-opacity-25", "text-white opacity-20")}
+                        {serie?.backdrop_path ? showBackground(serie?.backdrop_path) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto absolute0", "bg-black bg-opacity-25", "text-white opacity-20")}
                     </div>
                     <div
                         className="movie_details cinematic sm:mt-[0] h-[84vh] sm:h-[75vh] md:h-[80vh] xl:justify-center overflow-y-scroll overflow-x-hidden">
@@ -76,9 +74,9 @@ const IdSerie: React.FC<IdSerieProps> = ({}) => {
                                 {serie?.genres.map((genre, index) => (
                                     <span key={genre.id} className={`genre`}>{genre.name}</span>))}
                                 {/*TODO Pas sûre de faire ça comme ça*/}
-                                <span className="media-badge"><AccessTimeOutlinedIcon />{serie?.last_episode_to_air?.runtime ? timeConvert(serie?.last_episode_to_air.runtime) : "NaN"}</span>
+                                <span className="media-badge"><AccessTimeOutlinedIcon />{timeConvert(serie?.last_episode_to_air.runtime)}</span>
                             </p>
-                            {showNote(serie!)}
+                            {showNote(serie?.vote_average!)}
                         </div>
                     </div>
                     <div className="about_movie cinematic flex flex-col justify-between pt-[0] pl-[3vw]  md:pt-[0] lg:flex-row">
@@ -102,92 +100,5 @@ const IdSerie: React.FC<IdSerieProps> = ({}) => {
             }
         </main>
     );
-    function showNote(serie:FullSerie){
-        return (
-            <p className="relative mt-5">
-                {/*@ts-ignore*/}
-                {serie?.vote_average.toFixed(1) >= 7.5 &&
-                    <span className="absolute left-[0] top-[6px] w-6 h-6 "><i
-                        className="fa-solid fa-fire fa-xl fa-beat-fade text-secondary-500"></i></span>}
-                {/*@ts-ignore*/}
-                {serie?.vote_average.toFixed(1) < 5.0 &&
-                    <span className="absolute left-[0] top-[6px] w-6 h-6 "><i
-                        className="fa-solid fa-face-frown fa-xl text-primary-400"></i></span>}
-                <span
-                    className="font-extrabold text-3xl text-secondary-500 -tracking-widest absolute left-[35px] movie-note">{serie?.vote_average.toFixed(1)}
-                        </span>
-                <span className="absolute text-sm left-[85px] top-[2.5px] tracking-wide movie-note"><span
-                    className="font-extralight text-neutral-400">/</span>10</span>
-            </p>
-        )
-    }
-    function showBackground(serie: FullSerie) {
-        return (
-            [...Array(4)].map((_, index) => (
-                <div
-                    key={`background_image_${index}`}
-                    className={index === 0 ? "background_image_repeat absolute0"
-                        : index === 1 ? "background_image dropShadow absolute0" : "background_image absolute0"}
-                    style={{
-                        backgroundImage: `url(${ConfigService.themoviedb.urls.image_view}/original${serie?.backdrop_path})`
-                    }}
-                ></div>
-            ))
-        )
-    }
 }
 export default IdSerie;
-
-function countSpaces(str: string) {
-    if (str === null || str === undefined) return 0;
-    let spaceCount = 0;
-    for (let i = 0; i < str.length; i++) {
-        if (str[i] === ' ') {
-            spaceCount++;
-        }
-    }
-    return spaceCount;
-}
-
-function movieTitleSize(title: string) {
-    const spaces = countSpaces(title);
-    if (spaces === 0 && title.length > 10) {
-        return 'text-[70px] sm:text-[75px] md:text-[80px] lg:text-[90px]';
-    } else if (spaces > 3 || title.length > 15) {
-        if (title.length > 20 && title.length < 30) {
-            return 'text-[50px] sm:text-[55px] md:text-[70px] lg:text-[80px]';
-        } else if(title.length >= 30) {
-            return 'text-[40px] sm:text-[45px] md:text-[60px] lg:text-[70px]';
-        }else {
-            return 'text-[70px] sm:text-[75px] md:text-[80px] lg:text-[90px]';
-        }
-    } else if (spaces > 1 || title.length > 10) {
-        return 'text-[80px] sm:text-[95px] md:text-[98px] lg:text-[108px]';
-    } else {
-        return 'text-[90px] sm:text-[115px] md:text-[120px] lg:text-[130px]';
-    }
-}
-
-function timeConvert(minutes:number | undefined){
-    if(minutes === undefined || minutes <=0) return "NaN";
-    // Si le temps est inférieur à 60 minutes, affiche seulement les minutes
-    if (minutes < 60) {
-        if(minutes < 10){
-            return "0"+minutes+ "min";
-        }
-        return minutes + "min";
-    } else {
-        // Calculer le nombre d'heures
-        var heures = Math.floor(minutes / 60);
-
-        // Calculer le nombre de minutes restantes
-        var minutesRestantes = minutes % 60;
-
-        // Retourner le résultat sous forme de chaîne de caractères
-        if(minutesRestantes < 10){
-            return heures + "h0" + minutesRestantes;
-        }else{
-            return heures + "h" + minutesRestantes;
-        }
-    }
-}

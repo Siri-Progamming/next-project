@@ -6,9 +6,10 @@ import {ConfigService} from "../../../src/services/IMDB.API/config.service";
 import Loader from "../../../src/components/utils/Loader";
 import {showNoImage} from "../../../src/components/Skeleton/NoData/NoImage";
 import {useConstantes} from "../../../src/contexts/ConstantesContext";
-import {CombinedCredits, FullActor} from "../../../src/interfaces/People";
+import {FullActor} from "../../../src/interfaces/People";
 import HorizontalItemsShowcase from "../../../src/components/Showcase/HorizontalItemsShowcase";
 import {MediaCardProps} from "../../../src/interfaces/UI";
+import {countSpaces, movieTitleSize} from "../movies/[idMovie]";
 
 const IdPeople: React.FC = ({}) => {
     const router = useRouter();
@@ -54,6 +55,7 @@ const IdPeople: React.FC = ({}) => {
                 title: movie.title!,
                 release_date: movie.release_date!,
                 vote_average: movie.vote_average,
+                vote_count: movie.vote_count,
                 poster_path: movie.poster_path,
                 character: movie.character,
                 roleOrder: movie.order
@@ -82,6 +84,7 @@ const IdPeople: React.FC = ({}) => {
                 title: serie.name!,
                 release_date: serie.first_air_date!,
                 vote_average: serie.vote_average,
+                vote_count: serie.vote_count,
                 poster_path: serie.poster_path,
                 character: serie.character,
                 nbEpisodes: serie.episode_count
@@ -136,69 +139,13 @@ const IdPeople: React.FC = ({}) => {
 }
 export default IdPeople;
 
-function countSpaces(str: string) {
-    if (str === null || str === undefined) return 0;
-    let spaceCount = 0;
-    for (let i = 0; i < str.length; i++) {
-        if (str[i] === ' ') {
-            spaceCount++;
-        }
-    }
-    return spaceCount;
-}
-
-function movieTitleSize(title: string) {
-    const spaces = countSpaces(title);
-    if (spaces === 0 && title.length > 10) {
-        return 'text-[70px] sm:text-[75px] md:text-[80px] lg:text-[90px]';
-    } else if (spaces > 3 || title.length > 15) {
-        if (title.length > 20 && title.length < 30) {
-            return 'text-[50px] sm:text-[55px] md:text-[70px] lg:text-[80px]';
-        } else if (title.length >= 30) {
-            return 'text-[40px] sm:text-[45px] md:text-[60px] lg:text-[70px]';
-        } else {
-            return 'text-[70px] sm:text-[75px] md:text-[80px] lg:text-[90px]';
-        }
-    } else if (spaces > 1 || title.length > 10) {
-        return 'text-[80px] sm:text-[95px] md:text-[98px] lg:text-[108px]';
-    } else {
-        return 'text-[90px] sm:text-[115px] md:text-[120px] lg:text-[130px]';
-    }
-}
-
-function timeConvert(minutes: number | undefined) {
-    if (minutes === undefined || minutes <= 0) return "NaN";
-    // Si le temps est inférieur à 60 minutes, affiche seulement les minutes
-    if (minutes < 60) {
-        if (minutes < 10) {
-            return "0" + minutes + "min";
-        }
-        return minutes + "min";
-    } else {
-        // Calculer le nombre d'heures
-        var heures = Math.floor(minutes / 60);
-
-        // Calculer le nombre de minutes restantes
-        var minutesRestantes = minutes % 60;
-
-        // Retourner le résultat sous forme de chaîne de caractères
-        if (minutesRestantes < 10) {
-            return heures + "h0" + minutesRestantes;
-        } else {
-            return heures + "h" + minutesRestantes;
-        }
-    }
-}
-
 function popularityOrderRoleRatio(popularity: number, orderRole: number) {
     orderRole += 1;
     return (popularity / orderRole) + (popularity - (orderRole * 1));
 }
-
 function popularityEpisodesRatio(popularity: number, episodes: number) {
     return (popularity * episodes);
 }
-
 function convertBirthdayToAge(birthday: string) {
     if (birthday === null || birthday === undefined) return "NaN";
     const birthDate = new Date(birthday);

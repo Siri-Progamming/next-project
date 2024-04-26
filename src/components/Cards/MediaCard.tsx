@@ -6,8 +6,8 @@ import MediaCardSkeleton from "../Skeleton/MediaCardSkeleton";
 import {showNoImage} from "../Skeleton/NoData/NoImage";
 import {MediaCardProps} from "../../interfaces/UI";
 import {useAuth} from "../../contexts/AuthContext";
-import Like from "../utils/buttons/Like";
 import More from "../utils/buttons/More";
+import {noteTrusted} from "../../../pages/ui/movies/[idMovie]";
 
 interface MediaCardProperties {
     media:MediaCardProps;
@@ -49,7 +49,7 @@ const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
                             {user && <div className="absolute top-[-1px] right-[-1px] z-[10]"><More id={media.id} mediaType={media.type}/></div>}
                             {media.poster_path ? showImage(media.poster_path) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
-                                <PercentSticker note={media.vote_average} />
+                                <PercentSticker note={noteTrusted(media.vote_average, media.vote_count)} />
                             </div>
                             <div className="media-card-details leading-none">
                                 <h2 className="text-sm font-semibold">{media.title}</h2>
