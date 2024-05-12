@@ -13,7 +13,7 @@ export const ConfigService = {
             movie_genres:"https://api.themoviedb.org/3/genre/movie/list",
             movie_recommanded: "https://api.themoviedb.org/3/movie/{movie_id}/recommendations",
             movie_images: "https://api.themoviedb.org/3/movie/{movie_id}/images",
-            search_movie: "https://api.themoviedb.org/3/search/movie",
+            search_movie: "https://api.themoviedb.org/3/search/multi",
             image_view: "https://image.tmdb.org/t/p",
             serie_genres:"https://api.themoviedb.org/3/genre/tv/list",
             serie_search_filter: "https://api.themoviedb.org/3/discover/tv",

@@ -39,7 +39,7 @@ const HorizontalEpisodeShowcase: React.FC<HorizontalEpisodeShowcaseProps> = ({se
                         {(activeSeason != -1 && seasons[activeSeason].episodes?.length == 0) && (seasons[activeSeason].air_date === null ? "Coming soon !" : "Coming soon => " + seasons[activeSeason].air_date)}
 
                         {(activeSeason != -1 && seasons[activeSeason].episodes?.length > 0) && seasons[activeSeason].episodes.map((episode, index) => (
-                            <li key={index+"-"+activeSeason} className="">
+                            <li key={index+"-"+activeSeason+seasons} className="">
                                 <div className="relative w-[300px] h-[180px]">
                                     {episode.still_path == null ?
                                         showNoImage("w-[300px]", "h-[180px]", "text-[150px]", "rounded-sm")

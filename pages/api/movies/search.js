@@ -55,7 +55,7 @@ export default async function handler(req, res) {
         const page = req.query.page;
         url = url + '&page=' + page;
     }
-    // console.log("api/movies/nameSearch url : ", url);
+    console.log("api/movies/nameSearch url : ", url);
     const options = {
         method: 'GET',
         headers: {

@@ -2,7 +2,10 @@ import React, {useEffect, useState} from "react";
 import {useNameSearch} from "../../../src/contexts/NameSearchContext";
 import {MediaCardProps, MediaSearchState} from "../../../src/interfaces/UI";
 import {getMediaSearch} from "../../../src/services/API/call.api.service";
-import {createMediaCardPropsFromMovie} from "../../../src/services/API/object.creator.service";
+import {
+    createMediaCardPropsFromMovie,
+    createMediaCardPropsFromSerie
+} from "../../../src/services/API/object.creator.service";
 import Loader from "../../../src/components/utils/Loader";
 import VerticalItemsShowcase from "../../../src/components/Showcase/VerticalItemsShowcase";
 
@@ -27,7 +30,11 @@ const NameSearch: React.FC<searchProps> = () => {
             setMediaSearchState({...mediaSearchState, isSearchEmpty: false, nbPages: results.total_pages, nbResults: results.total_results});
             let tempMedias: Array<MediaCardProps> = [];
             for(const item of items) {
-                tempMedias.push(createMediaCardPropsFromMovie(item))
+                if(item.media_type === "tv"){
+                    tempMedias.push(createMediaCardPropsFromSerie(item))
+                }else{
+                    tempMedias.push(createMediaCardPropsFromMovie(item))
+                }
             }
             setMediaCards(tempMedias);
         }else{
