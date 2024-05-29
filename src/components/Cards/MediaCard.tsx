@@ -22,12 +22,17 @@ const MediaCard: React.FC<MediaCardProperties> = ({media, showMediaType}) => {
     const {user} = useAuth();
 
     const handleClick = () => {
-        if(media.type === MEDIA_TYPES.movie){
-            router.push('/ui/movies/' + media.id).then();
-        }else{
-            router.push('/ui/series/' + media.id).then();
+        switch (media.type) {
+            case MEDIA_TYPES.movie:
+                router.push('/ui/movies/' + media.id).then();
+                break;
+            case MEDIA_TYPES.tv:
+                router.push('/ui/series/' + media.id).then();
+                break;
+            case MEDIA_TYPES.people:
+                router.push('/ui/people/' + media.id).then();
+                break;
         }
-
     };
 
     useEffect(() => {
