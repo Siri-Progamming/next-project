@@ -1,11 +1,14 @@
 import React, {useEffect} from "react";
+import { useTranslation } from 'react-i18next';
 
 interface SwitchProps{
     elements: Array<string>;
     onSelect: (element: string) => void;
 }
 const Switch: React.FC<SwitchProps> = ({elements, onSelect}) => {
+    const { t } = useTranslation();
     const [isActive, setIsActive] = React.useState<number>(0);
+
     const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
         const index = Number(e.currentTarget.id);
         setIsActive(index);

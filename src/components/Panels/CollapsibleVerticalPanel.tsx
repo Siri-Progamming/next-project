@@ -30,7 +30,7 @@ const CollapsibleVerticalPanel: React.FC = () => {
                          className={`collapsible-element flex flex-row relative overflow-hidden text-wrap ${
                              showPanel ? 'w-[80vw] md:w-[40vw] lg:w-[35vw] xl:w-[30vw] 2xl:w-[20vw] showPanel' : 'w-0'
                          }`}>
-                        <h1 className="">Rechercher des médias</h1>
+                        {/*<h1 className="">Rechercher des médias</h1>*/}
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                             <Switch elements={["Films", "Séries"]} onSelect={handleSwitch}/>
                             {elementToDisplay === 0 ?
