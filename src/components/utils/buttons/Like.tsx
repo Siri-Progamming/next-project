@@ -3,6 +3,7 @@ import {getMovieLike, getSerieLike, updateMovieLike, updateSerieLike} from "../.
 import {useAuth} from "../../../contexts/AuthContext";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import {MEDIA_TYPES} from "../../../constantes/app_constantes";
 
 interface LikeProps{
     id:number;
@@ -20,9 +21,9 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     const getLike = async () => {
         let like;
         switch(mediaType){
-            case "movie":
+            case MEDIA_TYPES.movie:
                 like = await getMovieLike(user?.id!, id); break;
-            case "serie":
+            case MEDIA_TYPES.tv:
                 like = await getSerieLike(user?.id!, id); break;
         }
         if (like) {
@@ -34,9 +35,9 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     const updateLike = async () => {
         let like;
         switch (mediaType) {
-            case "movie":
+            case MEDIA_TYPES.movie:
                 like = await updateMovieLike(user?.id!, id); break;
-            case "serie":
+            case MEDIA_TYPES.tv:
                 like = await updateSerieLike(user?.id!, id); break;
         }
         if (like != null) {

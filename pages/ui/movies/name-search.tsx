@@ -4,14 +4,14 @@ import {MediaCardProps, MediaSearchState} from "../../../src/interfaces/UI";
 import {getMediaSearch} from "../../../src/services/API/call.api.service";
 import {
     createMediaCardPropsFromMovie,
-    createMediaCardPropsFromSerie
+    createMediaCardPropsFromSerie,
+    createMediaCardPropsFromActor
 } from "../../../src/services/API/object.creator.service";
 import Loader from "../../../src/components/utils/Loader";
 import VerticalItemsShowcase from "../../../src/components/Showcase/VerticalItemsShowcase";
+import {MEDIA_TYPES} from "../../../src/constantes/app_constantes";
 
-interface searchProps {
-}
-const NameSearch: React.FC<searchProps> = () => {
+const NameSearch: React.FC = () => {
     const [isSearch, setIsSearch] = useState<boolean>(false);
     const {query,setQuery} = useNameSearch();
     const [mediaCards, setMediaCards] = useState<Array<MediaCardProps>>([])
@@ -19,6 +19,7 @@ const NameSearch: React.FC<searchProps> = () => {
     const [mediaSearchState, setMediaSearchState] = useState<MediaSearchState>({isSearchEmpty: false, isLoading: true, nbPages: 0, nbResults: 0});
     const [starterLoader, setStarterLoader] = useState<boolean>(true);
     const [activePage, setActivePage] = useState<number>(1);
+
     const initMediaCards = async () => {
         // console.log("Initilaizing media cards for MOVIES/NAME-SEARCH");
         // console.log("name-search initMediaCards urlAPI : ",urlApi);
@@ -30,10 +31,12 @@ const NameSearch: React.FC<searchProps> = () => {
             setMediaSearchState({...mediaSearchState, isSearchEmpty: false, nbPages: results.total_pages, nbResults: results.total_results});
             let tempMedias: Array<MediaCardProps> = [];
             for(const item of items) {
-                if(item.media_type === "tv"){
+                if(item.media_type === MEDIA_TYPES.tv){
                     tempMedias.push(createMediaCardPropsFromSerie(item))
-                }else{
+                }else if(item.media_type === MEDIA_TYPES.movie){
                     tempMedias.push(createMediaCardPropsFromMovie(item))
+                }else if(item.media_type === MEDIA_TYPES.people){
+                    tempMedias.push(createMediaCardPropsFromActor(item))
                 }
             }
             setMediaCards(tempMedias);

@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import {ConfigService, tmdbGetOption} from "/src/services/IMDB.API/config.service";
 import {buildURL_media_full} from "../../../src/services/IMDB.API/urlBuilder.service";
+import {MEDIA_TYPES} from "../../../src/constantes/app_constantes";
 
 /**
  * @swagger
@@ -32,7 +33,7 @@ import {buildURL_media_full} from "../../../src/services/IMDB.API/urlBuilder.ser
  */
 export default async function handler(req,res){
     const idSerie = parseInt(req.query.idSerie, 10);
-    const url = buildURL_media_full(idSerie, req.query.append_to_response,req.query.language, "serie");
+    const url = buildURL_media_full(idSerie, req.query.append_to_response,req.query.language, MEDIA_TYPES.tv);
 
     switch (req.method) {
         case "GET":

@@ -20,6 +20,7 @@
     "argon2": "^0.40.1",
     "btoa": "^1.2.1",
     "formdata-node": "^6.0.3",
+    "i18next": "^23.11.5",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^4.8.1",
@@ -30,6 +31,7 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-i18next": "^14.1.2",
     "resemblejs": "^5.0.0",
     "swagger-ui-react": "^3.52.3"
   },

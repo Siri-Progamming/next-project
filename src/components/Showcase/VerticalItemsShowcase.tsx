@@ -19,6 +19,7 @@ const VerticalItemsShowcase: React.FC<VerticalItemsShowcase> = ({medias,mediaSea
             anchor.current.scrollIntoView({ behavior: 'smooth' });
         }
     }
+
     return (
         <>
         {

@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {fetchMediaGenres} from "../services/IMDB.API/fetch.service";
 import {Genre} from "../interfaces/Movie";
+import {MEDIA_TYPES} from "../constantes/app_constantes";
 
 interface ConstantesContextProps {
     MOVIE_GENRES: Array<Genre> | [];
@@ -28,7 +29,7 @@ export const ConstantesProvider: React.FC<ConstantesProviderProps> = ({ children
     const initMovieGenres = async () => {
         const storedGenres = localStorage.getItem('MOVIE_GENRES');
         if(storedGenres === null) {
-            await fetchMediaGenres(DISPLAY_LANGUAGE,"movie").then((data) => {
+            await fetchMediaGenres(DISPLAY_LANGUAGE,MEDIA_TYPES.movie).then((data) => {
                 console.log("-----------------Fetching MOVIE_GENRES-----------------");
                 setMOVIE_GENRES(data);
                 localStorage.setItem('MOVIE_GENRES', JSON.stringify(data));
@@ -42,7 +43,7 @@ export const ConstantesProvider: React.FC<ConstantesProviderProps> = ({ children
     const initSerieGenres = async () => {
         const storedGenres = localStorage.getItem('SERIE_GENRES');
         if(storedGenres === null) {
-            await fetchMediaGenres(DISPLAY_LANGUAGE,"serie").then((data) => {
+            await fetchMediaGenres(DISPLAY_LANGUAGE,MEDIA_TYPES.tv).then((data) => {
                 console.log("-----------------Fetching SERIE_GENRES-----------------");
                 setSERIE_GENRES(data);
                 localStorage.setItem('SERIE_GENRES', JSON.stringify(data));

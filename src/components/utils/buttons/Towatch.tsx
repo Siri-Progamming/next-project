@@ -3,6 +3,7 @@ import {getMovieToWatch, getSerieToWatch, updateMovieToWatch, updateSerieToWatch
 import {useAuth} from "../../../contexts/AuthContext";
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import WatchLaterRoundedIcon from '@mui/icons-material/WatchLaterRounded';
+import {MEDIA_TYPES} from "../../../constantes/app_constantes";
 
 interface TowatchProps{
     id:number;
@@ -20,9 +21,9 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     const getTowatch = async () => {
         let towatch;
         switch(mediaType){
-            case "movie":
+            case MEDIA_TYPES.movie:
                 towatch = await getMovieToWatch(user?.id!, id); break;
-            case "serie":
+            case MEDIA_TYPES.tv:
                 towatch = await getSerieToWatch(user?.id!, id); break;
         }
         if (towatch) {
@@ -34,9 +35,9 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     const updateTowatch = async () => {
         let towatch;
         switch (mediaType) {
-            case "movie":
+            case MEDIA_TYPES.movie:
                 towatch = await updateMovieToWatch(user?.id!, id); break;
-            case "serie":
+            case MEDIA_TYPES.tv:
                towatch = await updateSerieToWatch(user?.id!, id); break;
         }
         if (towatch != null) {

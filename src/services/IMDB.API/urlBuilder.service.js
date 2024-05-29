@@ -1,4 +1,5 @@
 import {ConfigService} from "./config.service";
+import {MEDIA_TYPES} from "../../constantes/app_constantes";
 
 export function buildURL_movies_id_images(idMovie, include_image_language, language) {
     let url = ConfigService.themoviedb.urls.movie_images.replace("{movie_id}", idMovie.toString());
@@ -20,8 +21,8 @@ export function buildURL_movies_id_images(idMovie, include_image_language, langu
 export function buildURL_media_full(idMedia, append_to_response, language, type) {
     let url;
     switch(type){
-        case "movie" : url = ConfigService.themoviedb.urls.movie.replace("{movie_id}", idMedia.toString()); break;
-        case "serie" : url = ConfigService.themoviedb.urls.serie.replace("{serie_id}", idMedia.toString()); break;
+        case MEDIA_TYPES.movie : url = ConfigService.themoviedb.urls.movie.replace("{movie_id}", idMedia.toString()); break;
+        case MEDIA_TYPES.tv : url = ConfigService.themoviedb.urls.serie.replace("{serie_id}", idMedia.toString()); break;
     }
     let severalParams = false;
     if (append_to_response || append_to_response != null) {

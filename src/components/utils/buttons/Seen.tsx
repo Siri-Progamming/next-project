@@ -3,6 +3,7 @@ import {getMovieSeen, getSerieSeen, updateMovieSeen, updateSerieSeen} from "../.
 import {useAuth} from "../../../contexts/AuthContext";
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import {MEDIA_TYPES} from "../../../constantes/app_constantes";
 
 interface LikeProps{
     id:number;
@@ -20,9 +21,9 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     const getSeen = async () => {
         let seen;
         switch(mediaType){
-            case "movie":
+            case MEDIA_TYPES.movie:
                 seen = await getMovieSeen(user?.id!, id); break;
-            case "serie":
+            case MEDIA_TYPES.tv:
                seen = await getSerieSeen(user?.id!, id); break;
         }
         if (seen) {
@@ -34,9 +35,9 @@ const [isLoading, setIsLoading] = useState<boolean>(true);
     const updateLike = async () => {
         let seen;
         switch (mediaType) {
-            case "movie":
+            case MEDIA_TYPES.movie:
                 seen = await updateMovieSeen(user?.id!, id); break;
-            case "serie":
+            case MEDIA_TYPES.tv:
                 seen = await updateSerieSeen(user?.id!, id); break;
         }
         if (seen != null) {

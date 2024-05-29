@@ -6,13 +6,10 @@ import {createMediaCardPropsFromMovie} from "../../../src/services/API/object.cr
 import Loader from "../../../src/components/utils/Loader";
 import VerticalItemsShowcase from "../../../src/components/Showcase/VerticalItemsShowcase";
 
-interface searchProps {
-}
-const Search: React.FC<searchProps> = () => {
+const Search: React.FC = () => {
     const {queryData, setQueryData} = useMovieFilter();
     const [searchQuery, setSearchQuery] = useState('');
     const isSearch = searchQuery !== '' && searchQuery.trim().length > 0;
-
     const [mediaCards, setMediaCards] = useState<Array<MediaCardProps>>([])
     const [urlApi, setUrlApi] = useState<string>('');
     const [mediaSearchState, setMediaSearchState] = useState<MediaSearchState>({isSearchEmpty: false, isLoading: true, nbPages: 0, nbResults: 0});
@@ -39,7 +36,6 @@ const Search: React.FC<searchProps> = () => {
             setMediaSearchState({...mediaSearchState,isLoading:false, isSearchEmpty: true});
         }
     }
-
     const handlePageChange = async (e: React.ChangeEvent<unknown>, pageNumber: number) => {
         setQueryData({...queryData, activePage: pageNumber})
     }

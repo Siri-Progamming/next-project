@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import {ConfigService, tmdbGetOption} from "./config.service";
 import {buildURL_movies_onlyLanguage} from "./urlBuilder.service";
+import {MEDIA_TYPES} from "../../constantes/app_constantes";
 
 async function getData(res, url) {
     const response = await fetch(url, tmdbGetOption);
@@ -24,8 +25,8 @@ export async function switchGetData(req, res, url) {
 export async function fetchMediaGenres(language, type) {
     let url;
     switch(type){
-        case "movie": url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.movie_genres); break;
-        case "serie": url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.serie_genres); break;
+        case MEDIA_TYPES.movie: url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.movie_genres); break;
+        case MEDIA_TYPES.tv: url = buildURL_movies_onlyLanguage(language, ConfigService.themoviedb.urls.serie_genres); break;
     }
     const apiResponse = await fetch(url, tmdbGetOption)
         .then(r => r.json())

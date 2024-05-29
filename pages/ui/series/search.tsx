@@ -6,6 +6,7 @@ import {createMediaCardPropsFromSerie} from "../../../src/services/API/object.cr
 import {MediaSearchState, MediaCardProps} from "../../../src/interfaces/UI";
 import Loader from "../../../src/components/utils/Loader";
 //UI / SERIES / SEARCH
+//TODO MEME PAGE QUE MOVIES/SEARCH
 const Search: React.FC = () => {
     const {queryData, setQueryData} = useSerieFilter();
     const [searchQuery, setSearchQuery] = useState('');
@@ -14,6 +15,7 @@ const Search: React.FC = () => {
     const [urlApi, setUrlApi] = useState<string>('');
     const [mediaSearchState, setMediaSearchState] = useState<MediaSearchState>({isSearchEmpty: false, isLoading: true, nbPages: 0, nbResults: 0});
     const [starterLoader, setStarterLoader] = useState<boolean>(true);
+
     const initMediaCards = async () => {
         let url = urlApi;
 

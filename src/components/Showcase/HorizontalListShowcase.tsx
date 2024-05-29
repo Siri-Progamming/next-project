@@ -4,6 +4,7 @@ import MediaCard from "../Cards/MediaCard";
 import {createMediaCardPropsFromMovie, createMediaCardPropsFromSerie} from "../../services/API/object.creator.service";
 import {getMedias} from "../../services/API/call.api.service";
 import {useConstantes} from "../../contexts/ConstantesContext";
+import {MEDIA_TYPES} from "../../constantes/app_constantes";
 import Switch from "../Forms/Filters/Switch";
 import {useAuth} from "../../contexts/AuthContext";
 import {MediaCardProps, MediaHorizontalDisplayState} from "../../interfaces/UI";
@@ -57,7 +58,7 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
         }
     }
     const selectApi = (mediaType:string) => {
-        if (mediaType === "movie") {
+        if (mediaType === MEDIA_TYPES.movie) {
             switch (type) {
                 case "trending":
                     return ApiConfigService.fennext.urls.movie_trending;
@@ -66,7 +67,7 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
                 case "recommended":
                     return ApiConfigService.fennext.urls.movie_user_recommanded.replace("{user_id}", user?.id!);
             }
-        } else if (mediaType === "serie") {
+        } else if (mediaType === MEDIA_TYPES.tv) {
             switch (type) {
                 case "trending":
                     return ApiConfigService.fennext.urls.serie_trending;
@@ -85,14 +86,14 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
                 setMediaMoviesCards(mediaMoviesCards);
             } else {
                 console.log("Movies Empty, calling API... - " + type);
-                initMovies("movie").then();
+                initMovies(MEDIA_TYPES.movie).then();
             }
             if (mediaSeriesCards.length > 0) {
                 console.log("Already Set Series, refreshing... - " + type);
                 setMediaSeriesCards(mediaSeriesCards);
             } else {
                 console.log("Series Empty, calling API... - " + type);
-                initSeries("serie").then();
+                initSeries(MEDIA_TYPES.tv).then();
             }
         }
     }, [elementToDisplay]);
@@ -107,22 +108,42 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
     const handleSwitchElement = (element: string) => {
         setElementToDisplay(element === "Films" ? 0 : 1);
     }
-
+    const handleLoadAll = () => {
+        switch (type){
+            case "trending": window.location.href = "/movies";
+                break;
+            case "toprated":
+                window.location.href = "/movies";
+                break;
+            case "recommended":
+                window.location.href = "/movies";
+                break;
+        }
+    }
     return (
         <div className="flex flex-col">
-            <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start "><h1 className="category_title min-w-full sm:min-w-fit">{title}</h1></div>
-            <Switch elements={["Films", "Séries"]} onSelect={handleSwitchElement}/>
-            {isUserRecommandation && (
-                <div>
+            <div className="divider after:bg-accent-500 after:bg-opacity-50 after:h-[4px] divider-start ">
+                <h1 className="category_title min-w-full sm:min-w-fit">{title}</h1>
+            </div>
+            <div className="flex flex-row justify-between">
+                <Switch elements={["Films", "Séries"]} onSelect={handleSwitchElement}/>
+                <i className="fa-solid fa-circle-chevron-right text-[24px] text-white/70 hover:text-white/100 hover:cursor-pointer" onClick={handleLoadAll}></i>
+            </div>
+                {isUserRecommandation && (
+                    <div>
                     {elementToDisplay === 0 ? (
                         <div>
-                            {moviesState.isEmpty && <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées."}</p>}
-                            {moviesState.isLoading && <p>Chargement de vos recommandations de films personnalisées...</p>}
+                            {moviesState.isEmpty &&
+                                <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de films personnalisées."}</p>}
+                            {moviesState.isLoading &&
+                                <p>Chargement de vos recommandations de films personnalisées...</p>}
                         </div>
                     ) : (
                         <div>
-                            {seriesState.isEmpty && <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées."}</p>}
-                            {seriesState.isLoading && <p>Chargement de vos recommandations de séries personnalisées...</p>}
+                            {seriesState.isEmpty &&
+                                <p>{"Nous n'avons pas assez d'informations pour vous proposer des recommandations de séries personnalisées."}</p>}
+                            {seriesState.isLoading &&
+                                <p>Chargement de vos recommandations de séries personnalisées...</p>}
                         </div>
                     )}
                 </div>
@@ -137,6 +158,7 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
         </div>
     );
 }
+
 function showMedias(movies: Array<MediaCardProps>) {
     return (
         movies.map((movie,index) => (

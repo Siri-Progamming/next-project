@@ -13,6 +13,7 @@ import {useConstantes} from "../../../src/contexts/ConstantesContext";
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import {showNote, timeConvert, movieTitleSize, showBackground} from "../movies/[idMovie]";
 import HorizontalEpisodeShowcase from "../../../src/components/Showcase/HorizontalEpisodesShowcase";
+import {MEDIA_TYPES} from "../../../src/constantes/app_constantes";
 
 const IdSerie: React.FC = () => {
     const router = useRouter();
@@ -22,7 +23,7 @@ const IdSerie: React.FC = () => {
     const {DISPLAY_LANGUAGE} = useConstantes();
 
     const initSerie = async () => {
-        const serie = await getFullMedia(DISPLAY_LANGUAGE,Number(idSerie as string),"serie");
+        const serie = await getFullMedia(DISPLAY_LANGUAGE,Number(idSerie as string),MEDIA_TYPES.tv);
         if (serie != null) {
             setSerie(createFullSerie(serie));
         }
@@ -51,7 +52,7 @@ const IdSerie: React.FC = () => {
                     <div className="cinematic absolute top-[-4vh] left-0 w-full h-[4vh]"></div>
                     <div className="bg_image_container">
                         <div className="absolute right-[5vw] 2xl:right-[10vw] top-[10vh] z-[10]">
-                            <Like id={serie?.id!} mediaType="serie" width="" style="like-button"/>
+                            <Like id={serie?.id!} mediaType={MEDIA_TYPES.tv} width="" style="like-button"/>
                         </div>
                         {/*h-[calc(100vh_-_var(--nav-height,0))*/}
                         {serie?.backdrop_path ? showBackground(serie?.backdrop_path) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto absolute0", "bg-black bg-opacity-25", "text-white opacity-20")}

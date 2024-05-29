@@ -12,7 +12,7 @@ import {showNoImage} from "../../../src/components/Skeleton/NoData/NoImage";
 import Like from "../../../src/components/utils/buttons/Like";
 import {useConstantes} from "../../../src/contexts/ConstantesContext";
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import {NA_VALUE, NO_TIME_VALUE, MIN_VOTES_FOR_TRUST_RATING} from "../../../src/constantes/app_constantes";
+import {NA_VALUE, NO_TIME_VALUE, MIN_VOTES_FOR_TRUST_RATING, MEDIA_TYPES} from "../../../src/constantes/app_constantes";
 
 const IdMovie: React.FC = () => {
     const router = useRouter();
@@ -22,7 +22,7 @@ const IdMovie: React.FC = () => {
     const {DISPLAY_LANGUAGE} = useConstantes();
 
     const initMovie = async () => {
-        const movie = await getFullMedia(DISPLAY_LANGUAGE,Number(idMovie as string),"movie");
+        const movie = await getFullMedia(DISPLAY_LANGUAGE,Number(idMovie as string),MEDIA_TYPES.movie);
         if (movie != null) {
             setMovie(createFullMovie(movie));
         }
@@ -56,7 +56,7 @@ const IdMovie: React.FC = () => {
                     <div className="cinematic absolute top-[-4vh] left-0 w-full h-[4vh]"></div>
                     <div className="bg_image_container">
                         <div className="absolute right-[5vw] 2xl:right-[10vw] top-[10vh] z-[10]">
-                            <Like id={movie?.id!}  mediaType="movie" width="" style="like-button"/>
+                            <Like id={movie?.id!}  mediaType={MEDIA_TYPES.movie} width="" style="like-button"/>
                         </div>
                         {/*h-[calc(100vh_-_var(--nav-height,0))*/}
                         {movie?.backdrop_path ? showBackground(movie?.backdrop_path!) : showNoImage("w-[80%]", "h-[95vh]", "text-[300px]", "mx-auto absolute0", "bg-black bg-opacity-25", "text-white opacity-20")}

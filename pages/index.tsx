@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import HomeShowcases from "../src/components/HomeShowcases";
+
 interface IndexProps {
     searchQuery: string;
 }

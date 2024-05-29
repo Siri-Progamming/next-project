@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import {ConfigService, tmdbGetOption} from "/src/services/IMDB.API/config.service";
 import {buildURL_media_full} from "/src/services/IMDB.API/urlBuilder.service";
 import {getLikesCountForAMovie} from "/src/services/MONGODB.BDD/queries.service";
+import {MEDIA_TYPES} from "../../../src/constantes/app_constantes";
 
 /**
  * @swagger
@@ -33,7 +34,7 @@ import {getLikesCountForAMovie} from "/src/services/MONGODB.BDD/queries.service"
  */
 export default async function handler(req, res) {
     const idMovie = parseInt(req.query.idMovie, 10);
-    const url = buildURL_media_full(idMovie, req.query.append_to_response,req.query.language, "movie");
+    const url = buildURL_media_full(idMovie, req.query.append_to_response,req.query.language, MEDIA_TYPES.movie);
     switch (req.method) {
         case "GET":
             // console.log("API CALL - GET - URL : ", url);

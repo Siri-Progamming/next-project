@@ -10,6 +10,7 @@ import {FullActor} from "../../../src/interfaces/People";
 import HorizontalItemsShowcase from "../../../src/components/Showcase/HorizontalItemsShowcase";
 import {MediaCardProps} from "../../../src/interfaces/UI";
 import {countSpaces, movieTitleSize} from "../movies/[idMovie]";
+import {MEDIA_TYPES} from "../../../src/constantes/app_constantes";
 
 const IdPeople: React.FC = ({}) => {
     const router = useRouter();
@@ -131,7 +132,7 @@ const IdPeople: React.FC = ({}) => {
                     place_of_birth: {people?.place_of_birth}<br/>
                     popularity: {people?.popularity}<br/>
                     profile_path: {people?.profile_path}<br/>
-                    <HorizontalItemsShowcase type="movie" title="Médiathèque : " movies={movies} series={series} />
+                    <HorizontalItemsShowcase type={MEDIA_TYPES.movie} title="Médiathèque : " movies={movies} series={series} />
                 </div>
             }
         </main>

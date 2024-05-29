@@ -2,10 +2,11 @@ import {FullMovie, Movie} from "../../interfaces/Movie";
 import {Episode, FullSerie, Season, Serie} from "../../interfaces/Serie";
 import {MediaCardProps} from "../../interfaces/UI";
 import {Actor, FullActor} from "../../interfaces/People";
+import {MEDIA_TYPES} from "../../constantes/app_constantes";
 
 export function createMovie(data: any): Movie {
     return {
-        mediaType: "movie",
+        mediaType: MEDIA_TYPES.movie,
         id: data.id,
         imdb_id: data.imdb_id,
         original_title: data.original_title,
@@ -24,7 +25,7 @@ export function createMovie(data: any): Movie {
 }
 export function createSerie(data: any): Serie {
     return {
-        mediaType: "serie",
+        mediaType: MEDIA_TYPES.tv,
         adult: data.adult,
         backdrop_path: data.backdrop_path,
         id: data.id,
@@ -81,11 +82,12 @@ export function createFullSerie(data:any): FullSerie{
         watch: data['watch/providers'].results
     }
 }
+
 export function createMediaCardPropsFromSerie(data: any): MediaCardProps {
     //console.log("Movie or Serie before MediaCardProps : ",data);
     return {
         id: data.id,
-        type: "serie",
+        type: MEDIA_TYPES.tv,
         title: data.name,
         release_date: data.first_air_date,
         vote_average: data.vote_average,
@@ -97,7 +99,7 @@ export function createMediaCardPropsFromMovie(data: any): MediaCardProps {
     //console.log("Movie or Serie before MediaCardProps : ",data);
     return {
         id: data.id,
-        type: "movie",
+        type: MEDIA_TYPES.movie,
         title: data.title,
         release_date: data.release_date,
         vote_average: data.vote_average,
@@ -105,6 +107,19 @@ export function createMediaCardPropsFromMovie(data: any): MediaCardProps {
         poster_path: data.poster_path
     }
 }
+export function createMediaCardPropsFromActor(data: any): MediaCardProps {
+    //console.log("Datas before MediaCardProps : ",data);
+    return {
+        id: data.id,
+        type: MEDIA_TYPES.people,
+        title: data.name,
+        release_date: data.birthday,
+        vote_average: data.popularity,
+        vote_count: 0,
+        poster_path: data.profile_path
+    }
+}
+
 export function createActor(data:any):Actor{
     return{
         adult: data.adult,

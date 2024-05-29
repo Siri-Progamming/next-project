@@ -1,3 +1,5 @@
+import {MEDIA_TYPES} from "../../constantes/app_constantes";
+
 export const getMedias = async (language:string,api:string) => {
     try {
         api = api + '?language=' + language;
@@ -25,11 +27,11 @@ export const getFullMedia = async (language:string,id: number, type:string) => {
     let fetchURL:string;
     switch(type){
         //TODO mettre ça dans un fichier de conf !!
-        case "movie":
+        case MEDIA_TYPES.movie:
             append_to_response = 'credits%2Cimages%2Ckeywords%2Crecommendations%2Creviews%2Csimilar%2Cvideos';
             fetchURL = '/api/movies/' + id+'?language='+language+'&append_to_response='+append_to_response;
             break;
-        case "serie":
+        case MEDIA_TYPES.tv:
             append_to_response = 'credits%2Cimages%2Crecommendations%2Creviews%2Csimilar%2Cvideos%2Cwatch%2Fproviders';
             fetchURL = "/api/series/"+id+"?language="+language+"&append_to_response="+append_to_response;
             break;
@@ -38,8 +40,8 @@ export const getFullMedia = async (language:string,id: number, type:string) => {
         const response = await fetch(fetchURL!);
         const data = await response.json();
         switch(type){
-            case "movie": return data.data.movie;
-            case"serie": return data.data.serie;
+            case MEDIA_TYPES.movie: return data.data.movie;
+            case MEDIA_TYPES.tv: return data.data.serie;
         }
     } catch (error) {
         console.error(error);

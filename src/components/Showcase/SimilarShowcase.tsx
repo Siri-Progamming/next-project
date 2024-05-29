@@ -4,6 +4,7 @@ import {FullMovie, Movie} from "../../interfaces/Movie";
 import {FullSerie, Serie} from "../../interfaces/Serie";
 import {useRouter} from "next/router";
 import {showNoImage} from "../Skeleton/NoData/NoImage";
+import {MEDIA_TYPES} from "../../constantes/app_constantes";
 
 interface SimilarShowcaseProps {
     fullMedia: FullMovie | FullSerie
@@ -26,7 +27,7 @@ const SimilarShowcase: React.FC<SimilarShowcaseProps> = ({fullMedia, nbToShow, t
     {title === "Similar" ?  similars = media?.similar : similars = media?.recommendations}
     const router = useRouter();
     const handleClick = (id:number) => {
-        if(media.mediaType === "movie"){
+        if(media.mediaType === MEDIA_TYPES.movie){
             router.push('/ui/movies/'+id);
         }else{
             router.push('/ui/series/'+id);

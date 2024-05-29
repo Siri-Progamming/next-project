@@ -8,24 +8,33 @@ import {MediaCardProps} from "../../interfaces/UI";
 import {useAuth} from "../../contexts/AuthContext";
 import More from "../utils/buttons/More";
 import {noteTrusted} from "../../../pages/ui/movies/[idMovie]";
+import MediaTypeBadge from "../utils/badges/MediaTypeBadge";
+import {MEDIA_TYPES} from "../../constantes/app_constantes";
 
 interface MediaCardProperties {
     media:MediaCardProps;
+    showMediaType?:boolean;
 }
 
-const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
+const MediaCard: React.FC<MediaCardProperties> = ({media, showMediaType}) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const {user} = useAuth();
 
     const handleClick = () => {
-        if(media.type === "movie"){
+        if(media.type === MEDIA_TYPES.movie){
             router.push('/ui/movies/' + media.id).then();
         }else{
             router.push('/ui/series/' + media.id).then();
         }
 
     };
+
+    useEffect(() => {
+        if(media.type !== MEDIA_TYPES.movie && media.type !== MEDIA_TYPES.tv){
+            console.log("MediaCard init : ",media);
+        }
+    }, []);
 
     useEffect(() => {
         if (media.id && media.title) {
@@ -47,6 +56,7 @@ const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
                     (
                         <li key={media.id} className="media-card">
                             {user && <div className="absolute top-[-1px] right-[-1px] z-[10]"><More id={media.id} mediaType={media.type}/></div>}
+                            {showMediaType && <MediaTypeBadge type={media.type} className="absolute left-0 top-0"/>}
                             {media.poster_path ? showImage(media.poster_path) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
                                 <PercentSticker note={noteTrusted(media.vote_average, media.vote_count)} />
@@ -77,4 +87,9 @@ const MediaCard: React.FC<MediaCardProperties> = ({media}) => {
         )
     }
 }
+
+MediaCard.defaultProps = {
+    showMediaType: true
+}
+
 export default MediaCard;

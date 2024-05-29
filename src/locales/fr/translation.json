@@ -1,0 +1,7 @@
+{
+  "mediaTypes": {
+      "movie": "film",
+      "tv": "série",
+      "person": "people"
+  }
+}
