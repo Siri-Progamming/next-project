@@ -162,14 +162,14 @@ const HorizontalListShowcase: React.FC<HorizontalListShowcaseProps> = ({type, ti
 function showMedias(movies: Array<MediaCardProps>) {
     return (
         movies.map((movie,index) => (
-            <MediaCard key={movie.id+'-'+index} media={movie}/>
+            <MediaCard key={movie.id+'-'+index} media={movie} showMediaType={false}/>
         ))
     )
 }
 function showSeries(series: Array<MediaCardProps>) {
     return (
         series.map((serie,index) => (
-            <MediaCard key={serie.id+'-'+index} media={serie}/>
+            <MediaCard key={serie.id+'-'+index} media={serie} showMediaType={false}/>
         ))
     )
 }

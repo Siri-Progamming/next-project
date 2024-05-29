@@ -56,7 +56,7 @@ const MediaCard: React.FC<MediaCardProperties> = ({media, showMediaType}) => {
                     (
                         <li key={media.id} className="media-card">
                             {user && <div className="absolute top-[-1px] right-[-1px] z-[10]"><More id={media.id} mediaType={media.type}/></div>}
-                            {showMediaType && <MediaTypeBadge type={media.type} className="absolute left-0 top-0"/>}
+                            {showMediaType && <MediaTypeBadge type={media.type} className="absolute left-2 top-2"/>}
                             {media.poster_path ? showImage(media.poster_path) : showNoImage("min-w-[220px] max-w-[220px]", "min-h-[330px] max-h-[330px]", "text-[150px]", "media-card-bg")}
                             <div id="percent" className="absolute top-[68.3%] left-[6%] z-[2]">
                                 <PercentSticker note={noteTrusted(media.vote_average, media.vote_count)} />
